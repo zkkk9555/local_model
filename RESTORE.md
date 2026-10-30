@@ -289,10 +289,10 @@ logs/            23 MB，实测证据（可选）
 ### 10.3 恢复流程（删完之后照这个做；留了 models/ + engine/ 的话 5 分钟，全下 40 分钟）
 
 1. **克隆到项目根**（不是 `repo/` 子目录 —— 脚本里的 `ROOT` 硬编码成项目根）：
-   `git clone https://github.com/zkkk9555/local_model.git C:/Project/local_model`
-2. `mkdir -p logs tmp`（仓库按 .gitignore 不带 `logs/`，而 `scripts/switch.sh` 起服第一句就重定向到 `logs/`）
+   `git clone https://github.com/zkkk9555/local_model.git C:/Project/local_model`（约 192 MB，**6 个不可复现 DLL 已经在 `engine-dlls/` 里一起下来了**，只有 `avcodec-63.dll` 87.6 MB 会触发一条 GitHub 的 >50 MB 警告，不影响克隆）
+2. `bash scripts/bootstrap.sh` —— 建 `logs/ tmp/ engine/` 并把 `engine-dlls/*.dll` 铺进 `engine/`（= 老的 `mkdir -p logs tmp` 那一步，现在一条命令搞定）
 3. 模型放 `models/`：留了旧件就跳过；否则按 §3.2 从 ModelScope 下（6.4 GB）
-4. 引擎放 `engine/`：`ninfer-serve-89.exe` + 9 个 DLL（§3.1 / §3.3）。**别把 r3 包的 `runtime/*.dll` 混进来**（见 §3.3 的警告）
+4. 引擎放 `engine/`：`ninfer-serve-89.exe`（§3.1）。三个 CUDA DLL 从 PyPI 拿（见 `engine-dlls/README.md`）。**别把 r3 包的 `runtime/*.dll` 混进来**（见 §3.3 的警告）
 5. `python tools/restore_check.py --deep`（真树应 18 项全 OK；报 11 项 MISSING 基本就是第 1 步克隆位置错了，可用 `--root <项目根>` 指路）
 6. `bash scripts/switch.sh ninfer` → `bash scripts/console.sh open`
 
