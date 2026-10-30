@@ -234,3 +234,46 @@ bash tools/verify_all.sh                 # 探活四层端口 + DSH 配置一致
 ```
 
 全部 OK 的标准：`verify_all.sh` 输出 0 FAIL，控制台 8090 打开能看到四个档位，DSH 里四条模型都能选且首字 0.3 s 左右。
+---
+
+## 10. 存档：可以删什么、必须留什么、以后怎么恢复
+
+### 10.1 本机实测体积（2026-10-31）
+
+| 目录 | 体积 | 是什么 | 删了会怎样 |
+| --- | --- | --- | --- |
+| `models/` | 21 GB | 权重（在用 6.4 GB + `_archive/` 里 v3 全件 9.5 GB、自打包件 6.4 GB） | 重下 2.09 GB 包即恢复；`_archive/` 永久没用了 |
+| `incoming/` | 6.8 GB | 下载的原始分发包（③省显存档等） | 想回头试省显存路线要重下 |
+| `llama8g/` | 7.4 GB | llama.cpp bundle + 6.4 GB GGUF | 从 HuggingFace 重下（§4） |
+| `engine/` | 1.4 GB | 引擎 + 9 个 DLL | 按 §3.1 / §3.3 重下 |
+| `pack/` | 1.4 GB | 2.09 GB 包解开后的副本 | 可删，包里内容与 `engine/`+`models/` 重复 |
+| `tmp/` | 1.3 GB | 实验 fixture、截图、抓取缓存 | 可删（报告里已固化读数） |
+| `logs/` | 23 MB | 历史运行日志 | **建议留**：每个读数都靠它追溯 |
+| `tools/ffmpeg/` | 194 MB | 便携 ffmpeg（从 LosslessCut 复制） | 与推理无关，可删 |
+| `repo/` | 4.7 MB | 本仓库工作副本 | 可删，GitHub 上有 |
+
+⇒ 全删约省 **39.7 GB**（C 盘 302 GB 里当前剩 132 GB）。
+
+### 10.2 建议保留的最小集（约 25 MB）
+
+```
+repo/            （或直接 git clone 回来）
+logs/            23 MB，实测证据（可选）
+```
+
+### 10.3 恢复流程（删完之后照这个做，约 20 分钟，其中 15 分钟是下载）
+
+1. `git clone https://github.com/zkkk9555/local_model.git C:/Project/local_model/repo`（或直接看网页）
+2. 按 §3 下 `infer-27b-kv-stream-3arch-20261019-r3.zip`（2.09 GB，夸克）
+3. 解开后把 `model/*.ninfer` 放进 `models/`，`engines/sm89/*` + `runtime/*.dll` 放进 `engine/`
+4. `python tools/restore_check.py --deep`（校验字节数与 SHA-256）
+5. `bash scripts/switch.sh ninfer` → `bash scripts/console.sh open`
+
+### 10.4 什么时候值得再捡起来
+
+| 触发条件 | 那时能期待什么 |
+| --- | --- |
+| 出现 NVFP4 / MXFP4 权重的 27B–35B 件 | 8 GB 上权重压到 ~4.5 GB，KV 池能翻倍到 8–9 万 token |
+| 引擎支持 INT4 KV + 更好的 host 页回读 | 150K 单遍才有希望（现在还差 1.2 GB） |
+| 换 16 GB 卡（4060 Ti 16G / 5060 Ti 16G） | 同样模型可以 200K 单遍 + 双倍 decode 余量 |
+| 只是想过几个月再试一次 | 现在这套一条命令就能回来，不用重新研究 |
