@@ -1,0 +1,5 @@
+strata host  ·  http://127.0.0.1:8096
+hardware     ·  NVIDIA GeForce RTX 4060 Ti / cuda / 8 cores / 31 GB
+inference    ·  simulated (design iteration) — set STRATA_REAL_ENGINE=1 for a real engine
+models dir   ·  C:\Users\Administrator\Documents\Strata\Models
+workspace    ·  C:\Users\Administrator\Documents\Strata\Workspace

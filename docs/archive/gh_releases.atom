@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:https://github.com/1314521gjy/ninfer-fusion-kvmem/releases</id>
+  <link type="text/html" rel="alternate" href="https://github.com/1314521gjy/ninfer-fusion-kvmem/releases"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/1314521gjy/ninfer-fusion-kvmem/releases.atom"/>
+  <title>Release notes from ninfer-fusion-kvmem</title>
+  <updated>2026-10-08T08:41:47Z</updated>
+  <entry>
+    <id>tag:github.com,2008:Repository/1404347821/engine-v0.11.0-kvmem-20261008</id>
+    <updated>2026-10-19T10:12:54Z</updated>
+    <link rel="alternate" type="text/html" href="https://github.com/1314521gjy/ninfer-fusion-kvmem/releases/tag/engine-v0.11.0-kvmem-20261008"/>
+    <title>NInfer 融合引擎 · KVMem 环 · 单架构件（2026-10-08）</title>
+    <content type="html">&lt;h1&gt;NInfer 融合引擎 · KVMem 环（2026-10-08）&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;本版先发 40 系件&lt;/strong&gt;：&lt;code&gt;ninfer-serve-89.exe&lt;/code&gt;；30 系（sm_86）与 50 系（sm_120a）件随编随补进&lt;strong&gt;同一 Release&lt;/strong&gt;。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;文件&lt;/th&gt;
+&lt;th&gt;架构&lt;/th&gt;
+&lt;th&gt;适用显卡&lt;/th&gt;
+&lt;th&gt;大小&lt;/th&gt;
+&lt;th&gt;SHA256（前 16 位）&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;ninfer-serve-89.exe&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;sm_89&lt;/td&gt;
+&lt;td&gt;RTX 40 系 / Ada&lt;/td&gt;
+&lt;td&gt;758 MB&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;9fa7490bcbc4825a&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;件为什么小了一半&lt;/strong&gt;：本版关掉编译期的 &lt;code&gt;-lineinfo&lt;/code&gt;（cubin 里的源码行号对照表）⇒ 二进制由 1.41 GB 降到 758 MB（&lt;strong&gt;−47.4%&lt;/strong&gt;）。&lt;strong&gt;推理功能、数值结果、显存占用、速度都不变&lt;/strong&gt;（权重常驻仍是 5.52 GiB）。代价只有一条：不能用 Nsight / cuda-gdb 做&lt;strong&gt;源码行级&lt;/strong&gt;归因，崩溃栈里只有 kernel 名。需要行号信息请按仓内 &lt;code&gt;编译指南-怎么编.md&lt;/code&gt; 用 &lt;code&gt;-DNINFER_LINE_INFO=ON&lt;/code&gt; 自编。&lt;/p&gt;
+&lt;h2&gt;相对上一版（&lt;code&gt;engine-v0.11.0-kvmem-20261003&lt;/code&gt;）多了什么&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B01&lt;/strong&gt; 容量类失败统一分类 + 超池改&lt;strong&gt;可见拒绝 429&lt;/strong&gt;（不再杀进程、不留僵尸）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B02&lt;/strong&gt; worker 不可用时非 &lt;code&gt;/health&lt;/code&gt; 统一 &lt;strong&gt;503&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B03&lt;/strong&gt; MTP 发布守卫（取消后同会话仍可用）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B21&lt;/strong&gt; 启动守卫：&lt;code&gt;sink + 4 &amp;gt; pool&lt;/code&gt; 拒启并给三条出路（此前&quot;起来了但每个请求都 429&quot;）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B06&lt;/strong&gt; KVMem 打分器并发门（&lt;code&gt;--max-concurrency&amp;gt;1&lt;/code&gt; + 环 ⇒ 明确拒绝）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B32&lt;/strong&gt; 超池 + &lt;code&gt;NINFER_KV_RETRIEVE&lt;/code&gt; 未设 ⇒ &lt;strong&gt;默认启用检索预算&lt;/strong&gt;（显式 &lt;code&gt;0&lt;/code&gt; 仍权威）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B30&lt;/strong&gt; 环的两道门改读同一个 &lt;code&gt;NINFER_KV_WINDOW&lt;/code&gt;（照引擎提示操作必崩的问题已修）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B29&lt;/strong&gt; T2 conv 两父投影&lt;strong&gt;重复平面&lt;/strong&gt;（真数值 bug）已修&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B26&lt;/strong&gt; 判据收窄（仅三元时要求同格式）⇒ 原先全红的 15 个用例 &lt;strong&gt;12 个转绿&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;B25&lt;/strong&gt; 布尔开关 &lt;code&gt;=0&lt;/code&gt; 真的生效（此前&quot;设 0 = 未设&quot;）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;S3&lt;/strong&gt; OpenAI 路由 per-request &lt;code&gt;thinking_budget&lt;/code&gt; · &lt;strong&gt;S2&lt;/strong&gt; &lt;code&gt;--thinking-presence-penalty&lt;/code&gt;（仅思考通道）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;S6&lt;/strong&gt; 完成记录新增 &lt;code&gt;repeat_channel / tokens / uniq8 / dup8 / max8&lt;/code&gt;（复读可测）&lt;/li&gt;
+&lt;li&gt;仓根 &lt;strong&gt;&lt;code&gt;start-8g.bat&lt;/code&gt;&lt;/strong&gt;：8 GB 卡配方（&lt;code&gt;rk4v4-e8&lt;/code&gt; + 按窗口定池；实测整卡 &lt;strong&gt;6.84 GiB&lt;/strong&gt;，质量代价 PPL +0.30%）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;用之前必读&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一支 exe 只含一个架构&lt;/strong&gt;，没有 PTX 回退；装错架构直接起不来。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;驱动 ≥ 580&lt;/strong&gt;（链接 CUDA 13.x；旧驱动会报 &lt;code&gt;CUDA_ERROR_INSUFFICIENT_DRIVER&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;8 GB 卡必须加 &lt;code&gt;--no-cuda-graph&lt;/code&gt;&lt;/strong&gt;；小显存卡请用 MTP-only 权重建 + &lt;code&gt;--spec mtp&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;请求日志 schema 由 27 升到 28&lt;/strong&gt;：解析 &lt;code&gt;--request-log-jsonl&lt;/code&gt; 的脚本要认 28。&lt;/li&gt;
+&lt;li&gt;已知未关闭缺陷见仓内 &lt;code&gt;已知问题-初期版本.md&lt;/code&gt;，&lt;strong&gt;上生产前先读&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;模型权重不在本发布中，需单独下载。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;本版判据（本机实测）&lt;/h2&gt;
+&lt;p&gt;冒烟 200 · 四项验收闸门 &lt;strong&gt;4/4&lt;/strong&gt; · 数值不变性子集 &lt;strong&gt;14/14&lt;/strong&gt; · B24 服务端默认思考预算四臂 · B30 两格 · 件身份 −47.4%；已修项在同一新件上逐条复核：&lt;strong&gt;B21 ✅ · B25 ✅ · B06 ✅ · B32 ✅（正负双向）&lt;/strong&gt;；&lt;strong&gt;B01 判&quot;未验&quot;&lt;/strong&gt;（复现需要&quot;大输出租约 + 池与 host 双满&quot;，本机仪器无该旋钮）。读数在仓内 &lt;code&gt;verify/读数-20261008/&lt;/code&gt;（20 件）。&lt;/p&gt;
+&lt;h2&gt;许可&lt;/h2&gt;
+&lt;p&gt;引擎为 NInfer 衍生（Apache-2.0）；第三方代码清单与署名见仓内 &lt;code&gt;NOTICE.md&lt;/code&gt;。本附件仅二进制，源码随仓提供。&lt;/p&gt;</content>
+    <author>
+      <name>1314521gjy</name>
+    </author>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/299195089?s=60&amp;v=4"/>
+  </entry>
+</feed>

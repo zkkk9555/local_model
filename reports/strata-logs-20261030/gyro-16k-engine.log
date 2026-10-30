@@ -1,0 +1,45 @@
+[strata] 2026-10-30 11:18:09 engine started: C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata.exe --serve --pack C:\Project\local_model\strata\model-data\packs\gyro-gyro-s --native C:\Project\local_model\strata\model-data\models\gyro-Gyro-S\Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf --ple-gguf C:\Project\local_model\strata\model-data\models\gyro-Gyro-S\Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf --expert-profile C:\Project\local_model\strata\app\control\data\expert-profile.bin --expert-cache auto --prefill auto --spec 4 --spec-min-p 0.5 --mtp C:\Project\local_model\strata\model-data\mtp\rt --max-context 16384 --kv int8 --mmap-experts
+strata generate: memory guard: limit 31.1 GiB (source: meminfo), current 10.4 GiB, reclaimable cache credited 0.0 GiB; available 20.8 GiB (MemAvailable 20.8 GiB), floor 2560 MiB
+strata generate: APR pack: Hadamard-folded experts (block 128)
+strata generate: PCIe probe: 13.4 GB/s host->device (best of 13.0 13.0 13.4 13.0) -> pcie_frac 0.37 (default 0.55)
+strata generate: native pack: C:\Project\local_model\strata\model-data\packs\gyro-gyro-s experts (largest blob 1.05 MB), token embedding Q6_K in mapped host memory (497 MiB, 0.6 s)
+strata generate: 1466 MiB of weights loaded from C:\Project\local_model\strata\model-data\packs\gyro-gyro-s in 0.9 s (302 canonical tensors skipped: served natively)
+strata generate: 300 native projection matrices, 1935.94 MiB of weights, in 2.4 s
+strata generate: PLE direct read probe: 112350 rows/s (fine)
+strata generate: the SSD is kept awake while rows are read: one page of the table after 100 ms without a read, until 60 s after the last request (STRATA_SSD_KEEPALIVE=0 turns it off)
+strata generate: profile C:\Project\local_model\strata\app\control\data\expert-profile.bin: 24576 ranked pairs, built for 24576 slots
+strata generate: PLE on, table 320001536 rows of C:\Project\local_model\strata\model-data\models\gyro-Gyro-S\Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf
+strata mtp: draft layer loaded, 814 MiB of VRAM (experts 675, dense 111), files read in 0.51 s (1533 MiB/s)
+strata generate: experimental native Q5_K head, 521472000 bytes, in 0.6 s
+strata generate: GPU 0: NVIDIA GeForce RTX 4060 Ti, compute capability 8.9
+strata generate: experts via mmap (--mmap-experts; the A/B arm of R2.1)
+strata generate: CPU pool tasks/phase: 24 (automatic), participating threads: 8
+strata generate: CPU pool: 7 workers by default (8 physical cores, 16 logical processors; bounded by every physical core but the host's)
+strata generate: 7 pool workers on logical processors 2,4,6,8,10,12,14, the host thread on 0 (draining too) (--host-core first)
+strata generate: CPU workers on logical processors 2,4,...,14 (7 workers, one per physical core; host on 0)
+strata aux cpus: not available on this system
+strata generate: expert cache auto: 1.60 GiB free, 700 MiB reserved (+218 MiB for the draft head, +256 MiB for what is allocated after the cache) -> 467 slots
+strata generate: expert cache 467 slots, 0.46 GiB of VRAM; policy is
+strata generate: the GPU computes the experts in the cache; it rounds differently from the CPU,
+                 so a reply can differ slightly from a run without the cache (same quality:
+                 bench/results/2026-09-27-cache-parity).
+                 PROFILE, ranked by routing frequency, no eviction.
+strata generate: the profile fill asks for 0 pairs ahead (STRATA_FILL_AHEAD)
+strata generate: pre-filled 467 of 467 slots from the profile in 0.5 s (1025 MB/s); slot 0 verified
+strata generate: R4 hit path ON - resident experts are computed on the GPU
+strata generate: 7 expert-pool workers + the host thread
+strata generate: session is up (engine 0.1.54)
+strata generate: token graph hit path: 467 resident experts, decided on the device
+strata serve: Windows commit: 25.3 GiB left of a 54.1 GiB limit (RAM + page file)
+strata: the CPU prefill share is not armed by default: the experts it would read are 23.6 GiB of file pages and only 19.4 GiB of RAM is free to keep them. STRATA_PREFILL_CPU_SHARE=auto turns it on anyway
+strata: prefill plan: chunk 256, ring 8 kept: file set 24.2 GiB does not fit the page cache 18.2 GiB -> about 1661.1 GB read from the drive per 16384-token prompt (64 chunks); no option does better (the set cannot fit: fewest passes win)
+strata: prefill plan inputs: 24.0 GiB experts, 0.5 GiB in the GPU caches, 0.0 GiB RAM copy (0 lend slots kept), file tier 23.6 GiB; 18.2 GiB available for the page cache; PCIe 13.4 GB/s; drive 1.50 GB/s (assumed); a 16384-token prompt
+strata serve: prompt chunk auto: 256 tokens, a 8-slot ring
+strata serve: the prompt path borrows 270 CUDA0 cache slots (0.26 GiB)
+strata hc: CUDA0: the hyper-connection read runs as staged (the norm per token and stream, the down projection's activations staged ahead by cp.async); checked bit for bit against the plain read on this card (STRATA_HC_SPLIT=1 or 0 for the earlier ones)
+strata verify: window up to 6 tokens, 49.9 MiB of device buffers
+strata mtp: draft head over 106299 tokens (212.9 MiB)
+strata serve: conversation cache sized from the free RAM: 6400 MiB for up to 4 parked conversations, so an agent's next turn reuses its prompt (--conversation-cache-mib N sets it, 0 turns it off)
+strata serve: STRATA_ROUTE_TAIL_SKIP=7 is ON (default): a missed expert that every token of a verify window routes at rank 7 or lower is skipped (+10..20% decode on 12-16 GB cards that miss experts, answers differ slightly from 0.1.41); STRATA_ROUTE_TAIL_SKIP=0 turns it off
+strata serve: adaptive overlap: off (STRATA_ADAPT_OVERLAP=1 turns it on)
+strata serve: 719 MiB of VRAM free with everything loaded

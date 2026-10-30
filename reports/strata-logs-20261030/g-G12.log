@@ -1,0 +1,10 @@
+=== G12: --max-context 256 --chunk 128 --no-graph --serve ===
+strata-q36: C:/Project/local_model/strata/model-data/models/qwen36-UD-Q4_K_XL/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf: 753 tensors (layout checked), 4.40 GiB on the GPU in 1.8 s (the routed experts are placed after the engine's buffers)
+strata: K-quant prompt kernels from C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata_kq.dll (STRATA_MMQ_KQ=1)
+strata-q36: prompt experts on MMQ (int8)
+strata-q36: context 256 cells, prompt chunk 128, MTP block loaded, 1.17 GiB of VRAM free
+strata-q36: hybrid experts: 0 of 256 per layer in VRAM (0.00 GiB), all 18.75 GiB in pageable host memory, the rest of a batch of <= 128 rows on 8 CPU threads, bigger prompt chunks streamed (1.10 GiB staging); 63.4 s
+strata-q36: warmed up in 3.3 s (one prompt chunk, a decode step)
+READY 256 stop
+strata-q36: hybrid experts: 0 of 0 batch entries on the GPU (0.0%), 0 on the CPU pool in 0 ms, 0 slot replacements
+EXIT=0

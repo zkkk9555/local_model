@@ -1,0 +1,21 @@
+=== 2026-10-30T09:15:47+08:00 label=V pin=14 cfg=C:/Project/local_model/strata/install/q36-V-2k.json extra= ===
+loading the model (the first start takes a minute or two) ...
+[strata] starting the engine: reading the model's weights ...
+Traceback (most recent call last):
+  File "C:\Project\local_model\strata\app\control\serve\server.py", line 9335, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Project\local_model\strata\app\control\serve\server.py", line 9024, in main
+    engine = StrataEngine(exe, engine_args(cfg) + (effort_end or []), cwd=cfg.get("cwd"), log=cfg.get("log"),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Project\local_model\strata\app\control\serve\server.py", line 1138, in __init__
+    raise EngineDied(why + (f" (see {log})" if log else "") + note +
+EngineDied: the engine exited before it was ready (see C:/Project/local_model/strata/install/strata-q36-V-2k.log)
+the engine process ended: exit code 1
+the engine log's last lines:
+  [strata] 2026-10-30 09:15:50 engine started: C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata.exe --serve --native C:\Project\local_model\strata\model-data\models\qwen36-UD-Q4_K_XL\Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf --max-context 2048 --prefill auto
+  strata-q36: C:\Project\local_model\strata\model-data\models\qwen36-UD-Q4_K_XL\Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf: 753 tensors (layout checked), 4.40 GiB on the GPU in 1.7 s (the routed experts are placed after the engine's buffers)
+  strata: K-quant prompt kernels from C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata_kq.dll (STRATA_MMQ_KQ=1)
+  strata-q36: prompt experts on MMQ (int8)
+  strata-q36: context 2048 cells, prompt chunk 512, MTP block loaded, 0.90 GiB of VRAM free
+  strata-q36: not enough VRAM left for the hybrid experts' buffers and slots (1159 MiB needed, 917 MiB free after the weights, the context and the sessions): use fewer slots ("parallel" / --batch), a shorter --max-context

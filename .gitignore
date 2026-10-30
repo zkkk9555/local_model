@@ -1,0 +1,19 @@
+# 大件一律不入库（引擎、权重、DLL、下载包、抓取缓存）
+engine/
+models/
+pack/
+incoming/
+llama8g/
+tmp/
+logs/
+raw/
+tools/ffmpeg/
+*.exe
+*.dll
+*.ninfer
+*.gguf
+*.zip
+*.7z
+__pycache__/
+*.pyc
+.env

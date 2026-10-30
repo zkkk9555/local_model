@@ -1,0 +1,187 @@
+{
+ "label": "mock-smoke",
+ "base": "http://127.0.0.1:8080",
+ "kind": "cmp",
+ "rows": [
+  {
+   "id": "arith1",
+   "pass": false,
+   "miss": [
+    "91"
+   ],
+   "bad": [],
+   "ttft": 0.013341188430786133,
+   "total": 0.013341188430786133,
+   "prompt_tokens": 310,
+   "completion_tokens": 32,
+   "decode_tps": null,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hell",
+   "chunks": 24
+  },
+  {
+   "id": "arith2",
+   "pass": false,
+   "miss": [
+    "11"
+   ],
+   "bad": [],
+   "ttft": 0.0016133785247802734,
+   "total": 0.0016133785247802734,
+   "prompt_tokens": 334,
+   "completion_tokens": 32,
+   "decode_tps": null,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hell",
+   "chunks": 24
+  },
+  {
+   "id": "logic1",
+   "pass": false,
+   "miss": [
+    "是"
+   ],
+   "bad": [],
+   "ttft": null,
+   "total": 0.001650094985961914,
+   "prompt_tokens": 342,
+   "completion_tokens": 16,
+   "decode_tps": 9090.385782401387,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "",
+   "chunks": 18
+  },
+  {
+   "id": "extract1",
+   "pass": false,
+   "miss": [
+    "王小明",
+    "成都"
+   ],
+   "bad": [],
+   "ttft": 0.0015864372253417969,
+   "total": 0.002233743667602539,
+   "prompt_tokens": 399,
+   "completion_tokens": 56,
+   "decode_tps": 84967.48434622468,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hello from the mock engine.",
+   "chunks": 47
+  },
+  {
+   "id": "pinyin1",
+   "pass": false,
+   "miss": [
+    "tan"
+   ],
+   "bad": [],
+   "ttft": 0.0011055469512939453,
+   "total": 0.0016596317291259766,
+   "prompt_tokens": 325,
+   "completion_tokens": 56,
+   "decode_tps": 99262.78829604131,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hello from the mock engine.",
+   "chunks": 47
+  },
+  {
+   "id": "code1",
+   "pass": false,
+   "miss": [
+    "13"
+   ],
+   "bad": [],
+   "ttft": 0.0013272762298583984,
+   "total": 0.0013272762298583984,
+   "prompt_tokens": 366,
+   "completion_tokens": 32,
+   "decode_tps": null,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hell",
+   "chunks": 24
+  },
+  {
+   "id": "instr1",
+   "pass": false,
+   "miss": [
+    "本地模型"
+   ],
+   "bad": [],
+   "ttft": 0.00182342529296875,
+   "total": 0.00182342529296875,
+   "prompt_tokens": 316,
+   "completion_tokens": 32,
+   "decode_tps": null,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hell",
+   "chunks": 24
+  },
+  {
+   "id": "json1",
+   "pass": false,
+   "miss": [
+    "name",
+    "张三",
+    "age",
+    "30"
+   ],
+   "bad": [],
+   "ttft": 0.001165628433227539,
+   "total": 0.001786947250366211,
+   "prompt_tokens": 369,
+   "completion_tokens": 56,
+   "decode_tps": 88521.38142747506,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hello from the mock engine.",
+   "chunks": 47
+  },
+  {
+   "id": "count1",
+   "pass": false,
+   "miss": [
+    "21",
+    "33",
+    "40"
+   ],
+   "bad": [],
+   "ttft": 0.0012378692626953125,
+   "total": 0.0017511844635009766,
+   "prompt_tokens": 338,
+   "completion_tokens": 56,
+   "decode_tps": 107146.64189503019,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hello from the mock engine.",
+   "chunks": 47
+  },
+  {
+   "id": "neg1",
+   "pass": true,
+   "miss": [],
+   "bad": [],
+   "ttft": 0.0016019344329833984,
+   "total": 0.002221345901489258,
+   "prompt_tokens": 358,
+   "completion_tokens": 56,
+   "decode_tps": 88793.96458814472,
+   "engine_predicted_tps": null,
+   "engine_prompt_tps": null,
+   "text": "Hello from the mock engine.",
+   "chunks": 47
+  }
+ ],
+ "summary": {
+  "pass": 1,
+  "n": 10,
+  "decode_median": 88657.67300780989,
+  "ttft_median": 0.0015864372253417969
+ }
+}

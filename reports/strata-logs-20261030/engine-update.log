@@ -1,0 +1,21 @@
+Strata update (https://github.com/Niko1221/Strata/releases/latest/download/strata-feed.json)
+  Reading the signed update feed
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 0%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 10%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 20%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 30%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 40%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 51%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 61%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 71%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 81%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 91%
+  downloading engine 0.1.54 windows-x86_64-cuda-cuda13: 100%
+  Unpacking 0.1.54 windows-x86_64-cuda-cuda13
+  Checking the package signature and every file
+  Test-starting engine 0.1.54 windows-x86_64-cuda-cuda13 before switching to it
+  Switching to engine 0.1.54 windows-x86_64-cuda-cuda13
+  Engine 0.1.54 is installed and will be used on the next start
+Feed sequence 117, signed by 5d1bc23abbeffd0d
+Engine  none -> 0.1.54   updated (tested: no model is installed yet, so the engine was run with --version only)
+The previous engine version is kept; `strata components rollback` returns to it.

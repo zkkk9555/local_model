@@ -1,0 +1,7 @@
+=== G2b: --max-context 8192 --chunk 512 --expert-vram 0 --batch 1 --serve ===
+strata-q36: C:/Project/local_model/strata/model-data/models/qwen36-UD-Q4_K_XL/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf: 753 tensors (layout checked), 4.40 GiB on the GPU in 1.8 s (the routed experts are placed after the engine's buffers)
+strata: K-quant prompt kernels from C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata_kq.dll (STRATA_MMQ_KQ=1)
+strata-q36: prompt experts on MMQ (int8)
+strata-q36: context 8192 cells, prompt chunk 512, MTP block loaded, 0.60 GiB of VRAM free
+strata-q36: not enough VRAM left for the hybrid experts' buffers and slots (1159 MiB needed, 617 MiB free after the weights, the context and the sessions): use fewer slots ("parallel" / --batch), a shorter --max-context
+EXIT=1

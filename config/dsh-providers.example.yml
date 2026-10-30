@@ -1,0 +1,50 @@
+# DSH 本地模型 provider 样例（从 ~/.dsh/profiles/desktop/cordis.patch.yml 抽出）
+# 用法：整段贴进 cordis.patch.yml 里 plugin id = llm-pi-ai 那条的 config.providers 下（与 opencode-go 同级）。
+# apiKeyEnv 只是环境变量名，真实值放 ~/.dsh/.credentials.yaml（本地引擎不校验 key，随便填）。
+# 改 models[].id 必须同时改引擎启动参数 --model-id（NInfer 逐字强校验）。
+
+ninfer:
+  displayName: NInfer KVMem
+  api: openai-completions
+  baseURL: http://127.0.0.1:8081/v1
+  apiKeyEnv: LOCAL_LLM_KEY
+  streamIdleTimeoutMs: 900000
+  models:
+  - id: bonsai27b-ptq1-mtp-rk2v4-40k
+    name: Bonsai 27B Ternary PTQ1 · MTP draft4/win8 · rk2v4-e8 · 池40K
+    contextWindow: 38000
+    maxTokens: 8192
+    input:
+    - text
+  - id: bonsai27b-ptq1-nomtp-rk2v4-72k
+    name: Bonsai 27B Ternary PTQ1 · 无MTP · rk2v4-e8 · 池72K
+    contextWindow: 80000
+    maxTokens: 8192
+    input:
+    - text
+llama:
+  displayName: Bonsai · llama.cpp 262K
+  api: openai-completions
+  baseURL: http://127.0.0.1:8089/v1
+  apiKeyEnv: LLAMA_API_KEY
+  streamIdleTimeoutMs: 3600000
+  models:
+  - id: Ternary-Bonsai-2-27B-PTQ1_0-mtp-262k
+    name: Bonsai-2 27B Ternary PTQ1 · 262K 窗口 · q3_0 KV · 显存线 93.7k · 单遍真读
+    contextWindow: 262144
+    maxTokens: 8192
+    input:
+    - text
+ninfer-long:
+  displayName: NInfer KVMem · 超池分片
+  api: openai-completions
+  baseURL: http://127.0.0.1:8086/v1
+  apiKeyEnv: LOCAL_LLM_KEY
+  streamIdleTimeoutMs: 1800000
+  models:
+  - id: bonsai27b-ptq1-nomtp-rk2v4-shard200k
+    name: Bonsai 27B Ternary PTQ1 · 无MTP · rk2v4-e8 · 池72K · 分片注入 150K–200K
+    contextWindow: 200000
+    maxTokens: 8192
+    input:
+    - text

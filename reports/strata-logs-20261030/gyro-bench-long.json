@@ -1,0 +1,2 @@
+{"mode": "long", "max_tokens": 32, "chars_in": 11402, "ttft_s": null, "wall_s": 28.72, "chunks": 0, "chars_out": 0, "usage": {"prompt_tokens": 7447, "completion_tokens": 32, "total_tokens": 7479, "prompt_tokens_details": {"cached_tokens": 0}}, "answer_head": ""}
+EXIT=0

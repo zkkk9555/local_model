@@ -1,0 +1,366 @@
+=== start 2026-10-30T09:01:44+08:00 ===
+Strata - Qwen3.8-Flash-Next on a normal PC (a GPU + system RAM + CPU)
+
+=== Step 1: checking your PC ===
+  [ok] GPU: NVIDIA GeForce RTX 4060 Ti, 8.0 GB VRAM, compute capability 8.9, driver 616.92
+  [!]  less than 12 GB of VRAM: Strata will run, but most experts stay on the CPU and it will be slow
+  [ok] RAM: 31 GB
+  [ok] CPU: AMD Ryzen 7 7800X3D 8-Core Processor (AVX-512)
+  [ok] PCIe: 4.0 x8
+
+=== Step 2: your choices ===
+  [ok] model: Qwen3.8-Flash-Next (Gyro)
+  Its license: Qwen Community License 1.0 (Qwen3.8-Flash-Next's; the Gyro files are agentionai's quantization): https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-GGUF
+
+  1) Gyro-S the smallest option, for PCs with little memory (27.6 GB of VRAM + RAM together); lower quality than the 2-3-bit sizes, and the 2-bit Q2_0 decodes faster; download 58.5 GB (the n-gram table is in the file), memory 27.6 GB
+  2) Gyro-M about IQ3_XXS quality with about 20% less GPU memory (35 GB of VRAM + RAM together); decodes about 16-21% slower than Q2_0 on 12 GB cards; download 92.0 GB (the n-gram table is in the file), memory 35.0 GB
+  [ok] size: Gyro-S
+
+  Context length = how much text the model can see at once (your chat, files, tool output).
+  Longer needs more VRAM for it, so fewer experts fit on the GPU:
+  1) 8K tokens
+  2) 32K tokens   (recommended for your GPU)
+  3) 64K tokens
+  4) 128K tokens
+  5) 200K tokens
+  6) 256K tokens
+  7) 384K tokens   (experimental: setup adds rope scaling)
+  8) 512K tokens   (experimental: setup adds rope scaling)
+  [ok] context: 32768 tokens
+  [ok] KV cache: 8-bit
+
+  Images: the model can also read pictures (screenshots, photos, scanned pages). This adds a 0.9 GB
+  download. On a card under 24 GB the encoder runs on the CPU (a few seconds per picture, nothing taken
+  from the GPU, pictures read at up to 300 tokens; --vision-tokens 1024 for more detail): the GPU
+  encoder keeps ~1.4 GB of VRAM free, which costs 3-5% of text speed on 16 GB cards (measured) and
+  more on some PCs. --vision gpu if you want pictures in under a second.
+  [ok] images: on (encoder on the CPU)
+  [ok] low-RAM mode: Gyro-S's experts (26 GB) are read from the model folder through the OS file cache instead of a copy in RAM (31 GB); the GPU holds ~8% of them
+  [!]  most of the experts are read from the SSD while it answers: expect it to be much slower than with enough RAM (a faster SSD and a smaller size help)
+
+=== Step 3: Python packages ===
+  [ok] numpy, jinja2, regex, pyyaml, tqdm, requests, pillow, psutil, textual (the screens): bundled with the app
+
+=== Step 4: the Strata engine ===
+  [ok] llama.cpp 3cf0325 (gguf-py for the preparation tools)
+  [ok] engine component: 0.1.54 (windows-x86_64-cuda) in C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13
+  [ok] image encoder: C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata-vision.exe (carried by the engine component)
+  [ok] engine: the engine component (looked up when the model loads)
+
+=== Step 5: downloading Qwen3.8-Flash-Next (Gyro) Gyro-S ===
+  The model files go in C:\Project\local_model\strata\model-data\models\gyro-Gyro-S
+  Files you already have: put them here with their original names (Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf), or use --gguf-dir <their folder>.
+  Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.12 / 58.49 GB (0%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.25 / 58.49 GB (0%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.38 / 58.49 GB (1%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.52 / 58.49 GB (1%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.63 / 58.49 GB (1%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.77 / 58.49 GB (1%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.89 / 58.49 GB (2%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.02 / 58.49 GB (2%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.15 / 58.49 GB (2%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.29 / 58.49 GB (2%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.42 / 58.49 GB (2%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.55 / 58.49 GB (3%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.69 / 58.49 GB (3%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.81 / 58.49 GB (3%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.93 / 58.49 GB (3%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.07 / 58.49 GB (4%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.21 / 58.49 GB (4%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.33 / 58.49 GB (4%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.46 / 58.49 GB (4%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.60 / 58.49 GB (4%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.72 / 58.49 GB (5%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.84 / 58.49 GB (5%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   2.97 / 58.49 GB (5%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.10 / 58.49 GB (5%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.22 / 58.49 GB (6%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.37 / 58.49 GB (6%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.49 / 58.49 GB (6%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.62 / 58.49 GB (6%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.76 / 58.49 GB (6%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.88 / 58.49 GB (7%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.01 / 58.49 GB (7%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.15 / 58.49 GB (7%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.27 / 58.49 GB (7%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.42 / 58.49 GB (8%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.55 / 58.49 GB (8%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.69 / 58.49 GB (8%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.82 / 58.49 GB (8%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   4.95 / 58.49 GB (8%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.08 / 58.49 GB (9%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.21 / 58.49 GB (9%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.33 / 58.49 GB (9%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.48 / 58.49 GB (9%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.60 / 58.49 GB (10%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.73 / 58.49 GB (10%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.86 / 58.49 GB (10%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.99 / 58.49 GB (10%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.12 / 58.49 GB (10%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.25 / 58.49 GB (11%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.39 / 58.49 GB (11%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.53 / 58.49 GB (11%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.66 / 58.49 GB (11%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.79 / 58.49 GB (12%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.91 / 58.49 GB (12%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.05 / 58.49 GB (12%)   === resume 2026-10-30T09:20:34+08:00 ===
+Strata - Qwen3.8-Flash-Next on a normal PC (a GPU + system RAM + CPU)
+
+=== Step 1: checking your PC ===
+  [ok] GPU: NVIDIA GeForce RTX 4060 Ti, 8.0 GB VRAM, compute capability 8.9, driver 616.92
+  [!]  less than 12 GB of VRAM: Strata will run, but most experts stay on the CPU and it will be slow
+  [ok] RAM: 31 GB
+  [ok] CPU: AMD Ryzen 7 7800X3D 8-Core Processor (AVX-512)
+  [ok] PCIe: 4.0 x8
+
+=== Step 2: your choices ===
+  [ok] model: Qwen3.8-Flash-Next (Gyro)
+  Its license: Qwen Community License 1.0 (Qwen3.8-Flash-Next's; the Gyro files are agentionai's quantization): https://huggingface.co/agentionai/Qwen3.8-Flash-Next-Gyro-GGUF
+
+  1) Gyro-S the smallest option, for PCs with little memory (27.6 GB of VRAM + RAM together); lower quality than the 2-3-bit sizes, and the 2-bit Q2_0 decodes faster; download 58.5 GB (the n-gram table is in the file), memory 27.6 GB
+  2) Gyro-M about IQ3_XXS quality with about 20% less GPU memory (35 GB of VRAM + RAM together); decodes about 16-21% slower than Q2_0 on 12 GB cards; download 92.0 GB (the n-gram table is in the file), memory 35.0 GB
+  [ok] size: Gyro-S
+
+  Context length = how much text the model can see at once (your chat, files, tool output).
+  Longer needs more VRAM for it, so fewer experts fit on the GPU:
+  1) 8K tokens
+  2) 32K tokens   (recommended for your GPU)
+  3) 64K tokens
+  4) 128K tokens
+  5) 200K tokens
+  6) 256K tokens
+  7) 384K tokens   (experimental: setup adds rope scaling)
+  8) 512K tokens   (experimental: setup adds rope scaling)
+  [ok] context: 32768 tokens
+  [ok] KV cache: 8-bit
+
+  Images: the model can also read pictures (screenshots, photos, scanned pages). This adds a 0.9 GB
+  download. On a card under 24 GB the encoder runs on the CPU (a few seconds per picture, nothing taken
+  from the GPU, pictures read at up to 300 tokens; --vision-tokens 1024 for more detail): the GPU
+  encoder keeps ~1.4 GB of VRAM free, which costs 3-5% of text speed on 16 GB cards (measured) and
+  more on some PCs. --vision gpu if you want pictures in under a second.
+  [ok] images: on (encoder on the CPU)
+  [ok] low-RAM mode: Gyro-S's experts (26 GB) are read from the model folder through the OS file cache instead of a copy in RAM (31 GB); the GPU holds ~8% of them
+  [!]  most of the experts are read from the SSD while it answers: expect it to be much slower than with enough RAM (a faster SSD and a smaller size help)
+
+=== Step 3: Python packages ===
+  [ok] numpy, jinja2, regex, pyyaml, tqdm, requests, pillow, psutil, textual (the screens): bundled with the app
+
+=== Step 4: the Strata engine ===
+  [ok] llama.cpp 3cf0325 (gguf-py for the preparation tools)
+  [ok] engine component: 0.1.54 (windows-x86_64-cuda) in C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13
+  [ok] image encoder: C:\Project\local_model\strata\components\engine\0.1.54-windows-x86_64-cuda-cuda13\strata-vision.exe (carried by the engine component)
+  [ok] engine: the engine component (looked up when the model loads)
+
+=== Step 5: downloading Qwen3.8-Flash-Next (Gyro) Gyro-S ===
+  The model files go in C:\Project\local_model\strata\model-data\models\gyro-Gyro-S
+  Files you already have: put them here with their original names (Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf), or use --gguf-dir <their folder>.
+  Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.73 / 58.49 GB (11%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   6.85 / 58.49 GB (12%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.00 / 58.49 GB (12%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.12 / 58.49 GB (12%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.26 / 58.49 GB (12%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.39 / 58.49 GB (13%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.50 / 58.49 GB (13%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.64 / 58.49 GB (13%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.77 / 58.49 GB (13%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.91 / 58.49 GB (14%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.01 / 58.49 GB (14%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.15 / 58.49 GB (14%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.29 / 58.49 GB (14%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.42 / 58.49 GB (14%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.55 / 58.49 GB (15%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.68 / 58.49 GB (15%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.80 / 58.49 GB (15%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   8.94 / 58.49 GB (15%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.08 / 58.49 GB (16%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.19 / 58.49 GB (16%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.34 / 58.49 GB (16%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.46 / 58.49 GB (16%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.56 / 58.49 GB (16%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.68 / 58.49 GB (17%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.79 / 58.49 GB (17%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.88 / 58.49 GB (17%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.97 / 58.49 GB (17%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.05 / 58.49 GB (17%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.15 / 58.49 GB (17%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.26 / 58.49 GB (18%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.41 / 58.49 GB (18%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.53 / 58.49 GB (18%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.67 / 58.49 GB (18%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.81 / 58.49 GB (18%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  10.93 / 58.49 GB (19%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.06 / 58.49 GB (19%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.19 / 58.49 GB (19%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.31 / 58.49 GB (19%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.45 / 58.49 GB (20%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.58 / 58.49 GB (20%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.71 / 58.49 GB (20%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.85 / 58.49 GB (20%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.97 / 58.49 GB (20%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.10 / 58.49 GB (21%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.24 / 58.49 GB (21%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.37 / 58.49 GB (21%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.49 / 58.49 GB (21%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.63 / 58.49 GB (22%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.76 / 58.49 GB (22%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  12.89 / 58.49 GB (22%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.02 / 58.49 GB (22%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.14 / 58.49 GB (22%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.27 / 58.49 GB (23%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.41 / 58.49 GB (23%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.54 / 58.49 GB (23%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.67 / 58.49 GB (23%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.79 / 58.49 GB (24%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.92 / 58.49 GB (24%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.06 / 58.49 GB (24%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.18 / 58.49 GB (24%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.32 / 58.49 GB (24%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.44 / 58.49 GB (25%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.55 / 58.49 GB (25%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.70 / 58.49 GB (25%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.82 / 58.49 GB (25%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  14.96 / 58.49 GB (26%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.08 / 58.49 GB (26%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.21 / 58.49 GB (26%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.33 / 58.49 GB (26%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.47 / 58.49 GB (26%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.59 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.68 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.76 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.83 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.87 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.91 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.96 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.01 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.06 / 58.49 GB (27%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.13 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.18 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.25 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.33 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.39 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.42 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.53 / 58.49 GB (28%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.69 / 58.49 GB (29%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.81 / 58.49 GB (29%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  16.95 / 58.49 GB (29%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.06 / 58.49 GB (29%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.18 / 58.49 GB (29%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.29 / 58.49 GB (30%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.42 / 58.49 GB (30%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.54 / 58.49 GB (30%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.65 / 58.49 GB (30%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.79 / 58.49 GB (30%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.91 / 58.49 GB (31%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.03 / 58.49 GB (31%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.16 / 58.49 GB (31%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.29 / 58.49 GB (31%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.41 / 58.49 GB (31%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.54 / 58.49 GB (32%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.64 / 58.49 GB (32%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.76 / 58.49 GB (32%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  18.88 / 58.49 GB (32%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.00 / 58.49 GB (32%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.11 / 58.49 GB (33%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.27 / 58.49 GB (33%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.38 / 58.49 GB (33%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.51 / 58.49 GB (33%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.64 / 58.49 GB (34%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.76 / 58.49 GB (34%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.91 / 58.49 GB (34%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.05 / 58.49 GB (34%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.17 / 58.49 GB (34%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.30 / 58.49 GB (35%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.43 / 58.49 GB (35%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.57 / 58.49 GB (35%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.69 / 58.49 GB (35%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.82 / 58.49 GB (36%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  20.95 / 58.49 GB (36%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.07 / 58.49 GB (36%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.18 / 58.49 GB (36%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.31 / 58.49 GB (36%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.42 / 58.49 GB (37%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.55 / 58.49 GB (37%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.66 / 58.49 GB (37%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.79 / 58.49 GB (37%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.91 / 58.49 GB (37%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.04 / 58.49 GB (38%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.16 / 58.49 GB (38%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.29 / 58.49 GB (38%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.42 / 58.49 GB (38%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.54 / 58.49 GB (39%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.65 / 58.49 GB (39%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.78 / 58.49 GB (39%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  22.89 / 58.49 GB (39%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.01 / 58.49 GB (39%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.14 / 58.49 GB (40%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.27 / 58.49 GB (40%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.38 / 58.49 GB (40%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.53 / 58.49 GB (40%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.64 / 58.49 GB (40%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.77 / 58.49 GB (41%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.89 / 58.49 GB (41%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.00 / 58.49 GB (41%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.12 / 58.49 GB (41%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.27 / 58.49 GB (41%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.37 / 58.49 GB (42%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.50 / 58.49 GB (42%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.63 / 58.49 GB (42%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.76 / 58.49 GB (42%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  24.88 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.01 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.08 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.18 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.27 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.34 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.40 / 58.49 GB (43%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.48 / 58.49 GB (44%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.55 / 58.49 GB (44%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.65 / 58.49 GB (44%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.77 / 58.49 GB (44%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.92 / 58.49 GB (44%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.05 / 58.49 GB (45%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.19 / 58.49 GB (45%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.32 / 58.49 GB (45%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.45 / 58.49 GB (45%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.57 / 58.49 GB (45%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.71 / 58.49 GB (46%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.83 / 58.49 GB (46%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  26.97 / 58.49 GB (46%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.08 / 58.49 GB (46%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.21 / 58.49 GB (47%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.33 / 58.49 GB (47%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.47 / 58.49 GB (47%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.60 / 58.49 GB (47%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.74 / 58.49 GB (47%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.86 / 58.49 GB (48%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.00 / 58.49 GB (48%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.12 / 58.49 GB (48%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.29 / 58.49 GB (48%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.43 / 58.49 GB (49%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.56 / 58.49 GB (49%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.69 / 58.49 GB (49%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.82 / 58.49 GB (49%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  28.95 / 58.49 GB (50%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.07 / 58.49 GB (50%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.20 / 58.49 GB (50%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.34 / 58.49 GB (50%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.46 / 58.49 GB (50%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.59 / 58.49 GB (51%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.72 / 58.49 GB (51%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.84 / 58.49 GB (51%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.97 / 58.49 GB (51%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.09 / 58.49 GB (51%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.23 / 58.49 GB (52%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.34 / 58.49 GB (52%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.48 / 58.49 GB (52%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.61 / 58.49 GB (52%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.73 / 58.49 GB (53%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  30.86 / 58.49 GB (53%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.02 / 58.49 GB (53%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.14 / 58.49 GB (53%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.28 / 58.49 GB (53%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.41 / 58.49 GB (54%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.54 / 58.49 GB (54%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.67 / 58.49 GB (54%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.80 / 58.49 GB (54%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.91 / 58.49 GB (55%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.06 / 58.49 GB (55%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.18 / 58.49 GB (55%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.31 / 58.49 GB (55%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.45 / 58.49 GB (55%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.60 / 58.49 GB (56%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.72 / 58.49 GB (56%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  32.87 / 58.49 GB (56%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.00 / 58.49 GB (56%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.13 / 58.49 GB (57%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.26 / 58.49 GB (57%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.40 / 58.49 GB (57%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.52 / 58.49 GB (57%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.66 / 58.49 GB (58%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.76 / 58.49 GB (58%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.88 / 58.49 GB (58%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.00 / 58.49 GB (58%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.17 / 58.49 GB (58%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.29 / 58.49 GB (59%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.42 / 58.49 GB (59%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.59 / 58.49 GB (59%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.76 / 58.49 GB (59%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  34.89 / 58.49 GB (60%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.01 / 58.49 GB (60%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.12 / 58.49 GB (60%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.21 / 58.49 GB (60%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.31 / 58.49 GB (60%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.37 / 58.49 GB (60%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.45 / 58.49 GB (61%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.54 / 58.49 GB (61%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.63 / 58.49 GB (61%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.69 / 58.49 GB (61%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.84 / 58.49 GB (61%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.98 / 58.49 GB (62%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.11 / 58.49 GB (62%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.23 / 58.49 GB (62%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.37 / 58.49 GB (62%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.50 / 58.49 GB (62%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.64 / 58.49 GB (63%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.76 / 58.49 GB (63%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  36.94 / 58.49 GB (63%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.10 / 58.49 GB (63%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.22 / 58.49 GB (64%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.35 / 58.49 GB (64%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.46 / 58.49 GB (64%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.59 / 58.49 GB (64%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.71 / 58.49 GB (64%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.82 / 58.49 GB (65%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.98 / 58.49 GB (65%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.10 / 58.49 GB (65%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.23 / 58.49 GB (65%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.37 / 58.49 GB (66%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.48 / 58.49 GB (66%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.62 / 58.49 GB (66%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.74 / 58.49 GB (66%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.88 / 58.49 GB (66%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  38.97 / 58.49 GB (67%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.12 / 58.49 GB (67%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.24 / 58.49 GB (67%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.46 / 58.49 GB (67%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.61 / 58.49 GB (68%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.76 / 58.49 GB (68%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.90 / 58.49 GB (68%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.03 / 58.49 GB (68%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.15 / 58.49 GB (69%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.26 / 58.49 GB (69%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.39 / 58.49 GB (69%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.51 / 58.49 GB (69%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.63 / 58.49 GB (69%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.76 / 58.49 GB (70%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  40.89 / 58.49 GB (70%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.02 / 58.49 GB (70%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.18 / 58.49 GB (70%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.31 / 58.49 GB (71%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.43 / 58.49 GB (71%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.59 / 58.49 GB (71%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.70 / 58.49 GB (71%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.79 / 58.49 GB (71%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.91 / 58.49 GB (72%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.00 / 58.49 GB (72%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.12 / 58.49 GB (72%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.25 / 58.49 GB (72%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.38 / 58.49 GB (72%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.52 / 58.49 GB (73%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.62 / 58.49 GB (73%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.75 / 58.49 GB (73%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  42.86 / 58.49 GB (73%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.00 / 58.49 GB (74%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.10 / 58.49 GB (74%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.25 / 58.49 GB (74%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.37 / 58.49 GB (74%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.50 / 58.49 GB (74%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.61 / 58.49 GB (75%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.71 / 58.49 GB (75%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.83 / 58.49 GB (75%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.94 / 58.49 GB (75%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.08 / 58.49 GB (75%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.13 / 58.49 GB (75%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.24 / 58.49 GB (76%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.33 / 58.49 GB (76%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.43 / 58.49 GB (76%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.53 / 58.49 GB (76%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.63 / 58.49 GB (76%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.73 / 58.49 GB (76%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.83 / 58.49 GB (77%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.91 / 58.49 GB (77%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  44.97 / 58.49 GB (77%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.06 / 58.49 GB (77%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.17 / 58.49 GB (77%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.27 / 58.49 GB (77%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.43 / 58.49 GB (78%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.54 / 58.49 GB (78%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.66 / 58.49 GB (78%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.73 / 58.49 GB (78%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.84 / 58.49 GB (78%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.95 / 58.49 GB (79%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.05 / 58.49 GB (79%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.17 / 58.49 GB (79%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.27 / 58.49 GB (79%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.38 / 58.49 GB (79%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.49 / 58.49 GB (79%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.59 / 58.49 GB (80%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.69 / 58.49 GB (80%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.80 / 58.49 GB (80%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.88 / 58.49 GB (80%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.99 / 58.49 GB (80%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.07 / 58.49 GB (80%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.16 / 58.49 GB (81%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.25 / 58.49 GB (81%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.36 / 58.49 GB (81%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.46 / 58.49 GB (81%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.55 / 58.49 GB (81%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.61 / 58.49 GB (81%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.67 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.72 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.76 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.78 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.81 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.85 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.89 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  47.99 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.13 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.23 / 58.49 GB (82%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.34 / 58.49 GB (83%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.47 / 58.49 GB (83%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.57 / 58.49 GB (83%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.67 / 58.49 GB (83%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.74 / 58.49 GB (83%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.81 / 58.49 GB (83%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.91 / 58.49 GB (84%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.00 / 58.49 GB (84%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.08 / 58.49 GB (84%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.18 / 58.49 GB (84%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.28 / 58.49 GB (84%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.37 / 58.49 GB (84%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.46 / 58.49 GB (85%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.56 / 58.49 GB (85%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.66 / 58.49 GB (85%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.76 / 58.49 GB (85%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.87 / 58.49 GB (85%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  49.94 / 58.49 GB (85%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.01 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.06 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.09 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.12 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.15 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.18 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.25 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.31 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.41 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.51 / 58.49 GB (86%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.62 / 58.49 GB (87%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.73 / 58.49 GB (87%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.83 / 58.49 GB (87%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.94 / 58.49 GB (87%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.06 / 58.49 GB (87%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.16 / 58.49 GB (87%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.27 / 58.49 GB (88%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.37 / 58.49 GB (88%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.47 / 58.49 GB (88%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.58 / 58.49 GB (88%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.71 / 58.49 GB (88%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.79 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.88 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  51.95 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.02 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.09 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.17 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.23 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.31 / 58.49 GB (89%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.40 / 58.49 GB (90%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.47 / 58.49 GB (90%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.56 / 58.49 GB (90%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.64 / 58.49 GB (90%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.76 / 58.49 GB (90%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.87 / 58.49 GB (90%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.95 / 58.49 GB (91%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.05 / 58.49 GB (91%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.14 / 58.49 GB (91%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.24 / 58.49 GB (91%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.33 / 58.49 GB (91%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.43 / 58.49 GB (91%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.54 / 58.49 GB (92%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.65 / 58.49 GB (92%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.74 / 58.49 GB (92%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.84 / 58.49 GB (92%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  53.95 / 58.49 GB (92%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.07 / 58.49 GB (92%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.16 / 58.49 GB (93%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.27 / 58.49 GB (93%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.37 / 58.49 GB (93%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.48 / 58.49 GB (93%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.57 / 58.49 GB (93%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.66 / 58.49 GB (93%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.74 / 58.49 GB (94%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.83 / 58.49 GB (94%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.91 / 58.49 GB (94%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.01 / 58.49 GB (94%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.07 / 58.49 GB (94%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.18 / 58.49 GB (94%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.27 / 58.49 GB (95%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.36 / 58.49 GB (95%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.47 / 58.49 GB (95%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.57 / 58.49 GB (95%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.68 / 58.49 GB (95%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.79 / 58.49 GB (95%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.89 / 58.49 GB (96%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  55.99 / 58.49 GB (96%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.08 / 58.49 GB (96%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.20 / 58.49 GB (96%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.30 / 58.49 GB (96%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.42 / 58.49 GB (96%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.50 / 58.49 GB (97%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.60 / 58.49 GB (97%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.70 / 58.49 GB (97%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.78 / 58.49 GB (97%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.86 / 58.49 GB (97%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.97 / 58.49 GB (97%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.05 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.13 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.22 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.31 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.40 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.48 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.56 / 58.49 GB (98%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.65 / 58.49 GB (99%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.74 / 58.49 GB (99%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.84 / 58.49 GB (99%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  57.95 / 58.49 GB (99%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.04 / 58.49 GB (99%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.10 / 58.49 GB (99%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.23 / 58.49 GB (100%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.31 / 58.49 GB (100%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.39 / 58.49 GB (100%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.44 / 58.49 GB (100%)     Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  58.49 / 58.49 GB (100%)   
+  checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf (SHA-256, 58.5 GB) ...
+  checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   0.02 / 58.49 GB (0%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   1.98 / 58.49 GB (3%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   3.84 / 58.49 GB (6%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   5.79 / 58.49 GB (9%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   7.85 / 58.49 GB (13%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:   9.93 / 58.49 GB (16%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  11.91 / 58.49 GB (20%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  13.89 / 58.49 GB (23%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  15.80 / 58.49 GB (27%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  17.72 / 58.49 GB (30%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  19.65 / 58.49 GB (33%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  21.61 / 58.49 GB (36%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  23.59 / 58.49 GB (40%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  25.57 / 58.49 GB (43%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  27.43 / 58.49 GB (46%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  29.39 / 58.49 GB (50%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  31.32 / 58.49 GB (53%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  33.30 / 58.49 GB (56%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  35.27 / 58.49 GB (60%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  37.26 / 58.49 GB (63%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  39.26 / 58.49 GB (67%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  41.15 / 58.49 GB (70%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  43.13 / 58.49 GB (73%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  45.05 / 58.49 GB (77%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  46.98 / 58.49 GB (80%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  48.92 / 58.49 GB (83%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  50.87 / 58.49 GB (86%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  52.83 / 58.49 GB (90%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  54.78 / 58.49 GB (93%)     checking Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf:  56.72 / 58.49 GB (96%)   
+  [ok] Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf downloaded
+  [ok] model files present
+  vision encoder:   0.05 / 0.91 GB (5%)     vision encoder:   0.14 / 0.91 GB (15%)     vision encoder:   0.22 / 0.91 GB (24%)     vision encoder:   0.33 / 0.91 GB (36%)     vision encoder:   0.46 / 0.91 GB (50%)     vision encoder:   0.58 / 0.91 GB (64%)     vision encoder:   0.70 / 0.91 GB (77%)     vision encoder:   0.80 / 0.91 GB (88%)     vision encoder:   0.90 / 0.91 GB (99%)     vision encoder:   0.91 / 0.91 GB (100%)   
+  checking mmproj-Qwen3.8-Flash-Next-BF16.gguf (SHA-256, 0.9 GB) ...
+  [ok] vision encoder downloaded
+  [ok] vision encoder: C:\Project\local_model\strata\model-data\models\mmproj-Qwen3.8-Flash-Next-BF16.gguf
+       tip: on the CPU a Q8_0 copy of this encoder is a third smaller and about as exact (embedding cosine 0.999 vs BF16); see 'A Q8_0 encoder' in docs/DETAILS.md
+
+=== Step 6: preparing the model for Strata ===
+  > C:\Project\local_model\strata\app\control\python\python.exe C:\Project\local_model\strata\app\control\tools\iq_pack.py --gguf C:\Project\local_model\strata\model-data\models\gyro-Gyro-S\Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf --out C:\Project\local_model\strata\model-data\packs\gyro-gyro-s --compat-bf16
+tokenizer/: vocab 248320, merges 247587, pre qwen35, specials {'tokenizer.ggml.eos_token_id': 248046, 'tokenizer.ggml.padding_token_id': 248044, 'tokenizer.ggml.bos_token_id': 248044}
+prism.hadamard: 48 layer(s) of Hadamard-folded experts (block 128, explicit signs): hadamard.txt, native_experts.txt v5
+index.txt: 1079 tensors, 302 served natively, 0 in extra.bin, arena 1.43 GiB
+conversions.json: 412 tensors converted to the engine's form (48 exact, 364 rounded; max |err| 0.0144)
+compat-bf16: 364 tensors, 1.27 GiB; expert and PLE table bytes unchanged
+  Writing the experts into one file for the low-RAM mode (one time, 26 GB) ...
+  > C:\Project\local_model\strata\app\control\python\python.exe C:\Project\local_model\strata\app\control\tools\iq_pack.py --gguf C:\Project\local_model\strata\model-data\models\gyro-Gyro-S\Qwen3.8-Flash-Next-Gyro-S-TQ1_0.gguf --out C:\Project\local_model\strata\model-data\packs\gyro-gyro-s --experts-bin --compat-bf16
+prism.hadamard: 48 layer(s) of Hadamard-folded experts (block 128, explicit signs): hadamard.txt, native_experts.txt v5
+index.txt: 1079 tensors, 302 served natively, 0 in extra.bin, arena 1.43 GiB
+conversions.json: 412 tensors converted to the engine's form (48 exact, 364 rounded; max |err| 0.0144)
+compat-bf16: 364 tensors, 1.27 GiB; expert and PLE table bytes unchanged
+  layer  0  TQK6    /TQK7    blob  1049600  at 0.00 GiB
+  layer  8  TQK6    /TQK7    blob  1049600  at 4.00 GiB
+  layer 16  TQK6    /TQK7    blob  1049600  at 8.01 GiB
+  layer 24  TQK6    /TQK7    blob  1049600  at 12.01 GiB
+  layer 32  TQK6    /TQK7    blob  1049600  at 16.02 GiB
+  layer 40  TQK6    /TQK7    blob  1049600  at 20.02 GiB
+experts.bin: 48 layers, 24.02 GiB
+  [ok] model prepared: C:\Project\local_model\strata\model-data\packs\gyro-gyro-s
+  The MTP draft layer (speculative decoding, ~2x faster output) comes from the original Qwen checkpoint:
+  only its ~5 GB of MTP tensors are downloaded.
+  > C:\Project\local_model\strata\app\control\python\python.exe C:\Project\local_model\strata\app\control\tools\mtp_fetch.py fetch --out C:\Project\local_model\strata\model-data\mtp
+  MTP draft layer:   0.00 / 5.21 GB (0%)
+mtp.fc_embedding.weight done
+  MTP draft layer:   0.03 / 5.21 GB (0%)
+mtp.fc_hidden.weight done
+mtp.hyper_connection_mixer.hc_norm.weight done
+mtp.hyper_connection_mixer.input_mix_weight_down.weight done
+  MTP draft layer:   0.04 / 5.21 GB (0%)
+mtp.hyper_connection_mixer.input_mix_weight_up.weight done
+mtp.layers.0.attn_hyper_connection.block_inject_weight.weight done
+mtp.layers.0.attn_hyper_connection.hc_norm.weight done
+  MTP draft layer:   0.05 / 5.21 GB (0%)
+mtp.layers.0.attn_hyper_connection.input_mix_weight_down.weight done
+mtp.layers.0.attn_hyper_connection.input_mix_weight_up.weight done
+  MTP draft layer:   0.07 / 5.21 GB (1%)
+  MTP draft layer:   0.09 / 5.21 GB (1%)
+  MTP draft layer:   0.10 / 5.21 GB (1%)
+  MTP draft layer:   0.12 / 5.21 GB (2%)
+  MTP draft layer:   0.35 / 5.21 GB (6%)
+  MTP draft layer:   0.40 / 5.21 GB (7%)
+  MTP draft layer:   0.47 / 5.21 GB (9%)
+  MTP draft layer:   0.52 / 5.21 GB (10%)
+  MTP draft layer:   0.64 / 5.21 GB (12%)
+  MTP draft layer:   0.69 / 5.21 GB (13%)
+  MTP draft layer:   0.77 / 5.21 GB (14%)
+  MTP draft layer:   0.84 / 5.21 GB (16%)
+  MTP draft layer:   0.96 / 5.21 GB (18%)
+  MTP draft layer:   1.04 / 5.21 GB (19%)
+  MTP draft layer:   1.09 / 5.21 GB (20%)
+  MTP draft layer:   1.18 / 5.21 GB (22%)
+  MTP draft layer:   1.26 / 5.21 GB (24%)
+  MTP draft layer:   1.36 / 5.21 GB (26%)
+  MTP draft layer:   1.41 / 5.21 GB (27%)
+  MTP draft layer:   1.51 / 5.21 GB (29%)
+  MTP draft layer:   1.60 / 5.21 GB (30%)
+mtp.layers.0.mlp.experts.down_proj done
+  MTP draft layer:   1.75 / 5.21 GB (33%)
+  MTP draft layer:   1.78 / 5.21 GB (34%)
+  MTP draft layer:   2.08 / 5.21 GB (39%)
+  MTP draft layer:   2.12 / 5.21 GB (40%)
+  MTP draft layer:   2.22 / 5.21 GB (42%)
+  MTP draft layer:   2.28 / 5.21 GB (43%)
+  MTP draft layer:   2.40 / 5.21 GB (46%)
+  MTP draft layer:   2.47 / 5.21 GB (47%)
+  MTP draft layer:   2.55 / 5.21 GB (48%)
+  MTP draft layer:   2.65 / 5.21 GB (50%)
+  MTP draft layer:   2.70 / 5.21 GB (51%)
+  MTP draft layer:   2.75 / 5.21 GB (52%)
+  MTP draft layer:   2.80 / 5.21 GB (53%)
+  MTP draft layer:   2.87 / 5.21 GB (55%)
+  MTP draft layer:   2.99 / 5.21 GB (57%)
+  MTP draft layer:   3.04 / 5.21 GB (58%)
+  MTP draft layer:   3.09 / 5.21 GB (59%)
+  MTP draft layer:   3.14 / 5.21 GB (60%)
+  MTP draft layer:   3.26 / 5.21 GB (62%)
+  MTP draft layer:   3.31 / 5.21 GB (63%)
+  MTP draft layer:   3.36 / 5.21 GB (64%)
+  MTP draft layer:   3.41 / 5.21 GB (65%)
+  MTP draft layer:   3.58 / 5.21 GB (68%)
+  MTP draft layer:   3.63 / 5.21 GB (69%)
+  MTP draft layer:   3.69 / 5.21 GB (70%)
+  MTP draft layer:   3.84 / 5.21 GB (73%)
+  MTP draft layer:   3.89 / 5.21 GB (74%)
+  MTP draft layer:   4.00 / 5.21 GB (76%)
+  MTP draft layer:   4.11 / 5.21 GB (78%)
+  MTP draft layer:   4.16 / 5.21 GB (79%)
+  MTP draft layer:   4.25 / 5.21 GB (81%)
+  MTP draft layer:   4.35 / 5.21 GB (83%)
+  MTP draft layer:   4.41 / 5.21 GB (84%)
+  MTP draft layer:   4.45 / 5.21 GB (85%)
+  MTP draft layer:   4.52 / 5.21 GB (86%)
+  MTP draft layer:   4.57 / 5.21 GB (87%)
+  MTP draft layer:   4.65 / 5.21 GB (89%)
+  MTP draft layer:   4.70 / 5.21 GB (90%)
+  MTP draft layer:   4.75 / 5.21 GB (91%)
+  MTP draft layer:   4.78 / 5.21 GB (91%)
+  MTP draft layer:   4.90 / 5.21 GB (93%)
+  MTP draft layer:   4.95 / 5.21 GB (94%)
+mtp.layers.0.mlp.experts.gate_up_proj done
+  MTP draft layer:   5.09 / 5.21 GB (97%)
+mtp.layers.0.mlp.gate.weight done
+  MTP draft layer:   5.09 / 5.21 GB (97%)
+mtp.layers.0.mlp.shared_expert.down_proj.weight done
+mtp.layers.0.mlp.shared_expert.gate_proj.weight done
+  MTP draft layer:   5.10 / 5.21 GB (97%)
+mtp.layers.0.mlp.shared_expert.up_proj.weight done
+mtp.layers.0.mlp.shared_expert_gate.weight done
+  MTP draft layer:   5.10 / 5.21 GB (97%)
+mtp.layers.0.mlp_hyper_connection.block_inject_weight.weight done
+mtp.layers.0.mlp_hyper_connection.hc_norm.weight done
+  MTP draft layer:   5.10 / 5.21 GB (97%)
+mtp.layers.0.mlp_hyper_connection.input_mix_weight_down.weight done
+  MTP draft layer:   5.11 / 5.21 GB (98%)
+mtp.layers.0.mlp_hyper_connection.input_mix_weight_up.weight done
+mtp.layers.0.self_attn.indexer.index_qk_proj.weight done
+  MTP draft layer:   5.11 / 5.21 GB (98%)
+mtp.layers.0.self_attn.indexer.k_layernorm.weight done
+mtp.layers.0.self_attn.indexer.q_layernorm.weight done
+mtp.layers.0.self_attn.k_norm.weight done
+  MTP draft layer:   5.12 / 5.21 GB (98%)
+mtp.layers.0.self_attn.k_proj.weight done
+  MTP draft layer:   5.13 / 5.21 GB (98%)
+mtp.layers.0.self_attn.o_proj.weight done
+mtp.layers.0.self_attn.q_norm.weight done
+  MTP draft layer:   5.17 / 5.21 GB (99%)
+mtp.layers.0.self_attn.q_proj.weight done
+  MTP draft layer:   5.21 / 5.21 GB (99%)
+mtp.layers.0.self_attn.v_proj.weight done
+mtp.pre_fc_norm_embedding.weight done
+mtp.pre_fc_norm_hidden.weight done
+  MTP draft layer:   5.21 / 5.21 GB (100%)
+# MTP block in the BF16 checkpoint
+
+31 tensors, 5.214 GB, in 28 shards.
+
+| tensor | dtype | shape | MB |
+|---|---|---|---:|
+| `mtp.fc_embedding.weight` | BF16 | 2560x2560 | 13.1 |
+| `mtp.fc_hidden.weight` | BF16 | 2560x2560 | 13.1 |
+| `mtp.hyper_connection_mixer.hc_norm.weight` | BF16 | 10240 | 0.0 |
+| `mtp.hyper_connection_mixer.input_mix_weight_down.weight` | BF16 | 320x10240 | 6.6 |
+| `mtp.hyper_connection_mixer.input_mix_weight_up.weight` | BF16 | 10240x320 | 6.6 |
+| `mtp.layers.0.attn_hyper_connection.block_inject_weight.weight` | BF16 | 4x10240 | 0.1 |
+| `mtp.layers.0.attn_hyper_connection.hc_norm.weight` | BF16 | 10240 | 0.0 |
+| `mtp.layers.0.attn_hyper_connection.input_mix_weight_down.weight` | BF16 | 320x10240 | 6.6 |
+| `mtp.layers.0.attn_hyper_connection.input_mix_weight_up.weight` | BF16 | 10240x320 | 6.6 |
+| `mtp.layers.0.mlp.experts.down_proj` | BF16 | 512x2560x640 | 1677.7 |
+| `mtp.layers.0.mlp.experts.gate_up_proj` | BF16 | 512x1280x2560 | 3355.4 |
+| `mtp.layers.0.mlp.gate.weight` | BF16 | 512x2560 | 2.6 |
+| `mtp.layers.0.mlp.shared_expert.down_proj.weight` | BF16 | 2560x640 | 3.3 |
+| `mtp.layers.0.mlp.shared_expert.gate_proj.weight` | BF16 | 640x2560 | 3.3 |
+| `mtp.layers.0.mlp.shared_expert.up_proj.weight` | BF16 | 640x2560 | 3.3 |
+| `mtp.layers.0.mlp.shared_expert_gate.weight` | BF16 | 1x2560 | 0.0 |
+| `mtp.layers.0.mlp_hyper_connection.block_inject_weight.weight` | BF16 | 4x10240 | 0.1 |
+| `mtp.layers.0.mlp_hyper_connection.hc_norm.weight` | BF16 | 10240 | 0.0 |
+| `mtp.layers.0.mlp_hyper_connection.input_mix_weight_down.weight` | BF16 | 320x10240 | 6.6 |
+| `mtp.layers.0.mlp_hyper_connection.input_mix_weight_up.weight` | BF16 | 10240x320 | 6.6 |
+| `mtp.layers.0.self_attn.indexer.index_qk_proj.weight` | BF16 | 640x2560 | 3.3 |
+| `mtp.layers.0.self_attn.indexer.k_layernorm.weight` | BF16 | 128 | 0.0 |
+| `mtp.layers.0.self_attn.indexer.q_layernorm.weight` | BF16 | 128 | 0.0 |
+| `mtp.layers.0.self_attn.k_norm.weight` | BF16 | 256 | 0.0 |
+| `mtp.layers.0.self_attn.k_proj.weight` | BF16 | 512x2560 | 2.6 |
+| `mtp.layers.0.self_attn.o_proj.weight` | BF16 | 2560x6144 | 31.5 |
+| `mtp.layers.0.self_attn.q_norm.weight` | BF16 | 256 | 0.0 |
+| `mtp.layers.0.self_attn.q_proj.weight` | BF16 | 12288x2560 | 62.9 |
+| `mtp.layers.0.self_attn.v_proj.weight` | BF16 | 512x2560 | 2.6 |
+| `mtp.pre_fc_norm_embedding.weight` | BF16 | 2560 | 0.0 |
+| `mtp.pre_fc_norm_hidden.weight` | BF16 | 10240 | 0.0 |
+
+  > C:\Project\local_model\strata\app\control\python\python.exe C:\Project\local_model\strata\app\control\tools\mtp_pack.py --src C:\Project\local_model\strata\model-data\mtp --experts q2_0 --out C:\Project\local_model\strata\model-data\mtp\mtp-q2_0.gguf
+mtp.fc_embedding.weight: BF16 13.1 MB
+mtp.fc_hidden.weight: BF16 13.1 MB
+mtp.hyper_connection_mixer.hc_norm.weight: F32 0.0 MB
+mtp.hyper_connection_mixer.input_mix_weight_down.weight: BF16 6.6 MB
+mtp.hyper_connection_mixer.input_mix_weight_up.weight: BF16 6.6 MB
+mtp.layers.0.attn_hyper_connection.block_inject_weight.weight: BF16 0.1 MB
+mtp.layers.0.attn_hyper_connection.hc_norm.weight: F32 0.0 MB
+mtp.layers.0.attn_hyper_connection.input_mix_weight_down.weight: BF16 6.6 MB
+mtp.layers.0.attn_hyper_connection.input_mix_weight_up.weight: BF16 6.6 MB
+mtp.layers.0.mlp.experts.down_proj: q2_0 235.9 MB
+mtp.layers.0.mlp.experts.gate_up_proj: q2_0 471.9 MB
+mtp.layers.0.mlp.gate.weight: BF16 2.6 MB
+mtp.layers.0.mlp.shared_expert.down_proj.weight: BF16 3.3 MB
+mtp.layers.0.mlp.shared_expert.gate_proj.weight: BF16 3.3 MB
+mtp.layers.0.mlp.shared_expert.up_proj.weight: BF16 3.3 MB
+mtp.layers.0.mlp.shared_expert_gate.weight: BF16 0.0 MB
+mtp.layers.0.mlp_hyper_connection.block_inject_weight.weight: BF16 0.1 MB
+mtp.layers.0.mlp_hyper_connection.hc_norm.weight: F32 0.0 MB
+mtp.layers.0.mlp_hyper_connection.input_mix_weight_down.weight: BF16 6.6 MB
+mtp.layers.0.mlp_hyper_connection.input_mix_weight_up.weight: BF16 6.6 MB
+mtp.layers.0.self_attn.indexer.index_qk_proj.weight: BF16 3.3 MB
+mtp.layers.0.self_attn.indexer.k_layernorm.weight: F32 0.0 MB
+mtp.layers.0.self_attn.indexer.q_layernorm.weight: F32 0.0 MB
+mtp.layers.0.self_attn.k_norm.weight: F32 0.0 MB
+mtp.layers.0.self_attn.k_proj.weight: BF16 2.6 MB
+mtp.layers.0.self_attn.o_proj.weight: BF16 31.5 MB
+mtp.layers.0.self_attn.q_norm.weight: F32 0.0 MB
+mtp.layers.0.self_attn.q_proj.weight: BF16 62.9 MB
+mtp.layers.0.self_attn.v_proj.weight: BF16 2.6 MB
+mtp.pre_fc_norm_embedding.weight: F32 0.0 MB
+mtp.pre_fc_norm_hidden.weight: F32 0.0 MB
+wrote C:\Project\local_model\strata\model-data\mtp\mtp-q2_0.gguf: 0.889 GB of tensor data
+  > C:\Project\local_model\strata\app\control\python\python.exe C:\Project\local_model\strata\app\control\tools\mtp_rt.py --gguf C:\Project\local_model\strata\model-data\mtp\mtp-q2_0.gguf --out C:\Project\local_model\strata\model-data\mtp\rt
+experts.bin 707788800 B, dense.bin 116099072 B, 29 tensors -> C:\Project\local_model\strata\model-data\mtp\rt
+  fc_embedding.weight q8_0 2560 2560 0 6963200
+  fc_hidden.weight q8_0 2560 2560 6963200 6963200
+  hyper_connection_mixer.hc_norm.weight f32 1 10240 13926400 40960
+  hyper_connection_mixer.input_mix_weight_down.weight bf16 320 10240 13967360 6553600
+  hyper_connection_mixer.input_mix_weight_up.weight bf16 10240 320 20520960 6553600
+  attn_hyper_connection.block_inject_weight.weight bf16 4 10240 27074560 81920
+  attn_hyper_connection.hc_norm.weight f32 1 10240 27156480 40960
+  attn_hyper_connection.input_mix_weight_down.weight bf16 320 10240 27197440 6553600
+  attn_hyper_connection.input_mix_weight_up.weight bf16 10240 320 33751040 6553600
+  mlp.gate.weight bf16 512 2560 40304640 2621440
+  mlp.shared_expert.down_proj.weight q8_0 2560 640 42926080 1740800
+  mlp.shared_expert.gate_proj.weight q8_0 640 2560 44666880 1740800
+  mlp.shared_expert.up_proj.weight q8_0 640 2560 46407680 1740800
+  mlp.shared_expert_gate.weight bf16 1 2560 48148480 5120
+  mlp_hyper_connection.block_inject_weight.weight bf16 4 10240 48153600 81920
+  mlp_hyper_connection.hc_norm.weight f32 1 10240 48235520 40960
+  mlp_hyper_connection.input_mix_weight_down.weight bf16 320 10240 48276480 6553600
+  mlp_hyper_connection.input_mix_weight_up.weight bf16 10240 320 54830080 6553600
+  self_attn.indexer.index_qk_proj.weight q8_0 640 2560 61383680 1740800
+  self_attn.indexer.k_layernorm.weight f32 1 128 63124480 512
+  self_attn.indexer.q_layernorm.weight f32 1 128 63124992 512
+  self_attn.k_norm.weight f32 1 256 63125504 1024
+  self_attn.k_proj.weight q8_0 512 2560 63126528 1392640
+  self_attn.o_proj.weight q8_0 2560 6144 64519168 16711680
+  self_attn.q_norm.weight f32 1 256 81230848 1024
+  self_attn.q_proj.weight q8_0 12288 2560 81231872 33423360
+  self_attn.v_proj.weight q8_0 512 2560 114655232 1392640
+  pre_fc_norm_embedding.weight f32 1 2560 116047872 10240
+  pre_fc_norm_hidden.weight f32 1 10240 116058112 40960
+  [ok] MTP draft layer: C:\Project\local_model\strata\model-data\mtp\rt
+  Tip for a 8 GB card: the draft layer's default token subset (with Chinese, Japanese and Korean) needs up to ~348 MiB of VRAM.
+    For English and code answers, START-HERE.bat --draft-vocab en needs up to ~133 MiB (cyrillic: ~193) and leaves the rest to the expert cache - and it is the
+    fix when the start stops with "the draft head does not fit". The model keeps the choice.
+
+=== Step 7: writing the start script ===
+  [ok] start script: run-gyro-gyro-s.bat
+
+All set.
+  API (OpenAI):     http://127.0.0.1:8080/v1   (any API key; model name: anything)
+  API (Anthropic):  http://127.0.0.1:8080/v1/messages
+  Next time:        just run START-HERE.bat (or run-gyro-gyro-s.bat) - it starts right away
+  Images:           send them in the chat page, in chat.py (/image <path>) or over the API
+  Several requests at once: left at one at a time - parallel N reduces waiting for several users but costs about 10-25% speed per request on this card (docs/BATCHING.md).
+EXIT=0

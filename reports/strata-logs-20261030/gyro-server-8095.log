@@ -1,0 +1,33 @@
+loading the vision encoder ...
+loading the model (the first start takes a minute or two) ...
+[strata] starting the engine: reading the model's weights ...
+[strata] mapping the experts from the model files (about 58 GB, --mmap-experts): they are not loaded into RAM - the OS file cache reads them as the GPU's expert cache fills and as requests need them.
+         YOUR PC CAN BE SLOW OR STOP RESPONDING FOR 1-3 MINUTES NOW - this is normal.
+         Please wait and don't close this window; the server says when it is ready.
+[strata] filling the GPU's expert cache (471 experts, 0.46 GiB of VRAM) ...
+[strata] almost ready ...
+ready: http://127.0.0.1:8095/v1  (OpenAI: /v1/chat/completions, Anthropic: /v1/messages, context 32768 tokens, images on)
+       open http://127.0.0.1:8095/ in a browser to chat; close this window to stop the model
+[strata] reading the prompt: 54 of 59 tokens, 4 s so far
+[strata] thinking: 7 of max 96 tokens, 9.8 tok/s, 5 s
+[strata] thinking: 20 of max 96 tokens, 11.2 tok/s, 6 s
+[strata] thinking: 36 of max 96 tokens, 12.6 tok/s, 7 s
+[strata] answering: 55 of max 96 tokens, 13.8 tok/s, 8 s
+[strata] done: 73 tokens in 9 s (14.7 tok/s) (stop, cancel=False), expert cache 28.1% hit
+[strata] thinking: 20 of max 96 tokens, 23.5 tok/s, 1 s
+[strata] thinking: 38 of max 96 tokens, 19.8 tok/s, 2 s
+[strata] thinking: 58 of max 96 tokens, 19.8 tok/s, 3 s
+[strata] answering: 86 of max 96 tokens, 21.4 tok/s, 4 s
+[strata] done: 96 tokens in 5 s (20.7 tok/s) (length, cancel=False), expert cache 31.5% hit
+[strata] reading the prompt: 256 of 2,207 tokens, 5 s so far
+[strata] reading the prompt: 512 of 2,207 tokens, 8 s so far
+[strata] reading the prompt: 768 of 2,207 tokens, 10 s so far
+[strata] reading the prompt: 1,024 of 2,207 tokens, 12 s so far
+[strata] reading the prompt: 1,280 of 2,207 tokens, 13 s so far
+[strata] reading the prompt: 1,536 of 2,207 tokens, 15 s so far
+[strata] reading the prompt: 1,792 of 2,207 tokens, 16 s so far
+[strata] reading the prompt: 2,048 of 2,207 tokens, 18 s so far
+[strata] reading the prompt: 2,202 of 2,207 tokens, 19 s so far
+[strata] thinking: 19 of max 32 tokens, 24.4 tok/s, 21 s
+[strata] done: 32 tokens in 21 s (22.3 tok/s) (length, cancel=False), expert cache 16.0% hit
+[strata] the reply reached max tokens while still thinking, so it has no answer: a thinking budget (reasoning_budget_tokens, in the request or in strata-<model>.json for every request) leaves room to answer
