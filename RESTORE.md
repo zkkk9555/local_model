@@ -110,7 +110,7 @@ C:/Project/local_model/            ← 路径必须与这里一致，脚本里 R
 
 ```bash
 cd /c/Project/local_model
-bash scripts/switch.sh ninfer        # 40K 日常档：池 40,000 + MTP draft4 + rk2v4-e8 KV，显存约 7,570 MiB
+bash scripts/switch.sh ninfer        # 40K 日常档：池 40,000 + MTP draft4 + rk2v4-e8 KV，显存约 7,459 MiB
 bash scripts/switch.sh long72        # 72K 长文档档：关 MTP，池 72,000，显存约 7,301 MiB
 bash scripts/switch.sh llama         # 换 llama.cpp 262K 路线（需要 §4 的件）
 bash scripts/switch.sh status        # 看谁在 8091 / 显存多少
@@ -141,7 +141,7 @@ bash tools/verify_all.sh          # 一次性探活：引擎 / 网关 / 分片�
 bash scripts/console.sh open      # 打开控制台（亮色网页，127.0.0.1:8090）
 ```
 
-期望读数（4060 Ti 8 GB，40K 档，温度 0）：计数 110 tok/s、代码 75 tok/s、散文 39 tok/s，首字 0.2–0.5 s。
+期望读数（4060 Ti 8 GB，40K 档，温度 0）：计数 108 tok/s、代码 74 tok/s、散文 38 tok/s（出处：reports/速度-题面分化-实测-20261031.md），首字 0.2–0.5 s。
 
 ---
 
