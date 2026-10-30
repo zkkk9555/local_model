@@ -6,7 +6,7 @@
 # 依据：C:/Project/删除清单-本地模型-20261031.md（v3）+ 三份交叉审计（A/B/C）
 set -u
 MODE="${1:-dry}"
-ALL="${ALL:-0}"
+ALL="${ALL:-1}"   # 4 件存疑项已由用户确认全删；想留就 ALL=0
 ROOT=/c/Project/local_model
 HERE="$(cd "$(dirname "$0")" && pwd)"
 HOME_W=/c/Users/Administrator
@@ -46,7 +46,7 @@ kill_port() {
 # 按命令行精确匹配杀（只认 cwd 落在项目里的 DSH 宿主；排除自己与父进程）
 kill_cmd() {
   needle="$1"; label="$2"
-  pids=$(powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { \$_.CommandLine -and \$_.CommandLine.Contains(\"${needle}\") } | Select-Object -ExpandProperty ProcessId" 2>/dev/null | tr -d "\r")
+  pids=$(powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { \$_.CommandLine -and \$_.CommandLine.Contains(\"${needle}\") -and (\$_.Name -eq 'node.exe' -or \$_.Name -eq 'nohup.exe') } | Select-Object -ExpandProperty ProcessId" 2>/dev/null | tr -d "\r")
   [ -z "${pids:-}" ] && { echo "  [skip] 没有 ${label}"; return; }
   for pid in $pids; do
     [ "$pid" = "$$" ] && continue
@@ -111,6 +111,11 @@ del "$DOWN/04-卡死与循环的防治.md"
 del "$DOWN/方案-工具调用与死循环-20261013"
 if [ "$ALL" = "1" ]; then del "$DOWN/Strata-本地硬件适配指南-20261013"; else echo "  [keep] Strata-本地硬件适配指南-20261013（56 KB，内容早于本项目；ALL=1 才删）"; fi
 
+say "7.5 另外两项（用户已确认删）"
+# 回收站里那 10 个 ninfer_*.lib（r3 包解压残留，890 MB）—— 只删这一个文件夹，不清空整个回收站
+for d in /d/\$RECYCLE.BIN/S-1-5-21-344401079-*/\$RMBTEBX; do del "$d"; done
+# 本机 119 MB DLL 存档：线上仓库 engine-dlls/ 与 Release dlls-20261031 是同一份字节
+del "$HERE/存档/dll"
 say "8. 项目主目录（du 39.06 GiB / 27,201 文件 / 内含 6.39 GB 硬链接，整树删才回收）"
 del "$ROOT"
 
