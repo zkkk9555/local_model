@@ -18,3 +18,7 @@ __pycache__/
 *.pyc
 .env
 config/env.local.sh
+
+# 例外：引擎运行期 DLL 必须随 clone 一起下来（见 engine-dlls/README.md）
+!engine-dlls/
+!engine-dlls/*.dll

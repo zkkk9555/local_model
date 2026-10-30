@@ -116,7 +116,8 @@ C:/Project/local_model/            ← 路径必须与这里一致，脚本里 R
 
 前三个 CUDA DLL 与作者 `SHA256SUMS.txt` 逐字节相同；FFmpeg 五个与 libcurl 是**不同构建**（大版本号一致、ABI 兼容），哈希与作者清单不同 —— 我们实测可用。
 
-> 📦 **这 6 个「不可复现」DLL 已存档**：<https://github.com/zkkk9555/local_model/releases/tag/dlls-20261031>（7 个资产 / 118.9 MiB / 匿名可下 / 支持 Range 分段）。
+> 📦 **这 6 个「不可复现」DLL 就在仓库里**：`engine-dlls/`（118.9 MiB，随 `git clone` 一起下来，无需另下）——
+> `cp engine-dlls/*.dll engine/` 即可。同一份字节也挂在 Release <https://github.com/zkkk9555/local_model/releases/tag/dlls-20261031>（只想拿 DLL、不想 clone 的人用）。
 > 为什么单开一个 Release 而不是放进 git：单文件上限 100 MB（`avcodec-63.dll` 87.6 MiB 刚好过线，再大就推不上去）、而且二进制进 history 会把 clone 体积从 30 MB 涨到 150 MB 且永远删不掉；Release 资产单文件上限 2 GiB、不计入仓库体积。
 > 用法：6 个 DLL 丢进 `engine/` → `python tools/restore_check.py --deep` 应报 **18/18 OK**。
 
