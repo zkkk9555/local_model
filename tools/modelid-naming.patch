@@ -1,0 +1,30 @@
+--- a/scripts/serve2.sh
++++ b/scripts/serve2.sh
+@@ -17,7 +17,11 @@
+ ROOT=/c/Project/local_model
+ MODEL=${MODEL:-$ROOT/models/bonsai2_27b_ternary_ptq1_native_mtp.ninfer}
+ PORT=${PORT:-8091}
+-MODELID=${MODELID:-local}
++# [DSH] models[].id 会原样发成请求的 model 字段，引擎按 --model-id 逐字强校验：
++# 对不上直接 404 model_not_found（经 8081 网关变 502）。这里的默认值必须与
++# ~/.dsh/profiles/desktop/cordis.patch.yml 里 ninfer provider 的 models[].id 一致。
++# 命名规范：模型族+尺寸+量化+关键配置，见 reports/DSH配置与验收.md
++MODELID=${MODELID:-bonsai27b-ptq1-mtp-rk2v4-40k}
+ PROFILE=${PROFILE:-fast}
+ GW=${GW:-0}
+ GWPORT=${GWPORT:-8081}
+--- a/scripts/asklong.sh
++++ b/scripts/asklong.sh
+@@ -10,7 +10,11 @@
+ set -u
+ ROOT=/c/Project/local_model
+ PORT=${PORT:-8091}
+-MODELID=${MODELID:-local}
++# [DSH] models[].id 会原样发成请求的 model 字段，引擎按 --model-id 逐字强校验：
++# 对不上直接 404 model_not_found（经 8081 网关变 502）。这里的默认值必须与
++# ~/.dsh/profiles/desktop/cordis.patch.yml 里 ninfer provider 的 models[].id 一致。
++# 命名规范：模型族+尺寸+量化+关键配置，见 reports/DSH配置与验收.md
++MODELID=${MODELID:-bonsai27b-ptq1-mtp-rk2v4-40k}
+ ENGINE=${ENGINE:-http://127.0.0.1:$PORT/v1}
+ PY=${PY:-python}
+ POOL=${POOL:-40000}

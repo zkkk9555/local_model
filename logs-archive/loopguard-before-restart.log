@@ -1,0 +1,23 @@
+============================================================================================================
+DSH provider 验收  2026-10-30 09:23:14   超长提示检查：跳过
+============================================================================================================
+
+[PASS] ninfer  base=http://127.0.0.1:8081/v1  model=bonsai27b-ptq1-mtp-rk2v4-40k
+   1 models        OK   列出=['bonsai27b-ptq1-mtp-rk2v4-40k']
+   2 nonstream     OK   HTTP 200 wall=0.4s text='2'
+   3 stream        OK   HTTP 200 chunks=6 ttft=0.33 wall=0.33 usage={'p': 38, 'c': 12} decode=n/a（样本太短） tok/s
+   4 tools         OK   真吐 tool_call=True
+   5 unknown fields OK   HTTP 200
+
+
+[SKIP/缺席] ninfer  base=http://127.0.0.1:8081/v1  model=bonsai27b-ptq1-nomtp-rk2v4-52k
+   DSH 里声明了这个 id，但引擎当前只报：['bonsai27b-ptq1-mtp-rk2v4-40k']
+   -> 预期不存在，不算 FAIL。要它可用请按 PROFILE=long（池 51,200、无投机，decode ~32 tok/s） 起服。
+
+------------------------------------------------------------------------------------------------------------
+provider       model                              判定     HTTP   TTFT(s)   decode
+ninfer         bonsai27b-ptq1-mtp-rk2v4-40k       PASS   200    0.33      n/a（样本太短）
+ninfer         bonsai27b-ptq1-nomtp-rk2v4-52k     SKIP   None   None      None
+------------------------------------------------------------------------------------------------------------
+1/2 PASS，1 SKIP/缺席（该档现在没起、按预期 404，不算失败），0 FAIL
+完整结果 -> logs/loopguard-before-restart.json

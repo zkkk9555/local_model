@@ -1,0 +1,15 @@
+[longdoc] 文档 C:/Users/Administrator/Documents/deepseek-harness/default-workspace/tmp/overpool/d209k-s20261030.txt  295944 字符 / 保守预估 417514 token
+[longdoc] 自适应分片启动：首片按 1.75 字节/token（纯中文下界），拿到实测 prompt_tokens 后校正
+[longdoc] 实测 3.638 字节/token（首片 body 13448 token / 48920 字节）-> 后续每片按 3.383 换算
+  [1] 行 1-490  prompt=13753  20.6s  取证 9 字
+  [2] 行 491-1433  prompt=26978  40.2s  取证 9 字
+  [3] 行 1434-2371  prompt=27345  40.4s  取证 9 字
+  [4] 行 2372-3309  prompt=27347  40.5s  取证 10 字
+  [5] 行 3310-4247  prompt=27345  40.5s  取证 9 字
+  [6] 行 4248-5185  prompt=27348  40.5s  取证 9 字
+  [7] 行 5186-6123  prompt=27346  40.6s  取证 9 字
+  [8] 行 6124-7061  prompt=27347  40.5s  取证 9 字
+  [9] 行 7062-7246  prompt=5509  9.0s  NONE
+[longdoc] 报告 -> tmp/matrix2/F_adapt209k.md
+[longdoc] 完成：315.7s，取证片 8/9
+EXIT=0

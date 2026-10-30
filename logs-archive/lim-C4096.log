@@ -1,0 +1,14 @@
+2026-10-30 08:52:11.981  INFO  build archive/qwen4exp-port-session2-dirty
+2026-10-30 08:52:11.981  INFO  engine init | constructing service
+2026-10-30 08:52:12.003  INFO  starting engine
+2026-10-30 08:52:12.057  INFO  engine | engine init | device ready, constructing model instance
+2026-10-30 08:52:12.058  INFO  engine | device profile nvidia-geforce-rtx-4060-ti-sm89: 52 routed keys (calibration)
+2026-10-30 08:52:12.561  INFO  loading weights | 5.94 GiB
+2026-10-30 08:52:16.012  INFO  weights ready | 5.94 GiB | 3.5s | 1.72 GiB/s
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+2026-10-30 08:52:16.286  ERROR startup failed | finalizing target | 272 ms
+2026-10-30 08:52:16.336  ERROR engine init | FAILED while constructing the service: requested Engine runtime reservation requires 1432616448 bytes, but only 1037041664 bytes are available for runtime capacity
+2026-10-30 08:52:16.336  FATAL server failed during startup | requested Engine runtime reservation requires 1432616448 bytes, but only 1037041664 bytes are available for runtime capacity

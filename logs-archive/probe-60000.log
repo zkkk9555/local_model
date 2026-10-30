@@ -1,0 +1,16 @@
+[gate] pool=60000 (938 pages) dtype=rk2v4-e8 mtp=1 => engine_est~8038 MiB | redline=7488 (card 8188 - reserve 400 - desktop 300) | slack -550 MiB => REFUSE
+[serve2] profile=legacy pool=60000 kv=rk2v4-e8 hostkv=9216 window=16384 chunk=1024 card=8188MiB gate_rc=2
+2026-10-30 06:44:02.916  INFO  build archive/qwen4exp-port-session2-dirty
+2026-10-30 06:44:02.916  INFO  engine init | constructing service
+2026-10-30 06:44:02.936  INFO  starting engine
+2026-10-30 06:44:02.973  INFO  engine | engine init | device ready, constructing model instance
+2026-10-30 06:44:02.973  INFO  engine | device profile nvidia-geforce-rtx-4060-ti-sm89: 52 routed keys (calibration)
+2026-10-30 06:44:03.388  INFO  loading weights | 5.94 GiB
+2026-10-30 06:44:06.790  INFO  weights ready | 5.94 GiB | 3.4s | 1.75 GiB/s
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+2026-10-30 06:44:06.853  ERROR startup failed | finalizing target | 61.5 ms
+2026-10-30 06:44:06.896  ERROR engine init | FAILED while constructing the service: requested Engine runtime reservation requires 1151519232 bytes, but only 1037041664 bytes are available for runtime capacity
+2026-10-30 06:44:06.896  FATAL server failed during startup | requested Engine runtime reservation requires 1151519232 bytes, but only 1037041664 bytes are available for runtime capacity

@@ -1,0 +1,11 @@
+[chatgw] selftest 1 L0 pass: level=L0 est=1002 -> True
+[chatgw] selftest 2 L1 trim: level=L1 dropped=23 est_after=12206 msgs=42->19 -> True
+[chatgw] L2s fallback=l2 (not applicable or a map call failed)
+[chatgw] selftest 3 L2 compress: level=L2 kept=1 dropped=0 est_after=10820 -> True
+[chatgw] 09:28:10 L2s segments=5 calls=5 map_in_tokens=40001 summary_tokens=58 final_est=59 elapsed_ms=0
+[chatgw] selftest 4 L2s: level=L2s segments=5 calls=5 est_after=59 -> True
+[chatgw] selftest loop 正常短文: want=None got=None chars=3000 -> True
+[chatgw] selftest loop 逐字复读: want=verbatim got=verbatim chars=480 unit='1,2,3' x6 -> True
+[chatgw] selftest loop 整段复读: want=passage got=passage chars=3168 coverage=0.364 -> True
+[chatgw] selftest loop 长文本无复读: want=None got=None chars=6000 -> True
+SELFTEST PASS

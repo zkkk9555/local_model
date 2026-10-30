@@ -1,0 +1,76 @@
+================= DSH 本地 provider 验收 20261030-084252 =================
+配置 : /c/Users/Administrator/.dsh/profiles/desktop/cordis.patch.yml
+脚本 : tools/dsh_provider_test.py
+日志 : /c/Project/local_model/logs/verify-20261030-084252.log
+
+--- 1/5 显卡 ---
+    NVIDIA GeForce RTX 4060 Ti, 616.92, 7305 MiB, 8188 MiB, 100 %
+    NVIDIA GeForce RTX 4060 Ti, 616.92, 7305 MiB, 8188 MiB, 100 %
+
+--- 2/5 8091 引擎直连  GET http://127.0.0.1:8091/v1/models -> HTTP 000
+!! FAIL: 2/5 8091 引擎直连 /v1/models 不可用（HTTP 000）；原始响应体：
+
+--- 3/5 8081 网关  GET http://127.0.0.1:8081/v1/models -> HTTP 000
+!! FAIL: 3/5 8081 网关 /v1/models 不可用（HTTP 000）；原始响应体：
+
+--- 4/5 dsh_provider_test --config（只测 127.0.0.1 provider，逐模型 PASS/FAIL）---
+============================================================================================================
+DSH provider 验收  2026-10-30 08:42:53   超长提示检查：跳过
+============================================================================================================
+
+[FAIL] ninfer  base=http://127.0.0.1:8081/v1  model=bonsai27b-ptq1-mtp-rk2v4-40k
+   1 models        FAIL  列出=[]
+   2 nonstream     FAIL  HTTP None wall=2.03s text=''
+   3 stream        FAIL  HTTP None chunks=None ttft=None wall=2.04 usage={'p': None, 'c': None} decode=None tok/s
+   4 tools         FAIL  真吐 tool_call=False
+   5 unknown fields FAIL  HTTP None
+   -> 2_nonstream 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 4_tools 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 5_unknown_fields 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+
+[FAIL] ninfer  base=http://127.0.0.1:8081/v1  model=bonsai27b-ptq1-nomtp-rk2v4-52k
+   1 models        FAIL  列出=[]
+   2 nonstream     FAIL  HTTP None wall=2.08s text=''
+   3 stream        FAIL  HTTP None chunks=None ttft=None wall=2.05 usage={'p': None, 'c': None} decode=None tok/s
+   4 tools         FAIL  真吐 tool_call=False
+   5 unknown fields FAIL  HTTP None
+   -> 2_nonstream 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 4_tools 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 5_unknown_fields 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+
+[FAIL] strata  base=http://127.0.0.1:8080/v1  model=qwen36-35b-a3b-udq4kxl
+   1 models        FAIL  列出=[]
+   2 nonstream     FAIL  HTTP None wall=2.04s text=''
+   3 stream        FAIL  HTTP None chunks=None ttft=None wall=2.01 usage={'p': None, 'c': None} decode=None tok/s
+   4 tools         FAIL  真吐 tool_call=False
+   5 unknown fields FAIL  HTTP None
+   -> 2_nonstream 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 4_tools 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 5_unknown_fields 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+
+[FAIL] strata  base=http://127.0.0.1:8080/v1  model=qwen38-flash-next-gyro-s
+   1 models        FAIL  列出=[]
+   2 nonstream     FAIL  HTTP None wall=2.02s text=''
+   3 stream        FAIL  HTTP None chunks=None ttft=None wall=2.05 usage={'p': None, 'c': None} decode=None tok/s
+   4 tools         FAIL  真吐 tool_call=False
+   5 unknown fields FAIL  HTTP None
+   -> 2_nonstream 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 4_tools 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+   -> 5_unknown_fields 原始错误：URLError(ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None))
+
+------------------------------------------------------------------------------------------------------------
+provider       model                              判定     HTTP   TTFT(s)   decode
+ninfer         bonsai27b-ptq1-mtp-rk2v4-40k       FAIL   None   None      None
+ninfer         bonsai27b-ptq1-nomtp-rk2v4-52k     FAIL   None   None      None
+strata         qwen36-35b-a3b-udq4kxl             FAIL   None   None      None
+strata         qwen38-flash-next-gyro-s           FAIL   None   None      None
+------------------------------------------------------------------------------------------------------------
+0/4 PASS
+完整结果 -> C:/Project/local_model/logs/verify-20261030-084252.json
+!! FAIL: provider_test 有 FAIL（退出码 1，原始响应体见上面；完整 json: logs/verify-20261030-084252.json）
+
+--- 5/5 Strata（在跑才测）---
+    Strata 未在跑（http://127.0.0.1:8080/v1/models -> HTTP 000），跳过（不算 FAIL）
+
+================= 结果 =================
+验收未通过：3 项 FAIL

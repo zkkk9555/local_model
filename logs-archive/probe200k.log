@@ -1,0 +1,13 @@
+doc chars 296021 lines 7248 needles [('紫色河马', '7314'), ('青铜狐狸', '1180'), ('银色海豚', '4402'), ('绿色猫头鹰', '9067'), ('红色骆驼', '2551'), ('金色蜥蜴', '6388'), ('蓝色水母', '8223'), ('黑色麋鹿', '5019')]
+HTTP 200
+ttft_sec 0.1 wall_sec 378.6 chunks 35 usage {'completion_tokens': 73, 'completion_tokens_details': {'reasoning_tokens': 0}, 'prompt_tokens': 209154, 'prompt_tokens_details': {'cached_tokens': 0}, 'total_tokens': 209227}
+ANSWER: 紫色河马-7314，青铜狐狸-1180，银色海豚-4402，绿色猫头鹰-9067，红色骆驼-2551，金色蜥蜴-6388，蓝色水母-8223，黑色麋鹿-5019
+needle1 紫色河马-7314 HIT
+needle2 青铜狐狸-1180 HIT
+needle3 银色海豚-4402 HIT
+needle4 绿色猫头鹰-9067 HIT
+needle5 红色骆驼-2551 HIT
+needle6 金色蜥蜴-6388 HIT
+needle7 蓝色水母-8223 HIT
+needle8 黑色麋鹿-5019 HIT
+RESULT 8/8

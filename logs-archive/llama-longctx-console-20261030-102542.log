@@ -1,0 +1,5 @@
+[llama-longctx] base=http://127.0.0.1:8089/v1 model=bonsai-2-27b seq=30k,60k,30k,100k sleep=20s max_tokens=512
+[1/4] 30k  fixture=d30000.txt chars=42564 prompt_chars=42651
+       -> HTTP 200  hits=8/8  extra=0  wall=1.1s  ttft=0.31s  prompt_tok=29996  cached=29992  prefill=14.29633441985475  decode=96.9
+       .. sleep 20s
+[2/4] 60k  fixture=d60000-s20261030.txt chars=85040 prompt_chars=85127

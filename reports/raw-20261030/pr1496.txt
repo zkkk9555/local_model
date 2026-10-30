@@ -1,0 +1,508 @@
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta by gbwzzy218 · Pull Request #1496 · Niko1221/Strata · GitHub
+Skip to content
+Navigation Menu
+Sign in
+Products
+Platform
+GitHub
+Repository hosting, code review, and collaboration
+Copilot
+AI coding agent for tasks, projects and automated work
+Build & Ship
+Actions
+CI/CD and automation
+Code Quality
+Quality analysis, fixes, and enforcement
+Codespaces
+Cloud development environments
+Secure
+Code Security
+Vulnerability detection and remediation
+Secret Protection
+Secret scanning and leak prevention
+All Features
+Developers
+Learn
+Documentation
+Training
+Certifications
+Build
+Build with Copilot
+Customize Copilot
+Integrations
+Explore
+Trending repos
+GitHub Sponsors
+Events
+Changelog
+Changelog
+Your source for the latest features, improvements, and fixes across GitHub products, all in one place.
+Businesses
+By Stage
+Enterprises
+Team
+Startups
+Nonprofits
+By Industry
+Healthcare
+Financial services
+Manufacturing
+Government
+See all industries
+Evaluate GitHub
+Why GitHub
+Customer Stories
+Business insights
+Trust Center
+Add-ons
+GitHub Advanced Security
+Enterprise-grade code security
+Copilot for business
+Enterprise-grade AI features
+Premium Support
+Enterprise-grade 24/7 support
+Resources
+Learn & Connect
+Documentation
+Resource center
+Blog
+Events & webinars
+Community Forum
+Customer Stories
+Integrations
+Support
+Customer support
+Training
+GitHub Status
+Company
+About
+Partners
+Changelog
+GitHub Universe
+GitHub Universe
+The event for developers, by developers — talks, workshops, and what’s next for GitHub.
+Pricing
+Search
+/
+Sign in
+Sign up
+Appearance settings
+You signed in with another tab or window.
+Reload
+to refresh your session.
+You signed out in another tab or window.
+Reload
+to refresh your session.
+You switched accounts on another tab or window.
+Reload
+to refresh your session.
+Dismiss alert
+{{ message }}
+Niko1221
+Strata
+Repository navigation
+Code
+Issues
+447
+(
+447
+)
+Pull requests
+436
+(
+436
+)
+Actions
+Projects
+Security and quality
+Insights
+More
+items
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta
+- #
+1496
+#
+1496
+Closed
+gbwzzy218
+wants to merge 6 commits into
+Niko1221:main
+Niko1221/Strata:main
+from
+gbwzzy218:bench-rtx3070ti-8gb
+gbwzzy218/Strata:bench-rtx3070ti-8gb
+Copy head branch name to clipboard
+Conversation
+Commits
+6
+(
+6
+)
+Checks
+Files changed
+Closed
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta
+#
+1496
+gbwzzy218
+wants to merge 6 commits into
+Niko1221:main
+Niko1221/Strata:main
+from
+gbwzzy218:bench-rtx3070ti-8gb
+gbwzzy218/Strata:bench-rtx3070ti-8gb
+Copy head branch name to clipboard
+Conversation
+gbwzzy218
+commented
+Oct 8, 2026
+•
+edited
+Loading
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Copy link
+Copy Markdown
+Problem and result
+A results-only PR: measurements, no code. Its first version carried the 0.1.40.3 report (
+bench/results/2026-10-07-community-rtx3070ti-8gb/
+), which found that on this 8 GB card setup's 128K k8v4 configuration (
+--kv-resident 32768
+) read prompts about 40% slower than the same configuration with
+--kv-resident 20480
+, because the planner could only afford 768-token prompt chunks instead of 1,024. The tracker reset asked for the checks to be re-run on 0.2.0-beta; this adds that re-run as
+bench/results/2026-10-19-community-rtx3070ti-8gb-0.2.0-beta/
+, on the same PC, model files and setup-written arguments.
+Result on v0.2.0-beta (
+3d1fb48
+, release engine 0.1.45.3):
+The gap is gone. C (
+--kv-resident 20480
+) against B (setup's 32,768) was -2.8% to +2.7% in prompt throughput over three within-session comparisons at 4,096 / 16,384 tokens; on 0.1.40.3 the same comparisons measured +38.8% to +41.4%.
+The cause is the CPU prefill share, on by default since 0.1.41 for prompt chunks under 1,024 tokens on one CUDA GPU. With
+STRATA_PREFILL_CPU_SHARE=0
+, B read 424.7 / 442.8 tok/s against 586.6 / 602.8 with the share on (same session): +38.1% / +36.1% from the share. The engine still plans 768-token chunks for B and 512 for D.
+Against the 0.1.40.3 report (session 1 of each, different days): B +33.6% / +31.2%, D (int8) +44.3% / +43.2%; A and C read 4K prompts at about the same rate and 16K prompts 8-9% slower (not isolated).
+The new README withdraws the 0.1.40.3 report's suggestion to pick a smaller window on cards under 10 GB.
+Related discussion
+none: a results-only PR (closed in the 0.2.0-beta tracker reset, reopened with the re-run).
+Approach
+Repeats the 0.1.40.3 method: the community harness
+bench/results/2026-09-30-community-rtx-5090/benchmark.py
+(the same file), configs written by 0.2.0-beta's own setup plus the same hand-added conversation cache, one server start per block, five runs per length (three at 128,000),
+tools/needle_bench.py
+and the 13-prompt task check.
+Adds an arm with
+STRATA_PREFILL_CPU_SHARE=0
+to show what the share changed, and a monitor that samples the GPU and the other processes' CPU about every 3 s so disturbed requests are flagged (28 of 98; the comparisons do not change without them).
+Measured with the current community guide (
+docs/COMMUNITY_BENCHMARKS.md
+), not the draft standard protocol.
+Keeps the 0.1.40.3 folder unchanged; adds one entry for the new report under "Community reports" in
+docs/COMMUNITY_BENCHMARKS.md
+.
+Validation
+Passed:
+Environment: Windows 11 Pro build 26200, RTX 3070 Ti 8 GB (driver 617.42, also drives the display), Ryzen 9 5900X, 64 GB DDR4-3600, NVMe. Revision:
+git clone --branch v0.2.0-beta
+->
+3d1fb48090e8
+(tag v0.2.0-beta); engine = the release asset
+strata-engine-0.1.45.3-windows-x86_64-cuda-cuda13.tar.gz
+(SHA-256 as in the release's
+SHA256SUMS.txt
+;
+BUILD.json
+0.1.45.3, commit
+f6d65cb584c0
+); hashes in
+system.txt
+.
+Harness check:
+benchmark.py --targets 1024 --runs 1
+on arm A read the engine's
+/metrics
+counters (1,023 prompt tokens, 0 reused,
+prompt_ms
+1,787.6,
+decode_ms
+4,179.5):
+harness-check.json
+.
+Per block:
+python bench/results/2026-09-30-community-rtx-5090/benchmark.py --root <repo> --pack <data-dir>\packs\iq2_xs --url http://127.0.0.1:8080 --targets 4096,16384 --runs 5
+(block 6 also 32768 x 5 and 128000 x 3): 98 measured requests, every one 256 generated tokens,
+finish_reason "length"
+, 0 reused prompt tokens. Medians and ranges in the README table, every request in
+results.json
+, timestamps in
+orchestrator-session*.txt
+.
+python tools/needle_bench.py --url http://127.0.0.1:8080 --lengths 32k,128k --depths 10,50,90 --out needles.json
+on C: 6 of 6 found (32,045-32,046 and 124,125-124,127 prompt tokens).
+Task check
+quality/strata_eval.py
+on C, scored by
+quality/check_results.py
+: 15/15 expressions, 4/4 malformed inputs rejected, JSON parsed and schema-checked, poem 4 x 7 characters, tool call
+get_weather
+, 24/7, both logic answers 1, needle exact,
+lo = mid + 1
+(
+quality/task-check-C.scored.txt
+).
+The engine arguments 0.2.0-beta's setup wrote for A, B and D are identical to the 0.1.40.3 report's (
+configs/setup-diff.md
+); the plan lines of every start are in
+engine-start.txt
+.
+Relative links in the README checked; the folder scanned for local paths and user names (none).
+Failed:
+No measured request failed: all 98 measured requests, the six needle checks and the task check completed.
+The first
+START-HERE.bat --yes
+on the clean v0.2.0-beta clone found no ready-made engine (HTTP 404 for the pre-0.2 asset name
+strata-windows-x64.zip
+) and started installing build tools to compile; the release engine was placed in
+engine\
+by hand instead (README, "Notes for the maintainers").
+Not run:
+The E1 / E2 isolation arms of the 0.1.40.3 report: planned only if C stayed clearly faster than B.
+A controlled display-on / display-off test: session 2 ran, by inference, with the display off and was 18.7-20.8% faster in prompt throughput and 38.1-48.1% in decode than session 1; reported as an inferred observation, and the comparisons are made within a session.
+The 0.2.0-beta installer (
+install.ps1
+/ the Windows
+.exe
+), a source build, revisions after 0.2.0-beta, other
+--kv-resident
+values, q4_0, vision,
+"parallel"
+, the draft standard protocol (
+strata bench run
+).
+Limits
+One machine and one model; configurations measured as blocks, not interleaved per request; by inference the display was on in session 1 and off in session 2.
+The 0.1.40.3 and 0.2.0-beta numbers come from different days.
+The engine binary is the release asset (built from
+f6d65cb584c0
+), not compiled from the
+3d1fb48
+tree.
+The cause of the A / C slowdown at 16K against 0.1.40.3 was not isolated.
+Prepared with an AI assistant; every number above comes from the raw data in the report folder.
+🤖 Generated with
+Claude Code
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+-->
+All reactions
+gbwzzy218
+and others
+added
+3
+commits
+October 7, 2026 22:16
+Add community benchmark: RTX 3070 Ti 8 GB, Ryzen 9 5900X, 64 GB (Wind…
+…
+1e94e23
+…ows 11)
+Flash-Next IQ2_XS on release engine 0.1.40.3: setup's 32K default vs three 128K configurations, plus two follow-up configurations; 108 measured requests with the community harness, needle_bench 6/6.
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Add per-block engine configs for the RTX 3070 Ti benchmark
+…
+d154332
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Add supplementary checks (scripts, records, scorer outputs) for the R…
+…
+27b6c65
+…TX 3070 Ti benchmark
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Niko1221
+commented
+Oct 19, 2026
+Copy link
+Copy Markdown
+Owner
+Thanks for the pull request.
+We're resetting the tracker for 0.2.0-beta. There are more than 1,300 open issues and pull requests, too many for us to review properly, so we're closing everything that isn't being worked on right now. Closed here does not mean rejected.
+To reopen it takes about two minutes:
+Rebase on
+main
+if it no longer applies, and re-run your checks on 0.2.0-beta.
+Start the title with its area: [Engine], [GUI], [TUI], [Benchmark], [Docs] or [Other].
+Fill in the pull request template: the problem and result, and the validation (what you ran, on which revision, what you saw).
+Comment
+/reopen
+. A check runs and either reopens the pull request or lists what is still missing.
+The rules are in
+CONTRIBUTING.md
+.
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Niko1221
+closed this
+Oct 19, 2026
+gbwzzy218
+and others
+added
+3
+commits
+October 19, 2026 18:49
+Merge Niko1221/Strata main into bench-rtx3070ti-8gb
+…
+4ae193f
+Brings the branch up to main (0.2.0-beta) before adding the re-measured report.
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+[Benchmark] RTX 3070 Ti 8 GB re-measured on 0.2.0-beta
+…
+56e6ae5
+bench/results/2026-10-19-community-rtx3070ti-8gb-0.2.0-beta: the 2026-10-07 report's method on v0.2.0-beta
+(tag
+3d1fb48
+, release engine 0.1.45.3), same PC, model files and setup-written arguments, plus an arm with
+STRATA_PREFILL_CPU_SHARE=0. --kv-resident 20480 no longer beats setup's 32,768 at 128K with k8v4 (-2.8% to
++2.7% in three comparisons, +39-41% on 0.1.40.3): the CPU prefill share, on by default since 0.1.41, lifts the
+768-token-chunk arm by 36-38%. 98 measured requests in two sessions, needles 6/6, a 13-prompt task check.
+docs/COMMUNITY_BENCHMARKS.md: one entry for the report.
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+[Benchmark] 0.2.0-beta report: state inferences as inferences, add th…
+…
+4698a5f
+…e launch command
+README: the display state between the sessions is inferred (power plan, last input, Kernel-Power 566),
+the CPU share was opt-in since 0.1.40.2 and on by default since 0.1.41, the monitor interval is about 3 s,
+the flagged temperatures are 72-84 C, setup's own 8-10 GB estimate is quoted as such, the server launch
+command and the scripts' working-folder names are given. docs/COMMUNITY_BENCHMARKS.md: the entry links the
+0.1.40.3 report.
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+gbwzzy218
+changed the title
+Community benchmark: RTX 3070 Ti 8 GB, Ryzen 9 5900X, 64 GB DDR4-3600 (Windows 11)
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta
+Oct 21, 2026
+gbwzzy218
+commented
+Oct 21, 2026
+Copy link
+Copy Markdown
+Author
+/reopen
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+github-actions
+Bot
+reopened this
+Oct 21, 2026
+github-actions
+Bot
+commented
+Oct 21, 2026
+Copy link
+Copy Markdown
+Reopened, thank you. A maintainer will pick it up from here. If it conflicts with main, rebase it first; that speeds up review.
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Niko1221
+commented
+Oct 29, 2026
+Copy link
+Copy Markdown
+Owner
+Thank you for measuring this and writing it up. The 8 to 9 percent slower 16K prompt reading you measured on 0.2.0-beta compared with 0.1.40.3 is on our list for the next update. We are building a Strata website with a page for community benchmarks, and results like these will be added there when it launches, so we are closing this pull request here; the numbers are not lost. If your numbers change with a new version, you are welcome to send them again.
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Niko1221
+closed this
+Oct 29, 2026
+-->
+This file contains hidden or bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+Learn more about bidirectional Unicode characters
+Show hidden characters
+Sign up for free
+to join this conversation on GitHub
+.
+Already have an account?
+Sign in to comment
+-->
+Reviewers
+No reviews
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+-->
+Assignees
+No one assigned
+Labels
+None yet
+-->
+Projects
+None yet
+-->
+Milestone
+No milestone
+-->
+Development
+Successfully merging this pull request may close these issues.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+2 participants
+Add this suggestion to a batch that can be applied as a single commit.
+This suggestion is invalid because no changes were made to the code.
+Suggestions cannot be applied while the pull request is closed.
+Suggestions cannot be applied while viewing a subset of changes.
+Only one suggestion per line can be applied in a batch.
+Add this suggestion to a batch that can be applied as a single commit.
+Applying suggestions on deleted lines is not supported.
+You must change the existing code in this line in order to create a valid suggestion.
+Outdated suggestions cannot be applied.
+This suggestion has been applied or marked resolved.
+Suggestions cannot be applied from pending reviews.
+Suggestions cannot be applied on multi-line comments.
+Suggestions cannot be applied while the pull request is queued to merge.
+Suggestion cannot be applied right now. Please check back later.
+Footer
+© 2026 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Community
+Docs
+Contact
+Manage cookies
+Do not share my personal information
+You can’t perform that action at this time.

@@ -1,0 +1,112 @@
+emium Support
+Enterprise-grade 24/7 support
+Resources
+Learn & Connect
+Documentation
+Resource center
+Blog
+Events & webinars
+Community Forum
+Customer Stories
+Integrations
+Support
+Customer support
+Training
+GitHub Status
+Company
+About
+Partners
+Changelog
+GitHub Universe
+GitHub Universe
+The event for developers, by developers — talks, workshops, and what’s next for GitHub.
+Pricing
+Search
+/
+Sign in
+Sign up
+Appearance settings
+You signed in with another tab or window.
+Reload
+to refresh your session.
+You signed out in another tab or window.
+Reload
+to refresh your session.
+You switched accounts on another tab or window.
+Reload
+to refresh your session.
+Dismiss alert
+{{ message }}
+Niko1221
+Strata
+Repository navigation
+Code
+Issues
+447
+(
+447
+)
+Pull requests
+436
+(
+436
+)
+Actions
+Projects
+Security and quality
+Insights
+More
+items
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta
+- #
+1496
+#
+1496
+Closed
+gbwzzy218
+wants to merge 6 commits into
+Niko1221:main
+Niko1221/Strata:main
+from
+gbwzzy218:bench-rtx3070ti-8gb
+gbwzzy218/Strata:bench-rtx3070ti-8gb
+Copy head branch name to clipboard
+Conversation
+Commits
+6
+(
+6
+)
+Checks
+Files changed
+Closed
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta
+#
+1496
+gbwzzy218
+wants to merge 6 commits into
+Niko1221:main
+Niko1221/Strata:main
+from
+gbwzzy218:bench-rtx3070ti-8gb
+gbwzzy218/Strata:bench-rtx3070ti-8gb
+Copy head branch name to clipboard
+Conversation
+gbwzzy218
+commented
+Oct 8, 2026
+•
+edited
+Loading
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Copy link
+Copy Markdown
+Problem and result
+A results-only PR: measurements, no code. Its first version carried the 0.1.40.3 report (
+bench/results/2026-10-07-community-rtx3070ti-8gb/
+), which found that on this 8 GB card setup's 128K k8v4 configuration (
+--kv-resident 32768
+) read prompts about 40% slower than the same configuration w

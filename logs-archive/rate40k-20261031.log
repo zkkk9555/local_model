@@ -1,0 +1,3 @@
+计数   out=340 ttft=0.28s total=3.42s decode=108.0 tok/s steps=24.1/s tok/step=4.5
+代码   out=340 ttft=0.25s total=4.87s decode=73.6 tok/s steps=24.0/s tok/step=3.1
+散文   out=212 ttft=0.25s total=5.86s decode=37.8 tok/s steps=23.9/s tok/step=1.6

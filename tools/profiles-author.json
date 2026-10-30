@@ -1,0 +1,151 @@
+{
+  "schema": "ninfer-kv-stream/profiles/1",
+  "note": "Numbers are fixed by the build order (20261019). --max-shared-prefixes is NOT here on purpose: launcher.py injects it and hard-asserts it.",
+  "ui_port": 8720,
+  "engine_host": "127.0.0.1",
+  "engine_port": 8080,
+  "engine_model_id": "j27b",
+  "gateway_port": 8081,
+  "gateway_headroom_tokens": 1024,
+  "page_tokens": 64,
+  "desktop_mib": 300,
+  "spec_base_mib": {
+    "ptq1": 7254,
+    "ptq2": 8463,
+    "ptq1_no_mtp": 6643,
+    "ptq2_no_mtp": 8463
+  },
+  "spec_base_note": "ptq1/ptq2 are the bases reverse-solved from MTP-enabled measurements (they include the draft head). *_no_mtp are the bases when no speculative head is loaded: 6643 = 7245 - 720 pages * 0.8357. ptq2_no_mtp is unmeasured and conservatively kept equal to ptq2.",
+  "slope_mib_per_page": {
+    "rk2v4-e8": 0.8357,
+    "k8v4": 1.602
+  },
+  "common_argv": [
+    "--max-context",
+    "262144",
+    "--prefill-chunk",
+    "1024",
+    "--max-concurrency",
+    "1",
+    "--derive-session-keys",
+    "--presence-penalty",
+    "0",
+    "--temperature",
+    "0.7",
+    "--top-p",
+    "0.9",
+    "--top-k",
+    "20",
+    "--default-max-tokens",
+    "8192",
+    "--default-reasoning-effort",
+    "medium"
+  ],
+  "env": {
+    "NINFER_KV_WINDOW": "10240",
+    "NINFER_KV_RETRIEVE": "8192",
+    "NINFER_KV_REUSE_HOSTBACKED": "1"
+  },
+  "profiles": [
+    {
+      "id": "8g-long",
+      "name": "8G 长档（无 MTP）",
+      "card_mib": 8192,
+      "dtype": "rk2v4-e8",
+      "quant": "ptq1",
+      "pool_tokens": 51200,
+      "pool_pages": 800,
+      "host_kv_mib": 2816,
+      "max_context": 262144,
+      "reserve_mib": 400,
+      "single_question_limit": 51200,
+      "engine_pred": 7312,
+      "prefill_chunk": 1024,
+      "mtp": null,
+      "evidence": "预测（实测锚 46080 tok / 7245 MiB + 斜率）"
+    },
+    {
+      "id": "8g-fast",
+      "name": "8G 快档（MTP）",
+      "card_mib": 8192,
+      "dtype": "rk2v4-e8",
+      "quant": "ptq1",
+      "pool_tokens": 12800,
+      "pool_pages": 200,
+      "host_kv_mib": 3328,
+      "max_context": 262144,
+      "reserve_mib": 400,
+      "single_question_limit": 12800,
+      "engine_measured": 7365,
+      "prefill_chunk": 1024,
+      "mtp": {
+        "draft_tokens": 1,
+        "attention_window": 8
+      },
+      "evidence": "A（实测 GREEN，余 77 MiB）"
+    },
+    {
+      "id": "10g",
+      "name": "10G 档",
+      "card_mib": 10240,
+      "dtype": "rk2v4-e8",
+      "quant": "ptq1",
+      "pool_tokens": 163840,
+      "pool_pages": 2560,
+      "host_kv_mib": 1344,
+      "max_context": 262144,
+      "reserve_mib": 500,
+      "single_question_limit": 163840,
+      "engine_pred": 9393,
+      "prefill_chunk": 1024,
+      "mtp": {
+        "draft_tokens": 1,
+        "attention_window": 8
+      },
+      "predicted": true,
+      "evidence": "预测（ptq1 基准 + 2560 页 x 0.8357） | MTP 投机：draft 1 / window 8（用户口径 MTP 必需）"
+    },
+    {
+      "id": "12g",
+      "name": "12G 档",
+      "card_mib": 12288,
+      "dtype": "rk2v4-e8",
+      "quant": "ptq2",
+      "pool_tokens": 229376,
+      "pool_pages": 3584,
+      "host_kv_mib": 448,
+      "max_context": 262144,
+      "reserve_mib": 500,
+      "single_question_limit": 229376,
+      "engine_pred": 11458,
+      "prefill_chunk": 1024,
+      "mtp": {
+        "draft_tokens": 1,
+        "attention_window": 8
+      },
+      "predicted": true,
+      "evidence": "预测（ptq2 基准 + 3584 页 x 0.8357） | MTP 投机：draft 1 / window 8（用户口径 MTP 必需）"
+    },
+    {
+      "id": "16g",
+      "name": "16G 档",
+      "card_mib": 16384,
+      "dtype": "k8v4",
+      "quant": "ptq2",
+      "pool_tokens": 262144,
+      "pool_pages": 4096,
+      "host_kv_mib": 0,
+      "max_context": 262144,
+      "reserve_mib": 500,
+      "single_question_limit": 262144,
+      "engine_pred": 15025,
+      "prefill_chunk": 1024,
+      "mtp": {
+        "draft_tokens": 1,
+        "attention_window": 8
+      },
+      "predicted": true,
+      "evidence": "预测（ptq2 基准 + 4096 页 x 1.602） | MTP 投机：draft 1 / window 8（用户口径 MTP 必需）"
+    }
+  ]
+}

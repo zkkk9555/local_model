@@ -1,0 +1,9 @@
+profile=fast model=/c/Project/local_model/models/bonsai2_27b_ternary_ptq1_native_mtp.ninfer ctx=262144 pool=32000 kv=rk2v4-e8 hostkv=8192 window=16384 retrieve=8192 spec=[--spec mtp --draft-tokens 4]
+2026-10-30 04:36:07.057  INFO  build archive/qwen4exp-port-session2-dirty
+2026-10-30 04:36:07.058  INFO  engine init | constructing service
+2026-10-30 04:36:07.079  INFO  starting engine
+2026-10-30 04:36:07.128  INFO  engine | engine init | device ready, constructing model instance
+2026-10-30 04:36:07.129  INFO  engine | device profile nvidia-geforce-rtx-4060-ti-sm89: 52 routed keys (calibration)
+2026-10-30 04:36:07.655  ERROR startup failed | planning runtime | 509 ms
+2026-10-30 04:36:07.655  ERROR engine init | FAILED while constructing the service: --lm-head-q6 requires text/output_head to be stored as row-split Q8_G32
+2026-10-30 04:36:07.655  FATAL server failed during startup | --lm-head-q6 requires text/output_head to be stored as row-split Q8_G32

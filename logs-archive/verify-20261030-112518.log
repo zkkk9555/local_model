@@ -1,0 +1,48 @@
+================= DSH æœ¬åœ° provider éªŒæ”¶ 20261030-112518 =================
+é…ç½® : /c/Users/Administrator/.dsh/profiles/desktop/cordis.patch.yml
+è„šæœ¬ : tools/dsh_provider_test.py
+æ—¥å¿— : /c/Project/local_model/logs/verify-20261030-112518.log
+
+--- 1/6 æ˜¾å¡ ---
+    NVIDIA GeForce RTX 4060 Ti, 616.92, 7637 MiB, 8188 MiB, 2 %
+    NVIDIA GeForce RTX 4060 Ti, 616.92, 7637 MiB, 8188 MiB, 2 %
+
+--- 2/6 8091 å¼•æ“Žç›´è¿ž  GET http://127.0.0.1:8091/v1/models -> HTTP 200
+    id=bonsai27b-ptq1-mtp-rk2v4-40k             ctx=262144   owner=ninfer
+
+--- 3/6 8081 ç½‘å…³  GET http://127.0.0.1:8081/v1/models -> HTTP 200
+    id=bonsai27b-ptq1-mtp-rk2v4-40k             ctx=262144   owner=ninfer
+
+--- 4/6 DSH è§†è§’ï¼šcordis.patch.yml å£°æ˜Žçš„ id vs å¼•æ“ŽçœŸå®ž id ---
+    provider ¶Ë¿Ú    DSH ÉùÃ÷µÄ id                           ctx       ÅÐ¶¨    ËµÃ÷
+    ninfer   8081  bonsai27b-ptq1-mtp-rk2v4-40k         38000     ÃüÖÐ    
+    ÒýÇæÕæÊµ id£º8091=['bonsai27b-ptq1-mtp-rk2v4-40k']  8081=['bonsai27b-ptq1-mtp-rk2v4-40k']
+    -> ÃüÖÐ 1 / ÉùÃ÷ 1£»È±Ï¯µÄÌõÄ¿²»ÊÇ¹ÊÕÏ£¨Ò»ÕÅ¿¨Í¬Ê±Ö»ÅÜÒ»µµ£©£¬µÚ 5/6 ²½Ò²Ö»±ê¡¸È±Ï¯¡¹²»Ëã FAIL
+
+--- 5/6 dsh_provider_test --configï¼ˆ127.0.0.1 ä¸Šçš„ providerï¼Œé€æ¨¡åž‹ PASS/FAILï¼‰---
+    ï¼ˆllama 8089 æœªåœ¨è·‘ -> æŽ’é™¤ï¼›åˆ‡è¿‡åŽ»ç”¨ bash scripts/switch.sh llamaï¼‰
+    ï¼ˆStrata ä¸åœ¨çº¿ -> ç¬¬ 6/6 æ­¥ä¼šæŠ¥ã€Œè·³è¿‡ã€ï¼‰
+============================================================================================================
+DSH provider ÑéÊÕ  2026-10-30 11:25:18   ³¬³¤ÌáÊ¾¼ì²é£ºÌø¹ý
+============================================================================================================
+
+[PASS] ninfer  base=http://127.0.0.1:8081/v1  model=bonsai27b-ptq1-mtp-rk2v4-40k
+   1 models        OK   ÁÐ³ö=['bonsai27b-ptq1-mtp-rk2v4-40k']
+   2 nonstream     OK   HTTP 200 wall=0.26s text='2'
+   3 stream        OK   HTTP 200 chunks=6 ttft=0.33 wall=0.33 usage={'p': 38, 'c': 12} decode=n/a£¨Ñù±¾Ì«¶Ì£© tok/s
+   4 tools         OK   ÕæÍÂ tool_call=True
+   5 unknown fields OK   HTTP 200
+
+------------------------------------------------------------------------------------------------------------
+provider       model                              ÅÐ¶¨     HTTP   TTFT(s)   decode
+ninfer         bonsai27b-ptq1-mtp-rk2v4-40k       PASS   200    0.33      n/a£¨Ñù±¾Ì«¶Ì£©
+------------------------------------------------------------------------------------------------------------
+1/1 PASS£¬0 SKIP/È±Ï¯£¨¸ÃµµÏÖÔÚÃ»Æð¡¢°´Ô¤ÆÚ 404£¬²»ËãÊ§°Ü£©£¬0 FAIL
+ÍêÕû½á¹û -> C:/Project/local_model/logs/verify-20261030-112518.json
+    -> provider_test å…¨ PASS
+
+--- 6/6 Strataï¼ˆåœ¨è·‘æ‰æµ‹ï¼‰---
+    Strata æœªåœ¨è·‘ï¼ˆhttp://127.0.0.1:8080/v1/models -> HTTP 000ï¼‰ï¼Œè·³è¿‡ï¼ˆä¸ç®— FAILï¼‰
+
+================= ç»“æžœ =================
+éªŒæ”¶é€šè¿‡ï¼š0 FAIL

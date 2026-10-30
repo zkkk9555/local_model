@@ -1,0 +1,29 @@
+===== normal @ 09:28:04
+[normal] HTTP 200 chunks=4 wall=0.5s finish=['stop'] guard=[] usage={'completion_tokens': 2, 'completion_tokens_details': {'reasoning_tokens': 0}, 'prompt_tokens': 28, 'prompt_tokens_details': {'cached_tokens': 0}, 'total_tokens': 30} chars=1
+[normal] head: 2
+[normal] tail: 2
+===== prose_long @ 09:28:24
+[prose_long] HTTP 200 chunks=84 wall=4.2s finish=[] guard=[] usage=None chars=283
+[prose_long] head: 在显存资源极度受限的硬件环境中，排查显存占用问题不仅是技术挑战，更是系统稳定性的核心保障。面对仅 8GB 显存的机器，显存分配往往处于临界状态，任何微小的泄漏或未释放的缓存都可能导致显存溢出，进而引发系统崩溃或性能剧烈下降。因此，建立一套系统化的排查流程至关重要。 |  | 首先，必须明确显存占用的基本构成与监控工具的选择。显
+[prose_long] tail: 排查流程至关重要。 |  | 首先，必须明确显存占用的基本构成与监控工具的选择。显存占用并非单一指标，它由显存帧缓冲、纹理缓存、渲染目标以及驱动内部数据结构共同组成。在 8GB 显存环境下，建议优先使用 NVIDIA 的 `nvidia-smi` 或 AMD 的 `rocm-smi` 等官方工具进行实时监控。这些工具能精确显示
+===== count @ 09:28:49
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 502: Bad Gateway
+===== run @ 09:29:11
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 502: Bad Gateway
+===== para @ 09:29:33
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 502: Bad Gateway

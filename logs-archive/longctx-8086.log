@@ -1,0 +1,131 @@
+[longctx] 13:21:48 ���� 127.0.0.1:8086 -> http://127.0.0.1:8091���� 72000�������� 61200��Ƭ <= 26000��
+[longctx] 13:21:56 ֱͨ���� 69 token <= 61200
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61340)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Project\local_model\tools\longctx_proxy.py", line 203, in do_POST
+    log("���أ��� %d token > ������ %d���� %d��\u21d2 ��Ƭע��" % (est, opts.trigger, opts.pool_tokens))
+  File "C:\Project\local_model\tools\longctx_proxy.py", line 65, in log
+    print("[longctx] %s %s" % (time.strftime("%H:%M:%S"), msg), flush=True)
+UnicodeEncodeError: 'gbk' codec can't encode character '\u21d2' in position 57: illegal multibyte sequence
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 61341)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 436, in handle
+    self.handle_one_request()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python312\Lib\http\server.py", line 424, in handle_one_request
+    method()
+  File "C:\Project\local_model\tools\longctx_proxy.py", line 203, in do_POST
+    log("���أ��� %d token > ������ %d���� %d��\u21d2 ��Ƭע��" % (est, opts.trigger, opts.pool_tokens))
+  File "C:\Project\local_model\tools\longctx_proxy.py", line 65, in log
+    print("[longctx] %s %s" % (time.strftime("%H:%M:%S"), msg), flush=True)
+UnicodeEncodeError: 'gbk' codec can't encode character '\u21d2' in position 57: illegal multibyte sequence
+----------------------------------------
+[longctx] 13:22:03 ���� 127.0.0.1:8086 -> http://127.0.0.1:8091���� 72000�������� 61200��Ƭ <= 26000��
+[longctx] 13:22:10 ֱͨ���� 69 token <= 61200
+[longctx] 13:22:23 监听 127.0.0.1:8086 -> http://127.0.0.1:8091（池 72000，触发线 61200，片 <= 26000）
+[longctx] 13:22:27 model 改写：x -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:22:27 直通：估 69 token <= 61200
+[longctx] 13:22:32 model 改写：x -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:22:32 超池：估 210141 token > 触发线 61200（池 72000）⇒ 分片注入
+[longctx] 13:22:32 分片：文档 180612 字 -> 8 片（每片 <= 26000 token），请求 2400 字
+[longctx] 13:22:53 实测 2.591 字节/token，后续按 2.409 切
+[longctx] 13:22:53   [1/8] 行 1-501 prompt=20617 20.7s 取证 9 字
+[longctx] 13:23:14   [2/8] 行 502-1001 prompt=20657 20.8s 取证 9 字
+[longctx] 13:23:35   [3/8] 行 1002-1496 prompt=20975 21.2s 取证 9 字
+[longctx] 13:23:56   [4/8] 行 1497-1991 prompt=20972 21.2s 取证 9 字
+[longctx] 13:24:18   [5/8] 行 1992-2486 prompt=20963 21.3s 取证 9 字
+[longctx] 13:24:39   [6/8] 行 2487-2981 prompt=20970 21.3s 取证 10 字
+[longctx] 13:25:00   [7/8] 行 2982-3476 prompt=20962 21.3s 取证 9 字
+[longctx] 13:25:21   [8/8] 行 3477-3959 prompt=20497 20.8s 取证 9 字
+[longctx] 13:25:26 model 改写：x -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:25:26 超池：估 280134 token > 触发线 61200（池 72000）⇒ 分片注入
+[longctx] 13:25:26 分片：文档 241783 字 -> 11 片（每片 <= 26000 token），请求 2400 字
+[longctx] 13:25:46 实测 2.592 字节/token，后续按 2.411 切
+[longctx] 13:25:46   [1/11] 行 1-501 prompt=20607 20.6s NONE
+[longctx] 13:26:07   [2/11] 行 502-1001 prompt=20684 21.1s 取证 9 字
+[longctx] 13:26:29   [3/11] 行 1002-1496 prompt=20953 21.3s 取证 9 字
+[longctx] 13:26:50   [4/11] 行 1497-1991 prompt=20952 21.3s 取证 9 字
+[longctx] 13:27:11   [5/11] 行 1992-2486 prompt=20959 21.3s 取证 9 字
+[longctx] 13:27:33   [6/11] 行 2487-2981 prompt=20948 21.4s 取证 9 字
+[longctx] 13:27:54   [7/11] 行 2982-3475 prompt=20931 21.0s NONE
+[longctx] 13:28:15   [8/11] 行 3476-3970 prompt=20929 21.2s 取证 9 字
+[longctx] 13:28:36   [9/11] 行 3971-4465 prompt=20954 21.3s 取证 9 字
+[longctx] 13:28:57   [10/11] 行 4466-4960 prompt=20957 21.3s 取证 9 字
+[longctx] 13:29:12   [11/11] 行 4961-5292 prompt=14754 14.6s NONE
+[longctx] 13:38:40 监听 127.0.0.1:8086 -> http://127.0.0.1:8091（池 72000，触发线 61200，片 <= 26000）
+[longctx] 13:38:50 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:50 直通：估 38 token <= 61200
+[longctx] 13:38:50 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:50 直通：估 88 token <= 61200
+[longctx] 13:38:50 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:50 直通：估 53 token <= 61200
+[longctx] 13:38:52 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:52 直通：估 18 token <= 61200
+[longctx] 13:38:52 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:52 直通：估 38 token <= 61200
+[longctx] 13:38:52 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:52 直通：估 88 token <= 61200
+[longctx] 13:38:53 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:53 直通：估 53 token <= 61200
+[longctx] 13:38:54 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:38:54 直通：估 18 token <= 61200
+[longctx] 13:39:03 model 改写：x -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:39:03 超池：估 210141 token > 触发线 61200（池 72000）⇒ 分片注入
+[longctx] 13:39:03 分片：文档 180612 字 -> 8 片（每片 <= 26000 token），请求 2400 字
+[longctx] 13:39:23 实测 2.591 字节/token，后续按 2.409 切
+[longctx] 13:39:23   [1/8] 行 1-501 prompt=20617 19.9s 取证 9 字
+[longctx] 13:39:43   [2/8] 行 502-1001 prompt=20657 20.5s 取证 9 字
+[longctx] 13:40:04   [3/8] 行 1002-1496 prompt=20975 20.8s 取证 9 字
+[longctx] 13:40:25   [4/8] 行 1497-1991 prompt=20972 20.9s 取证 9 字
+[longctx] 13:40:46   [5/8] 行 1992-2486 prompt=20963 20.9s 取证 9 字
+[longctx] 13:41:07   [6/8] 行 2487-2981 prompt=20970 20.9s 取证 10 字
+[longctx] 13:41:27   [7/8] 行 2982-3476 prompt=20962 20.9s 取证 9 字
+[longctx] 13:41:48   [8/8] 行 3477-3959 prompt=20497 20.4s 取证 9 字
+[longctx] 13:42:07 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:07 直通：估 38 token <= 61200
+[longctx] 13:42:07 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:07 直通：估 88 token <= 61200
+[longctx] 13:42:08 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:08 直通：估 53 token <= 61200
+[longctx] 13:42:09 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard150k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:09 直通：估 18 token <= 61200
+[longctx] 13:42:10 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:10 直通：估 38 token <= 61200
+[longctx] 13:42:10 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:10 直通：估 88 token <= 61200
+[longctx] 13:42:10 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:10 直通：估 53 token <= 61200
+[longctx] 13:42:12 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 13:42:12 直通：估 18 token <= 61200
+[longctx] 04:21:56 监听 127.0.0.1:8086 -> http://127.0.0.1:8091（池 72000，触发线 61200，片 <= 26000）
+[longctx] 04:22:53 监听 127.0.0.1:8086 -> http://127.0.0.1:8091（池 72000，触发线 61200，片 <= 26000）
+[longctx] 04:23:04 引擎实际 model id：bonsai27b-ptq1-mtp-rk2v4-40k
+[longctx] 04:23:04 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-mtp-rk2v4-40k
+[longctx] 04:23:04 直通：估 32 token <= 61200
+[longctx] 04:29:13 引擎实际 model id：bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 04:29:13 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 04:29:13 直通：估 38 token <= 61200
+[longctx] 04:29:13 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 04:29:13 直通：估 88 token <= 61200
+[longctx] 04:29:14 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 04:29:14 直通：估 53 token <= 61200
+[longctx] 04:29:15 model 改写：bonsai27b-ptq1-nomtp-rk2v4-shard200k -> bonsai27b-ptq1-nomtp-rk2v4-72k
+[longctx] 04:29:15 直通：估 18 token <= 61200

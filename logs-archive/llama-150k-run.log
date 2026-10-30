@@ -1,0 +1,15 @@
+162 MiB
+== èµ· llama CTX=155648ï¼ˆcells è‡ªåŠ¨ï¼Œlauncher ç®—æ˜¾å­˜çº¿ï¼‰13:32:16
+llama up after 20s
+window 155648 / q3_0  (8 GB default; trained max 262144)
+kv     sparse host-tail reads: 12288,64,1024 (B,P,R), budget max(B, host tail x 0.25), from 32768 host cells on; 103 MiB of page bounds counted: VRAM line 76800, 69120 once sparse engages (late reserve)
+spec   draft 0: MTP is OFF because BONSAI_SPEC=0 is set in this window. Decode is slower:
+       A new PowerShell window starts without them. Remove-Item Env:NAME removes one.
+0.03.734.116 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 155648, kv_unified = 'false'
+== 150K å•å‘æ¢é’ˆ 13:32:26
+[llama-probe] doc tmp/exp/doc-150k8.txt  182950 chars  needles 8  tag=llama150k
+[llama-probe] {"tag": "llama150k", "doc": "C:\\Project\\local_model\\tmp\\exp\\doc-150k8.txt", "chars": 182950, "wall": 268.3, "prompt_tokens": 151873, "completion_tokens": 97, "prompt_ms": 260544.838, "predicted_ms": 7636.465, "prompt_per_second": 582.9054268194714, "predicted_per_second": 12.571261702895253, "hits": 8, "needles": 8, "codes_found": ["°×É«¾¨Óã-3141", "»ÒÉ«ğĞğÄ-5926", "³ÈÉ«ÕÂÓã-8412", "ÇàÉ«´Ìâ¬-2673", "ºÖÉ«âµ×Ó-7058", "·ÛÉ«»ğÁÒÄñ-1936", "Ä«ÂÌ±Ú»¢-4482", "ĞÓÉ«ÃàÑò-6207"], "error": "", "answer_head": "1. °×É«¾¨Óã-3141 2. »ÒÉ«ğĞğÄ-5926 3. ³ÈÉ«ÕÂÓã-8412 4. ÇàÉ«´Ìâ¬-2673 5. ºÖÉ«âµ×Ó-7058 6. ·ÛÉ«»ğÁÒÄñ-1936 7. Ä«ÂÌ±Ú»¢-4482 8. ĞÓÉ«ÃàÑò-6207"}
+== æ”¶å°¾ åœ llama èµ· long72 13:36:55
+SUCCESS: The process "llama-server.exe" with PID 8196 has been terminated.
+{"data":[{"context_window":262144,"created":1793338663,"id":"bonsai27b-ptq1-nomtp-rk2v4-72k","max_mo
+== done 13:37:43

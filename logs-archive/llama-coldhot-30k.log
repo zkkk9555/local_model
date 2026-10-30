@@ -1,0 +1,17 @@
+[llama-longctx] base=http://127.0.0.1:8089/v1 model=bonsai-2-27b seq=30k,30k sleep=5s max_tokens=256
+[1/2] 30k  fixture=d30000.txt chars=42564 prompt_chars=42651
+       -> HTTP 200  hits=8/8  extra=0  wall=236.4s  ttft=235.32s  prompt_tok=29996  cached=0  prefill=127.49410502340928  decode=64.6
+       .. sleep 5s
+[2/2] 30k  fixture=d30000.txt chars=42564 prompt_chars=42651
+       -> HTTP 200  hits=8/8  extra=0  wall=0.9s  ttft=0.15s  prompt_tok=29996  cached=29992  prefill=38.14064362336114  decode=95.6
+
+| # | 题面 | hits/8 | 编造数 | wall s | prompt_tokens | prefill tok/s | ttft s | decode tok/s | 顺序 |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | 30k | 8/8 | 0 | 236.4 | 29996 | 127.5 | 235.32 | 64.6 | 是 |
+| 2 | 30k | 8/8 | 0 | 0.9 | 29996 | 38.1 | 0.15 | 95.6 | 是 |
+
+**判定**：序列里只有 1 次 209K，无法判断可重复性（把 --seq 写成 209k,30k,209k 再看）
+
+[llama-longctx] json=logs/llama-coldhot-30k.json
+[llama-longctx] md=logs/llama-coldhot-30k.md
+[llama-longctx] 总耗时 242.3s

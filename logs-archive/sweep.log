@@ -1,0 +1,427 @@
+profile=fast model=C:\Project\local_model\models\bonsai2_27b_ternary_ptq1_native_mtp.ninfer ctx=262144 pool=32000 kv=rk2v4-e8 hostkv=8192 window=16384 retrieve=8192 spec=[--spec mtp --draft-tokens 4]
+2026-10-30 04:39:24.845  INFO  build archive/qwen4exp-port-session2-dirty
+2026-10-30 04:39:24.846  INFO  engine init | constructing service
+2026-10-30 04:39:24.868  INFO  starting engine
+2026-10-30 04:39:24.918  INFO  engine | engine init | device ready, constructing model instance
+2026-10-30 04:39:24.919  INFO  engine | device profile nvidia-geforce-rtx-4060-ti-sm89: 52 routed keys (calibration)
+2026-10-30 04:39:25.393  INFO  loading weights | 5.94 GiB
+2026-10-30 04:39:28.824  INFO  weights ready | 5.94 GiB | 3.4s | 1.73 GiB/s
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+[ninfer] reuse host-backed: on
+[ring] content scoring ON by default (the ring is configured): retrieval ranks pages by the query-conditioned content score. Set NINFER_TERNARY_KVMEM_SCORE=0 (or the master switch NINFER_TERNARY_KVMEM=0) to fall back to the lexical ranking (that is the negative control, not a tuning knob).
+2026-10-30 04:39:28.974  INFO  pinning host state | 598.6 MiB
+2026-10-30 04:39:28.974  INFO  host state pinned | 598.6 MiB | 28 us
+2026-10-30 04:39:28.977  INFO  pinning host KV | 8.00 GiB
+2026-10-30 04:39:28.978  INFO  host KV pinned | 8.00 GiB | 872 us
+2026-10-30 04:39:28.982  INFO  engine | engine init | model instance ready
+2026-10-30 04:39:28.982  INFO  engine | engine init | constructing core (generation)
+2026-10-30 04:39:28.982  INFO  engine | engine init | core ready (generation)
+2026-10-30 04:39:28.982  INFO  engine finalized | 280 us
+2026-10-30 04:39:28.982  INFO  engine ready | bonsai2-27b | total 4.1s | weights 5.94 GiB | CUDA sync auto
+[spec] backend=mtp draft_tokens=4 adaptive=0 attention_window=0 ngram=0
+2026-10-30 04:39:28.982  INFO  capacity | KV 32,000 tokens, rk2v4-e8, explicit | pages 500/4,096 | runtime 756.2 MiB | free 229.0 MiB
+2026-10-30 04:39:28.982  INFO  context cache | 1 active + 1 cached device states | host 8 states, 8.00 GiB KV | private 2 | shared 0 | anchors 2
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=372 (pool 500) backend_pages=0 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+raw_k_shadow: harvest installed layers=16 kv_size=1024 tokens=896 (28.0 MiB device, same pinned)
+kvmem_index: installed layers=16 heads=4 head_dim=256 blocks=4096 bytes=256.2 MiB zero=cudaSuccess
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+kvmem_score: ARMED capacity_blocks=4096 layers_total=16 heads=24 kv_heads=4 head_dim=256
+kvmem_score: query span [3,6) not usable for chunk [9,13) (empty overlap or longer than MAXQ=256) -- falling back to the tail rule (QUERY_TAIL)
+[ninfer] kvmem harvest: skipped a 1-token key (round width is 4, layer 15); this pass is not the prefill round the harvest was armed for
+kvmem_score: KEPT 0
+kvmem_score: SELECT label=text_prefill_chunk n_blocks=1 budget_blocks=512 sink_blocks=64 recent_blocks=0 kept=1 runs=1 skip=0 window_tokens=64 sink_kept=1 recent_kept=0 scored_kept=0 candidates=0 kept_range=[0,0] sum_score=4.000 query_tokens=4 span_mode=abs span_abs=[3,6) chunk_abs=9 span_local=[0,4) oracle_ok=1 scale_floor=0.062500 harvest_layers=16/16
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+2026-10-30 04:39:29.403  INFO  warmup complete | 421 ms
+2026-10-30 04:39:29.403  INFO  listening on http://127.0.0.1:8091 | model bonsai2-27b | auth disabled
+2026-10-30 04:39:29.403  INFO  api base http://127.0.0.1:8091/v1
+2026-10-30 04:39:30.305  INFO  req#1 started | openai-chat stream | 1 message | max output 300 | thinking off
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=372 (pool 500) backend_pages=0 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+kvmem_score: KEPT 0
+kvmem_score: SELECT label=text_prefill_chunk n_blocks=1 budget_blocks=512 sink_blocks=64 recent_blocks=0 kept=1 runs=1 skip=0 window_tokens=64 sink_kept=1 recent_kept=0 scored_kept=0 candidates=0 kept_range=[0,0] sum_score=46.000 query_tokens=46 span_mode=abs span_abs=[3,49) chunk_abs=0 span_local=[3,49) oracle_ok=1 scale_floor=0.062500 harvest_layers=16/16
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+kvmem_score: KEPT 0
+kvmem_score: SELECT label=text_prefill_chunk n_blocks=1 budget_blocks=512 sink_blocks=64 recent_blocks=0 kept=1 runs=1 skip=0 window_tokens=64 sink_kept=1 recent_kept=0 scored_kept=0 candidates=0 kept_range=[0,0] sum_score=3.000 query_tokens=3 span_mode=abs span_abs=[3,49) chunk_abs=49 span_local=[0,3) oracle_ok=1 scale_floor=0.062500 harvest_layers=16/16
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+kvmem_score: KEPT 0
+kvmem_score: SELECT label=text_prefill_chunk n_blocks=1 budget_blocks=512 sink_blocks=64 recent_blocks=0 kept=1 runs=1 skip=0 window_tokens=64 sink_kept=1 recent_kept=0 scored_kept=0 candidates=0 kept_range=[0,0] sum_score=4.000 query_tokens=4 span_mode=abs span_abs=[3,49) chunk_abs=52 span_local=[0,4) oracle_ok=1 scale_floor=0.062500 harvest_layers=16/16
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=371 (pool 500) backend_pages=1 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=370 (pool 500) backend_pages=2 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=369 (pool 500) backend_pages=3 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+2026-10-30 04:39:34.409  INFO  throughput | 5.0s | prefill 11.2 tok/s (56 tok) | decode 30.8 tok/s (154 tok) | running 1 (decode-ready 1) | batch 1.00 | host 79.7% (4.0s)
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=368 (pool 500) backend_pages=4 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] retrieve preferred req=1 n=1
+[ninfer] ring retrieve: which=text preferred=1 restored=1 first=4 last=4
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=367 (pool 500) backend_pages=5 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] retrieve preferred req=2 n=2
+[ninfer] ring retrieve: which=text preferred=2 restored=2 first=4 last=5
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+[ring] budgets: protect=0 skeleton=0, evidence=128, recent=0, free=366 (pool 500) backend_pages=6 backend_capped=0 [protect+skeleton+evidence+recent+backend+free == pool: yes
+]
+2026-10-30 04:39:38.409  INFO  req#1 done | openai-chat | output limit | prompt 56 | output 300 | cache 0 (0.0%) | TTFT 243 ms | total 8.1s | prefill 231.4 tok/s | decode 38.1 tok/s | mtp accepted 118/719 (16.4%)

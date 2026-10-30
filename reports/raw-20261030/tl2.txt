@@ -1,0 +1,102 @@
+er launch
+command and the scripts' working-folder names are given. docs/COMMUNITY_BENCHMARKS.md: the entry links the
+0.1.40.3 report.
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+gbwzzy218
+changed the title
+Community benchmark: RTX 3070 Ti 8 GB, Ryzen 9 5900X, 64 GB DDR4-3600 (Windows 11)
+[Benchmark] RTX 3070 Ti 8 GB, IQ2_XS at 32K and 128K: re-measured on 0.2.0-beta
+Oct 21, 2026
+gbwzzy218
+commented
+Oct 21, 2026
+Copy link
+Copy Markdown
+Author
+/reopen
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+github-actions
+Bot
+reopened this
+Oct 21, 2026
+github-actions
+Bot
+commented
+Oct 21, 2026
+Copy link
+Copy Markdown
+Reopened, thank you. A maintainer will pick it up from here. If it conflicts with main, rebase it first; that speeds up review.
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Niko1221
+commented
+Oct 29, 2026
+Copy link
+Copy Markdown
+Owner
+Thank you for measuring this and writing it up. The 8 to 9 percent slower 16K prompt reading you measured on 0.2.0-beta compared with 0.1.40.3 is on our list for the next update. We are building a Strata website with a page for community benchmarks, and results like these will be added there when it launches, so we are closing this pull request here; the numbers are not lost. If your numbers change with a new version, you are welcome to send them again.
+-->
+All reactions
+-->
+Sorry, something went wrong.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+Niko1221
+closed this
+Oct 29, 2026
+-->
+This file contains hidden or bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
+Learn more about bidirectional Unicode characters
+Show hidden characters
+Sign up for free
+to join this conversation on GitHub
+.
+Already have an account?
+Sign in to comment
+-->
+Reviewers
+No reviews
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+-->
+Assignees
+No one assigned
+Labels
+None yet
+-->
+Projects
+None yet
+-->
+Milestone
+No milestone
+-->
+Development
+Successfully merging this pull request may close these issues.
+Uh oh!
+There was an error while loading.
+Please reload this page
+.
+2 participants
+Add this suggestion to a batch that can be applied as a single commit.
+This suggestion is invalid because no changes were made to the code.
+Suggestions cannot be applied while the pull request is closed.
+Suggestions cannot be applied while viewing a subset of changes.
+Only one suggestion per line can be applied in a batch.
+Add this suggestion to a batch

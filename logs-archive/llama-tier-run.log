@@ -1,0 +1,20 @@
+== åœ NInfer 13:29:32
+³É¹¦: ÒÑÖÕÖ¹½ø³Ì "ninfer-serve-89.exe"£¬Æä PID Îª 36144¡£
+162 MiB
+== èµ· llamaï¼ˆcells é’‰ 16384 / ctx 36864ï¼‰13:29:40
+llama up after 30s
+window 36864 / q3_0  (8 GB default; trained max 262144)
+kv     sparse host-tail reads: 12288,64,1024 (B,P,R), budget max(B, host tail x 0.25), from 32768 host cells on; 74 MiB of page bounds counted
+spec   draft 0: MTP is OFF because BONSAI_SPEC=0 is set in this window. Decode is slower:
+       To turn MTP on: Remove-Item Env:BONSAI_SPEC (or open a new window), then start again.
+env    set in this window, these change the defaults: BONSAI_8GB=1  BONSAI_CTX=36864  BONSAI_KV_VRAM_CELLS=16384  BONSAI_PORT=8089  BONSAI_SPARSE=1  BONSAI_SPEC=0
+       A new PowerShell window starts without them. Remove-Item Env:NAME removes one.
+0.05.347.940 W ggml_cuda_graph_check_compability: attention reads the host tail of the tiered KV cache: CUDA graphs off, tier prefetch pipeline on
+0.05.523.815 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 36864, kv_unified = 'false'
+== æ¢é’ˆï¼š30K æ–‡æ¡£å•å‘ 13:30:00
+[llama-probe] doc tmp/exp/llama-30k8.txt  36213 chars  needles 8  tag=tier16k-30k
+[llama-probe] {"tag": "tier16k-30k", "doc": "C:\\Project\\local_model\\tmp\\exp\\llama-30k8.txt", "chars": 36213, "wall": 34.6, "prompt_tokens": 30073, "completion_tokens": 70, "prompt_ms": 32478.081, "predicted_ms": 2077.745, "prompt_per_second": 925.9475644512371, "predicted_per_second": 33.20908003628934, "hits": 8, "needles": 8, "codes_found": ["ÒøÉ«º£ëà-4402", "ÇàÍ­ºüÀê-1180", "°×É«Ã¨Í·Ó¥-9067", "ºÚÉ«òùòğ-2551", "×ÏÉ«¿×È¸-6388", "½ğÉ«Ë®Ä¸-8223", "ºìÉ«÷çÂ¹-5019", "À¶É«º£±ª-7314"], "error": "", "answer_head": "ÒøÉ«º£ëà-4402 ÇàÍ­ºüÀê-1180 °×É«Ã¨Í·Ó¥-9067 ºÚÉ«òùòğ-2551 ×ÏÉ«¿×È¸-6388 ½ğÉ«Ë®Ä¸-8223 ºìÉ«÷çÂ¹-5019 À¶É«º£±ª-7314"}
+== æ”¶å°¾ åœ llama èµ· long72 13:30:35
+SUCCESS: The process "llama-server.exe" with PID 8488 has been terminated.
+{"error":{"code":"model_loading","message":"The model is still loading. Retry shortly.","param":null,"type":"service_una
+== done 13:30:57

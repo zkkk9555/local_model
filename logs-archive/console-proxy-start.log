@@ -1,0 +1,2 @@
+{"object": "list", "data": [{"id": "bonsai27b-ptq1-nomtp-rk2v4-72k", "object": "model", "owned_by": "longctx-proxy", "context_window": 262144}, {"id": "bonsai27b-ptq1-nomtp-rk2v4-shard150k", "object": "model", "owned_by": "longctx-proxy", "context_window": 262144}, {"id": "bonsai27b-ptq1-nomtp-rk2v4-shard200k", "object": "model", "owned_by": "longctx-proxy", "context_window": 262144}]}
+[longctx] 启动完成 log=logs/longctx-8086.log

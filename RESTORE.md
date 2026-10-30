@@ -104,8 +104,8 @@ C:/Project/local_model/            ← 路径必须与这里一致，脚本里 R
 
 | DLL | 字节 | SHA-256 | 从哪里来 |
 | --- | --- | --- | --- |
-| `cudart64_13.dll` | 551,024 | `b00ca6f53699120da815bf3e06e2e4285fae2f201235b883dcbb50eec51e2a2a` | PyPI `nvidia-cuda-runtime-cu13` 13.3.29 win-x64 |
-| `cublas64_13.dll` | 51,870,320 | `f1d500d0cd892f5b8c6b6cdbffd82d0c55d5f5427215668e7ceb55aeeccc1b63` | PyPI `nvidia-cublas-cu13` 13.5.1.27 win-x64 |
+| `cudart64_13.dll` | 551,024 | `b00ca6f53699120da815bf3e06e2e4285fae2f201235b883dcbb50eec51e2a2a` | PyPI `nvidia-cuda-runtime` **13.3.29** win-x64（⚠ 别写 `-cu13`，那是 DEPRECATED 空壳包，装出来只有 1 KB） |
+| `cublas64_13.dll` | 51,870,320 | `f1d500d0cd892f5b8c6b6cdbffd82d0c55d5f5427215668e7ceb55aeeccc1b63` | PyPI `nvidia-cublas` **13.5.1.27** win-x64（同上，不要 `-cu13`） |
 | `cublasLt64_13.dll` | 460,301,424 | `b592cd016d7673e9cb97716a22b27c4010ee635377a3ba28f37070a9bdb76a68` | 同上 |
 | `avcodec-63.dll` | 91,810,816 | `1ab43ac33e92aad9f29e82e6b4f57e06ff3537097d71908786d1388a6032ea45` | BtbN FFmpeg-Builds `ffmpeg-n9.0-latest-win64-lgpl-shared` |
 | `avformat-63.dll` | 23,003,136 | `1082bdcb0fd3bb62205a2be123350f2f4fa67a1478bb0162989d65c1463d29ef` | 同上 |
@@ -252,17 +252,19 @@ bash tools/verify_all.sh                 # 探活四层端口 + DSH 配置一致
 
 | 目录 | 体积 | 是什么 | 删了会怎样 |
 | --- | --- | --- | --- |
-| `models/` | 21 GB | 权重（在用 6.4 GB + `_archive/` 里 v3 全件 9.5 GB、自打包件 6.4 GB） | 重下 2.09 GB 包即恢复；`_archive/` 永久没用了 |
+| `models/` | 21 GB | 权重（在用 6.4 GB + `_archive/` 里 v3 全件 9.5 GB、自打包件 6.4 GB） | 从 ModelScope 直链重下 6,394,697,216 B（§3.2）；**r3 那个 2.09 GB 包里没有模型**；`_archive/` 永久没用了 |
 | `incoming/` | 6.8 GB | 下载的原始分发包（③省显存档等） | 想回头试省显存路线要重下 |
 | `llama8g/` | 7.4 GB | llama.cpp bundle + 6.4 GB GGUF | 从 HuggingFace 重下（§4） |
 | `engine/` | 1.4 GB | 引擎 + 9 个 DLL | 按 §3.1 / §3.3 重下 |
-| `pack/` | 1.4 GB | 2.09 GB 包解开后的副本 | 可删，包里内容与 `engine/`+`models/` 重复 |
+| `pack/` | **7.9 GB**（63 文件） | r3 包解开的**整个产品包**（三支引擎 + runtime + launcher.py / mcp_server.py / gateway/） | 可删，但它 `model/` 里那份 `.ninfer` 与 `models/` 那个是**同一 inode 硬链接**（nlink=2）⇒ 只删 `models/` 一个字节都回收不了，必须两处同删 |
 | `tmp/` | 1.3 GB | 实验 fixture、截图、抓取缓存 | 可删（报告里已固化读数） |
 | `logs/` | 23 MB | 历史运行日志 | **建议留**：每个读数都靠它追溯 |
 | `tools/ffmpeg/` | 194 MB | 便携 ffmpeg（从 LosslessCut 复制） | 与推理无关，可删 |
 | `repo/` | 4.7 MB | 本仓库工作副本 | 可删，GitHub 上有 |
 
-⇒ 全删约省 **39.7 GB**（C 盘 302 GB 里当前剩 132 GB）。
+⇒ 整树全删省 **39.06 GiB**（du 去重口径；表里各行相加是 45 GiB，差的那 6.39 GB 正是 `models` 与 `pack/model` 的硬链接）。C 盘 302 GB 里当前剩 131 GiB。
+
+> 另：`engine/` 里 FFmpeg 五个 + libcurl 是**不可逐字节复现**的构建（BtbN / curl.se 都是滚动 `latest`），删掉以后按 §3.3 重下，`tools/restore_check.py --deep` 必然报 5–6 项 BAD——那不是装错了，是哈希对不上新构建。要保住 18 项全 OK，就单独留这 6 个 DLL（119 MB）。
 
 ### 10.2 建议保留的最小集：`models/` + `engine/` 约 7.8 GB
 

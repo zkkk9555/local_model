@@ -1,0 +1,9 @@
+[chatgw] listening on http://127.0.0.1:8082 -> http://127.0.0.1:8091 pool=40000 usable=38976
+[chatgw] loop guard ON: check_every=480 coverage=0.25 history=30000 min_chars=24 passage_len=60 repeat_count=3 repeat_times=6 run_chars=96 run_unit_max=24 window=2000
+[chatgw] 09:33:53 est=16 pool_usable=38976 ratio=0.00 level=L0 est_after=16
+[chatgw] 09:34:14 est=52 pool_usable=38976 ratio=0.00 level=L0 est_after=52
+[chatgw] 09:34:54 est=37 pool_usable=38976 ratio=0.00 level=L0 est_after=37
+[chatgw] 09:35:23 est=26 pool_usable=38976 ratio=0.00 level=L0 est_after=26
+[chatgw] stream error: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>
+[chatgw] 09:35:46 est=68 pool_usable=38976 ratio=0.00 level=L0 est_after=68
+[chatgw] stream error: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>

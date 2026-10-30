@@ -1,0 +1,21 @@
+[suite] TS=20261030-100824 base=http://127.0.0.1:8089/v1 model=bonsai-2-27b key=48 bytes
+[suite] models: ['bonsai-2-27b']
+[suite] 起显存采样（7200s / 5s 一次 / match=llama）
+[suite] ① 12 题基线 bench（reasoning_effort=none）
+arith1             PASS ttft=0.394  prefill=76.4     decode=56.67  ctok=3     
+arith2             FAIL ttft=0.207  prefill=181.5    decode=30.21  ctok=2     missing=['11']
+logic1             PASS ttft=0.175  prefill=226.7    decode=30.68  ctok=2     
+extract1           PASS ttft=0.175  prefill=261.9    decode=58.95  ctok=10    
+pinyin1            PASS ttft=0.184  prefill=154.4    decode=28.45  ctok=3     
+code1              PASS ttft=0.195  prefill=290.7    decode=62.18  ctok=3     
+instr1             PASS ttft=0.164  prefill=161.3    decode=44.35  ctok=4     
+json1              PASS ttft=0.196  prefill=233.2    decode=67.2   ctok=11    
+count1             PASS ttft=0.178  prefill=216.9    decode=70.21  ctok=60    
+neg1               PASS ttft=0.207  prefill=183.7    decode=29.22  ctok=2     
+doc4needles_900    PASS ttft=334.839 prefill=74.8     decode=64.93  ctok=35    
+
+==  {"label": "llama-8g", "base": "http://127.0.0.1:8089/v1", "model": "bonsai-2-27b", "when": "2026-10-30 10:14:03", "n": 11, "n_error": 0, "n_pass": 10, "ttft_median_s": 0.195, "decode_median_tok_s": 56.67}
+[suite] cmp_bench exit=0
+[suite] ② 长上下文序列 209k,30k,209k,100k,209k（timeout 3600，可能 20-40 分钟，勿打断）
+[llama-longctx] base=http://127.0.0.1:8089/v1 model=bonsai-2-27b seq=209k,30k,209k,100k,209k sleep=20s max_tokens=512
+[1/5] 209k  fixture=d209k-s20261030.txt chars=295944 prompt_chars=296031

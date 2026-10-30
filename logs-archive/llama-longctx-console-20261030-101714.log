@@ -1,0 +1,5 @@
+[llama-longctx] base=http://127.0.0.1:8089/v1 model=bonsai-2-27b seq=30k,60k,30k,100k sleep=20s max_tokens=512
+[1/4] 30k  fixture=d30000.txt chars=42564 prompt_chars=42651
+       -> HTTP 200  hits=8/8  extra=0  wall=476.3s  ttft=475.19s  prompt_tok=29996  cached=121  prefill=62.92732325966062  decode=67.1
+       .. sleep 20s
+找不到 fixture '60k'（目录 C:/Users/Administrator/Documents/deepseek-harness/default-workspace/tmp/overpool 里只有：d100k-s20261030.txt, d100k-s777.txt, d150k-s20261030.txt, d209k-s20261030.txt, d30000.txt, d60000-s20261030.txt）

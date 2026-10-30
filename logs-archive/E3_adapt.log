@@ -1,0 +1,8 @@
+[longdoc] 文档 C:/Users/Administrator/Documents/deepseek-harness/default-workspace/tmp/overpool/d30000.txt  42564 字符 / 保守预估 60839 token
+[longdoc] 自适应分片启动：首片按 1.75 字节/token（纯中文下界），拿到实测 prompt_tokens 后校正
+[longdoc] 实测 3.634 字节/token（首片 body 13475 token / 48972 字节）-> 后续每片按 3.380 换算
+  [1] 行 1-491  prompt=13780  21.0s  取证 40 字
+  [2] 行 492-1066  prompt=16310  25.5s  取证 39 字
+[longdoc] 报告 -> tmp/matrix2/E3_adapt30k.md
+[longdoc] 完成：49.8s，取证片 2/2
+EXIT=0

@@ -1,0 +1,12 @@
+[longdoc] 文档 C:/Users/Administrator/Documents/deepseek-harness/default-workspace/tmp/overpool/d209k-s20261030.txt  295944 字符 / 预估 172080 token
+[longdoc] 切 7 片，每片 <= 26000 token（池 40,000，永远不超池）
+  [1/7] 行 1-1103  prompt=31021  46.3s  取证 19 字
+  [2/7] 行 1104-2196  prompt=31842  47.2s  取证 9 字
+  [3/7] 行 2197-3289  prompt=31844  47.4s  取证 10 字
+  [4/7] 行 3290-4382  prompt=31842  47.4s  取证 9 字
+  [5/7] 行 4383-5475  prompt=31845  47.4s  取证 9 字
+  [6/7] 行 5476-6568  prompt=31843  47.5s  取证 9 字
+  [7/7] 行 6569-7246  prompt=19809  29.6s  取证 9 字
+[longdoc] 报告 -> tmp/matrix2/D2_longdoc.md
+[longdoc] 完成：315.5s，取证片 7/7
+EXIT=0

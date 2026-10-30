@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "note": "双栈对比固定题面集。判分：must_contain 全部命中(忽略空白/大小写) 且 must_not_contain 一个不出现 ⇒ pass。",
+  "items": [
+    {
+      "id": "arith1",
+      "max_tokens": 32,
+      "temperature": 0,
+      "user": "13×7 等于多少？只输出数字，不要任何其它字符。",
+      "must_contain": [
+        "91"
+      ]
+    },
+    {
+      "id": "arith2",
+      "max_tokens": 32,
+      "temperature": 0,
+      "user": "一个数先乘以 3 再加上 12，结果是 45。这个数是多少？只输出数字。",
+      "must_contain": [
+        "11"
+      ]
+    },
+    {
+      "id": "logic1",
+      "max_tokens": 16,
+      "temperature": 0,
+      "user": "所有的猫都怕水。咪咪是一只猫。咪咪怕水吗？只回答一个字：是 或 否。",
+      "must_contain": [
+        "是"
+      ],
+      "must_not_contain": [
+        "否"
+      ]
+    },
+    {
+      "id": "extract1",
+      "max_tokens": 64,
+      "temperature": 0,
+      "user": "从这句话里抽出人名和城市，格式严格为 `姓名|城市`，不要解释：\n昨天王小明从哈尔滨坐火车去了成都看他的朋友。",
+      "must_contain": [
+        "王小明",
+        "成都"
+      ]
+    },
+    {
+      "id": "pinyin1",
+      "max_tokens": 64,
+      "temperature": 0,
+      "user": "「忐忑」这两个字的拼音是什么？只输出拼音，用空格分隔。",
+      "must_contain": [
+        "tan"
+      ]
+    },
+    {
+      "id": "code1",
+      "max_tokens": 32,
+      "temperature": 0,
+      "user": "下面代码输出什么？只输出结果数字：\n\ndef f(n):\n    return n if n < 2 else f(n - 1) + f(n - 2)\n\nprint(f(7))",
+      "must_contain": [
+        "13"
+      ]
+    },
+    {
+      "id": "instr1",
+      "max_tokens": 32,
+      "temperature": 0,
+      "user": "只输出四个汉字，不要标点、不要解释：本地模型很强",
+      "must_contain": [
+        "本地模型"
+      ]
+    },
+    {
+      "id": "json1",
+      "max_tokens": 96,
+      "temperature": 0,
+      "user": "只输出一个 JSON 对象，包含键 name 和 age，name 取值 张三，age 取值 30。不要输出任何其它文字。",
+      "must_contain": [
+        "name",
+        "张三",
+        "age",
+        "30"
+      ]
+    },
+    {
+      "id": "count1",
+      "max_tokens": 256,
+      "temperature": 0,
+      "user": "从 21 开始连续数到 40，只输出这些数字，用中文逗号分隔，不要解释。",
+      "must_contain": [
+        "21",
+        "33",
+        "40"
+      ]
+    },
+    {
+      "id": "neg1",
+      "max_tokens": 64,
+      "temperature": 0,
+      "user": "「永劫无间」这款游戏的首发日期是哪一天？如果你不确定，就只输出四个字：不知道",
+      "must_not_contain": [
+        "2018年"
+      ]
+    }
+  ]
+}
