@@ -17,3 +17,4 @@ tools/ffmpeg/
 __pycache__/
 *.pyc
 .env
+config/env.local.sh

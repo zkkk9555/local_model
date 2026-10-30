@@ -2,7 +2,7 @@
 
 > 侦察员 comment-miner ｜ task-18 ｜ 2026-10-30 ｜ 只做网络搜集，未启动任何引擎、未下载任何网盘文件。
 > 标注约定：**【实测】** = 有原始日志/表格/机器配置的第三方报告；**【官方 bench】** = 上游仓库 bench/results 或官方文档里的数字；**【博主口径】** = 媒体/UP 主汇总，未附原始日志；**【转述】** = 只见标题/摘要。
-> 本机基线（取自 reports/社区侦察-Strata出处与8G长上下文.md 与 reports/部署方案-最终-4060Ti-8G.md）：RTX 4060 Ti 8 GB（sm_89，8,188 MiB）+ Ryzen 7 7800X3D + 31 GB DDR5-6000 + Win11；现役 NInfer --kv-capacity 40000 --kv-dtype rk2v4-e8 --host-kv-mib 6144 --max-context 262144 + MTP draft4，峰值 7,469 MiB、97–98 tok/s（计数题）。
+> 本机基线（取自 reports/社区侦察-Strata出处与8G长上下文.md 与 reports/部署方案-最终-4060Ti-8G.md（已删除，未入库））：RTX 4060 Ti 8 GB（sm_89，8,188 MiB）+ Ryzen 7 7800X3D + 31 GB DDR5-6000 + Win11；现役 NInfer --kv-capacity 40000 --kv-dtype rk2v4-e8 --host-kv-mib 6144 --max-context 262144 + MTP draft4，峰值 7,469 MiB、97–98 tok/s（计数题）。
 > 姊妹报告（别重复看）：reports/HF与魔搭-情报.md（Bonsai 量化档/HF 体积/魔搭生态）、reports/社区侦察-Strata出处与8G长上下文.md（Strata 作者与出处、8G 长上下文配方）。本文只补「广度 + 本机可行性 + 技巧」。
 
 ---
@@ -114,7 +114,7 @@ Gyro-S 的两个代价（都有原文）：质量 **KL 0.268 vs IQ2_XS 0.236（�
 ## 4.2 预填 / 短提示 / 盘速
 
 6. **prefill 分一块给 CPU = +36~38%**：3070 Ti 8 GB 上，默认开着的 CPU share（仅 <1024 token 的 prompt chunk）让 128K 档的 4K/16K 提示读取从 424.7/442.8 → **586.6/602.8 tok/s**（关掉 CPU share 的同一会话对照）【实测】https://github.com/Niko1221/Strata/pull/1496 。**NInfer 对应物**：我们 prefill 在 4K 只有 ~1000 tok/s、113K 掉到 704；把短 chunk 的 attention/MLP 一部分交给 CPU（或至少别让 CPU 空等）是可试方向。
-7. **chunk 越小 prefill 越差，是 8 GB 卡的隐性税**：0.1.40.3 上 128K 档因显存只够 768-token chunk，比 1024-chunk 配置**慢 38.8–41.4%**；0.2.0-beta 用 CPU share 抹平后差距变 -2.8%~+2.7%【实测】同上 PR 。**对应到我们**：--prefill-chunk 1024 已是默认，但本机 32K 池时 512 只省 85 MiB（见 reports/部署方案-最终-4060Ti-8G.md）——**别为省 85 MiB 把 chunk 降到 512**，按此规律那是 -40% 的税。
+7. **chunk 越小 prefill 越差，是 8 GB 卡的隐性税**：0.1.40.3 上 128K 档因显存只够 768-token chunk，比 1024-chunk 配置**慢 38.8–41.4%**；0.2.0-beta 用 CPU share 抹平后差距变 -2.8%~+2.7%【实测】同上 PR 。**对应到我们**：--prefill-chunk 1024 已是默认，但本机 32K 池时 512 只省 85 MiB（见 reports/部署方案-最终-4060Ti-8G.md（已删除，未入库））——**别为省 85 MiB 把 chunk 降到 512**，按此规律那是 -40% 的税。
 8. **按盘速自适应 prompt chunk（planner）**：SATA 450 MB/s 模拟环境下把 chunk 8192→3840：20,400 token 提示 **334.0 → 822.3 tok/s（2.46×）**，盘读 26.1→2.7 GB，decode 25.4→42.6——tmp/web/Strata/docs/DETAILS.md:1392 。**NInfer 对应物**：我们的 --prefill-chunk 是固定值；若模型在 NVMe 上，按"盘读/显存"两约束自动选 chunk 是可直接实现的策略。
 9. **启动预读（read-ahead）**：Gen3 NVMe + 32 GB + Q2_0 驻留 262K：读前移把就绪时间 **920 s → 70 s**、填充速率 **39 MB/s → 3.2 GB/s**——tmp/web/Strata/docs/DETAILS.md:1385 。**NInfer 对应物**：我们有 --disk-kv-restore（已测为"全量重算"级别慢，见 reports/ninfer-analysis.md:212），但"启动时并行预读权重到页缓存"没有做。
 10. **短提示读取是 agent 的真瓶颈**：一次 5 小时、526 次模型调用的真实会话里，**74% 的 prompt 读取 <1000 token，却占了 57% 的读取时间**（200–750 tok/s，而长提示 3000+）；针对性打补丁后短提示读取 **-37~-41%**【实测，社区 fork】https://raw.githubusercontent.com/apatassini/Strata/qwen38-16gb/QWEN38.md 。**对应到我们**：TTFT 在 agent 场景基本等于"1K 提示的 prefill"，本机 1K prefill ~1000 tok/s → ~1 s，值得单独优化。
@@ -161,7 +161,7 @@ Gyro-S 的两个代价（都有原文）：质量 **KL 0.268 vs IQ2_XS 0.236（�
 
 | 方案 | decode | prefill/TTFT | 上下文 | 出处 |
 |---|---|---|---|---|
-| **现役 NInfer Bonsai 27B ternary** | **97–98**（计数题）/ 48–50（散文） | 1000 @1K / 899 @56K | 池 32–64K，逻辑窗 16K | reports/部署方案-最终-4060Ti-8G.md:21-25 |
+| **现役 NInfer Bonsai 27B ternary** | **97–98**（计数题）/ 48–50（散文） | 1000 @1K / 899 @56K | 池 32–64K，逻辑窗 16K | reports/部署方案-最终-4060Ti-8G.md（已删除，未入库）:21-25 |
 | Strata IQ2_XS 低内存（8 GB + 31.9 GB） | 20.7 | 31.3–35.7 @9.7K | 32K | PR #2004 |
 | Strata Coder IQ1_M 驻留（同上） | 15.5 | 134.9 @9.7K | 32K | PR #2004 |
 | Strata Gyro-S（推算） | 62.5 × 0.7 ≈ 40–45（3060 12 GB 为 62.5，8 GB 更紧） | 82–195（A750 8 GB 实测区间） | 可到 128K+ | tmp/web/Strata/docs/GYRO.md:74-77、:151-153 |
@@ -175,7 +175,7 @@ Gyro-S 的两个代价（都有原文）：质量 **KL 0.268 vs IQ2_XS 0.236（�
 | **P0** | **把显示器从 4060 Ti 挪到 7800X3D 核显**，再跑一次现役 NInfer 基准 | prompt +18~21%、decode +38~48%（他人实测，含推断成分） | 0（一根线 + BIOS） | PR #1496 |
 | **P0** | 同一基准里把 --kv-headroom-mib 现值（512/1024）与 256 做 A/B | 可能多出 200–700 MiB 池；注意本机 1024 曾 FATAL | 0 | PR #2004 的 ~70 MB→-43% 效应；fork 的 700→50 槽位 +2% |
 | **P1** | 显存固定后**别为省几十 MiB 把 --prefill-chunk 降到 512**；只在池/窗口确实装不下时才降，且优先降窗口 | 保住 ~40% prefill | 0 | PR #1496、PR #2004 |
-| **P1** | 试 --lm-head-draft + 中文词表裁剪（呼应 5258MF 的"13 万常用词头，快 10%"） | 投机解码 +5~10% | 低（换 flag） | fork QWEN38.md 的 draft_vocab 实测；reports/评论区与竞品项目-洞察.md |
+| **P1** | 试 --lm-head-draft + 中文词表裁剪（呼应 5258MF 的"13 万常用词头，快 10%"） | 投机解码 +5~10% | 低（换 flag） | fork QWEN38.md 的 draft_vocab 实测；reports/评论区与竞品项目-洞察.md（已删除，未入库） |
 | **P2** | 给 NInfer 提"消息边界检查点 + KV 预取流"两个功能（长历史只有最后一句改动时复用） | TTFT 大幅下降（Strata 侧 22.06 s → 0.404 s 类） | 中（引擎改动） | docs/MESSAGE_BOUNDARY_CACHE.md、docs/KV_PREFETCH.md、bench/results/2026-10-09…/README.md |
 | **P2** | 若必须体验 125B：只装 **Gyro-S**（58.5 GB 下载，留 60 GB NVMe），strata launch --family gyro --model Gyro-S，上下文先 32K | 可跑；质量 -13%；decode 预期 40 上下 | 高中（60 GB 盘 + 学习成本） | GYRO.md:21、:28-40 |
 | **不做** | 装 Strata 的 IQ2_XS/Q2_0 当日常主力 | 20.7 tok/s，且换页会卡死 | — | PR #2004 |

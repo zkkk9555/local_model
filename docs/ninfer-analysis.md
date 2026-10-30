@@ -285,4 +285,4 @@ Two structural caveats: **`--max-concurrency 1` is a hard serial gate in ring mo
 - **Expected user experience if it launches**: 27B-ternary quality, ~55–90 tok/s decode with MTP, ~20–30 s TTFT on a 20k prompt, ≤38k reliable context, one request at a time, no vision, single-step tool calling only.
 - **Do not promise**: dflash2 on 8 GB (forbidden), long-context >38k reliability (probabilistic silent misses), multi-user/concurrency (hard serial), or “just works” — the repo's own docs rate the 8 GB tier as unverified on 8 GB hardware.
 
-*Prepared from source + shipped receipts only; nothing was executed on the target machine. Report path: `reports/ninfer-analysis.md`.*
+*Prepared from source + shipped receipts only; nothing was executed on the target machine. Report path: `docs/ninfer-analysis.md`.*

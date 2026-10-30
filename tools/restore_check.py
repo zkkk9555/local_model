@@ -10,7 +10,12 @@
 """
 import argparse, hashlib, os, shutil, subprocess, sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
+ROOT = os.environ.get("LOCAL_MODEL_ROOT") or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # (相对路径, 字节数, sha256 或 None, 是否必需, 说明)
 # 引擎两支构建都接受：2026-10-08 的 801 MB 支 / 2026-10-13 packs 的 795 MB 支。
@@ -75,9 +80,13 @@ def check_one(rel, sizes, hashes, deep):
 
 
 def main():
+    global ROOT
     ap = argparse.ArgumentParser()
     ap.add_argument("--deep", action="store_true", help="顺便算 SHA-256")
+    ap.add_argument("--root", help="项目根目录（默认：本脚本上一级；也可用环境变量 LOCAL_MODEL_ROOT）")
     args = ap.parse_args()
+    if args.root:
+        ROOT = os.path.abspath(args.root)
     print("[restore] root =", ROOT)
     ok = True
 

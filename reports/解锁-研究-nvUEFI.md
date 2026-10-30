@@ -293,7 +293,7 @@ B) 加 --no-prefill-a8            → 全部走 A16
 - 锁机理：`nvuefi.md:308-325`；本质对照实验：`:269-300`；nvoc 组合：`:239-267`；显示模式矩阵：`:118-146`；RTD3：`:148-198`；回滚：`:508-522`；ssdiag：`:524-537`
 - issue #33（2803、MSI B550、免 U 盘方案）：https://github.com/physicsdolphin/nv-uefi-unlocker/issues/33 ；#51（2803、AMD APU 桌面）：https://github.com/physicsdolphin/nv-uefi-unlocker/issues/51 ；#56（双卡负控）：https://github.com/physicsdolphin/nv-uefi-unlocker/issues/56
 - 免 U 盘自动解锁：https://github.com/chungtair/rtx4060ti-auto-unlock
-- Linux kmod 路线（对照）：https://github.com/Zagitta/gpu-unlock ；本项目上一轮分析：`reports/gpu-unlock-analysis.md`
+- Linux kmod 路线（对照）：https://github.com/Zagitta/gpu-unlock ；本项目上一轮分析：`docs/gpu-unlock-analysis.md`
 - 视频/科普：https://www.bilibili.com/video/BV1d6xN66ECM/ 、https://www.bilibili.com/opus/1264436370549506065 、https://www.bilibili.com/opus/1264493051219279872
 - 社区口径（lead 转述，未独立复核）：2080Ti 22G BV1XnnZ6iELj「GEMM +81% / prefill +20%」；4090 48G「Windows 2000 vs Ubuntu 5000＝配置问题」
 - 定价脚本：`tools/unlock_pricing.py`（stdlib only，`--selftest` 通过）——A/B 反解 f、输出 GO/NO-GO

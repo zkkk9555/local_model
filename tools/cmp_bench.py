@@ -2,9 +2,9 @@
 """双栈对比评测：同一份题面、同一套判据，量 TTFT / decode / 正确率 / 编造。
 
 用法：
-  python tools/cmp_set.py --label ninfer --base http://127.0.0.1:8091/v1 --model X --out reports/cmp-ninfer.json
-  python tools/cmp_set.py --label strata --base http://127.0.0.1:PORT/v1 --model Y --api-key xxx --out reports/cmp-strata.json
-  python tools/cmp_set.py --selftest
+  python tools/cmp_bench.py --label ninfer --base http://127.0.0.1:8091/v1 --model X --out reports/cmp-ninfer.json
+  python tools/cmp_bench.py --label strata --base http://127.0.0.1:PORT/v1 --model Y --api-key xxx --out reports/cmp-strata.json
+  python tools/cmp_bench.py --selftest
 
 判据：must_contain 全部命中（忽略空白与大小写）且 must_not_contain 一个都不出现 => pass。
 另外跑一个 doc 题：造一份带 4 个暗号的中文长文档，问「按出现顺序列出全部暗号」，考超池/检索正确率。

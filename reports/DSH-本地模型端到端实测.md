@@ -135,7 +135,7 @@ providers: ['opencode-go', 'ninfer', 'strata', 'llama', 'wb']
  - ninfer      | http://127.0.0.1:8081/v1     | id=bonsai27b-ptq1-mtp-rk2v4-40k(38000/8192), bonsai27b-ptq1-nomtp-rk2v4-52k(50000/4096)
  - strata      | http://127.0.0.1:8080/v1     | id=qwen36-35b-a3b-udq4kxl(32768/4096), qwen38-flash-next-gyro-s(131072/4096)
  - llama       | http://127.0.0.1:8089/v1     | id=bonsai-2-27b(262144/8192)
- - wb          | http://192.168.0.241:8788/v1 | id=hy4-preview(960000/64000), hy3(192000/64000), deepseek-v4.1-flash(1000000/128000)
+ - wb          | http://<内网地址已脱敏>:8788/v1 | id=hy4-preview(960000/64000), hy3(192000/64000), deepseek-v4.1-flash(1000000/128000)
 ctx/max：ninfer 38000/8192 → DSH 提示上限 29,808 tok（池 40,000 留 10K 余量），与实测一致。
 ```
 

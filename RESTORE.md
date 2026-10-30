@@ -54,7 +54,9 @@ C:/Project/local_model/            ← 路径必须与这里一致，脚本里 R
 ```
 
 **如果你不想放在 `C:/Project/local_model`**：把 `scripts/serve2.sh`、`scripts/switch.sh`、`scripts/longctx.sh`、
-`scripts/console.sh`、`scripts/llama-*.sh` 顶部的 `ROOT=` / `ROOT_DIR=` 常量改成你的路径（全局搜 `local_model` 即可）。
+`scripts/console.sh`、`scripts/llama-*.sh` 顶部的 `ROOT=` / `ROOT_DIR=` 常量改成你的路径。
+
+全局搜 `local_model` 还会命中 7 处陈旧硬编码（历史实验脚本，不影响主流程）：`scripts/ab.sh:4`、`scripts/fetch_model.sh:5`、`scripts/fetch_runtime.sh:6`、`tools/dsh_provider_test.py:40`、`tools/llama_longctx_test.py:14,35-36`、`tools/matrix2.py:10`、`tools/verify_all.sh:21`。
 
 ---
 
@@ -67,7 +69,7 @@ C:/Project/local_model/            ← 路径必须与这里一致，脚本里 R
 - 链接：<https://pan.quark.cn/s/5af2f61bc482>（夸克，需登录才能下载，匿名只能列目录）
 - 内容：`engine/ninfer-serve-89.exe` + 12 个 DLL + `SHA256SUMS.txt`（16 条）+ `README-pack.md`
 - 引擎：**795,030,528 B**，SHA-256 `9fa7490bcbc4825a77673c5f8c6ffdbf25aab5b3e768a54d8bcebd7161ca41eb`
-- 校验：进目录后 `sha256sum -c SHA256SUMS.txt`，应 16 条全 OK
+- 校验：`tr -d '\r' < SHA256SUMS.txt | sha256sum -c -`，应 16 条全 OK（该文件是 CRLF 行尾，直接 `sha256sum -c SHA256SUMS.txt` 会 16 条全 FAILED）
 
 **选 B（GitHub 官方 Release，只有 exe，没有 DLL）**
 
@@ -84,13 +86,21 @@ C:/Project/local_model/            ← 路径必须与这里一致，脚本里 R
 | --- | --- | --- |
 | `bonsai2_27b_ternary_ptq1_native_mtp.ninfer` | 6,394,697,216 | `5c4486c8a52687e3f62072c7dd2a320546d0e00d1c019bf137eb02cc944e21b8` |
 
-来源：这份 PTQ1 件**公共 HuggingFace 上没有**（HF 只有 8.87 GiB 的 PQ2 全件，8 GB 卡装不下），只存在于作者分发包里。两条路：
+来源（2026-10-31 实测复核。**结论先说：能公开直下的是 ModelScope，不是网盘**）：
 
-1. 网盘 <https://pan.quark.cn/s/d4a29bfcb547> → `infer-27b-kv-stream-3arch-20261019-r3.zip`（约 2.09 GB）：
-   解开后 `model/bonsai2_27b_ternary_ptq1_native_mtp.ninfer` 就是它，另外还带 sm89 引擎与 runtime DLL —— **这条路最省事，模型 + 引擎一次拿全**。
-2. 网盘 <https://pan.quark.cn/s/4c7d9e017d98>（aivault 的引擎/模型分目录）也收着同族模型件。
+1. **ModelScope（推荐，公开、免提取码）**：`q409640976/ninfer-kvmem-heretic-bonsai2-27b`
+   - 直链（实测 HTTP 206 可下）：<https://www.modelscope.cn/models/q409640976/ninfer-kvmem-heretic-bonsai2-27b/resolve/master/models/bonsai2_27b_ternary_ptq1_native_mtp.ninfer>
+   - 该文件字节数与本表**完全一致**（6,394,697,216 B）；同目录还有 `heretic-27b-ptq1-mtponly.ninfer`（6,395,660,288 B，另一份微调件，未审查）
+   - SHA-256 未逐件复核，下完请跑 §9 校验
+2. 网盘 <https://pan.quark.cn/s/d4a29bfcb547> → `infer-27b-kv-stream-3arch-20261019-r3.zip`（2,092,648,837 B）
+   ⚠ **这个包里没有模型**：实测 73 个条目 / 解压 3,019,971,806 B / `model/` 是空目录 / 全包 0 个 `.ninfer` 或 `.gguf`，自带 `SHA256SUMS.txt` 里也没有模型条目。它只有 sm89 + sm86 + sm120a 三支引擎、runtime DLL 和 launcher。**别指望靠它恢复模型**（本文件早期版本写错了，特此更正）。
+3. 网盘 <https://pan.quark.cn/s/4c7d9e017d98>（aivault 引擎/模型分目录）：2026-10-31 复核返回 `code=41008`，**需要提取码**。
+
+> 别用 `scripts/fetch_model.sh` 去下：那是历史脚本，拉的是 v3 件（9,520,051,456 B），不是本表这一支。
 
 ### 3.3 九个运行期 DLL（官方 Release 不带，必须自备）
+
+> ⚠ 若从 r3 总包里取 DLL：`runtime/` 那套只有 CUDA 三个与本表一致，**FFmpeg / curl 六个是另一套构建**（包里 `avcodec-63.dll` 118,445,056 B，本表 91,810,816 B）。混用会让 `tools/restore_check.py` 判 6 项 BAD。要么整包统一用，要么按本表取。
 
 | DLL | 字节 | SHA-256 | 从哪里来 |
 | --- | --- | --- | --- |
@@ -120,7 +130,7 @@ bash scripts/switch.sh status        # 看谁在 8091 / 显存多少
 
 ```bash
 export NINFER_KV_WINDOW=16384 NINFER_HOST_PAGEABLE=1 NINFER_KV_REUSE_HOSTBACKED=1 NINFER_TERNARY_PTQ1_FAST=1
-export unset NINFER_KV_RETRIEVE    # 留空 = 引擎自动给证据预算（池的一半）；写死会少 3.9 倍
+unset NINFER_KV_RETRIEVE           # 必须真 unset；写成 `export unset ...` 实测无效（值仍是 8192）。留空 = 引擎自动给证据预算（池的一半）
 engine/ninfer-serve-89.exe models/bonsai2_27b_ternary_ptq1_native_mtp.ninfer \
   --host 127.0.0.1 --port 8091 --model-id bonsai27b-ptq1-mtp-rk2v4-40k \
   --max-context 262144 --kv-capacity 40000 --kv-dtype rk2v4-e8 --host-kv-mib 6144 \
@@ -151,12 +161,12 @@ bash scripts/console.sh open      # 打开控制台（亮色网页，127.0.0.1:8
 | --- | --- | --- | --- |
 | `bonsai-bundle-win-x64.zip`（llama-server.exe build 10807 + 依赖） | 616,671,821 | `6285cd5d6ef72e9e13ffadefb20b1ef91dd90afe80e53f3375bae268454e79ce` | <https://huggingface.co/CaryPalmer/Ternary-Bonsai-2-27B-262k-GGUF> |
 | `Ternary-Bonsai-2-27B-PTQ1_0-mtp-procreations.gguf` | 6,397,970,272 | `5f212d02ff57cb8eaad260fd7ff57bfaff87ae2bc9183a21dd2f127c27252505` | 同上仓库 `resolve/main/` |
-| `start-server.ps1` | 小 | — | 同上仓库 |
+| `start-server.ps1` | 62,380（bundle 自带）/ 26,955（HF 单独下） | — | **用 bundle 自带那份**；HF 那份只有 26,955 B，覆盖上去参数就变了（`scripts/llama8g_launch.sh:11` exec 的正是这个文件） |
 
 ```bash
 mkdir -p llama8g/bundle && cd llama8g/bundle && unzip ../bonsai-bundle-win-x64.zip
 mv <下载的 gguf> models/Ternary-Bonsai-2-27B-PTQ1_0-mtp-procreations.gguf
-mv <下载的 start-server.ps1> .
+# 别把 HF 那份 start-server.ps1（26,955 B）覆盖上去：bundle 自带的 62,380 B 那版才是能跑的
 cd /c/Project/local_model && bash scripts/switch.sh llama   # 起 8089（262K 窗口）
 ```
 
@@ -254,25 +264,30 @@ bash tools/verify_all.sh                 # 探活四层端口 + DSH 配置一致
 
 ⇒ 全删约省 **39.7 GB**（C 盘 302 GB 里当前剩 132 GB）。
 
-### 10.2 建议保留的最小集：一个 2.09 GB 的 zip + 25 MB 文本
+### 10.2 建议保留的最小集：`models/` + `engine/` 约 7.8 GB
 
 ```
-infer-27b-kv-stream-3arch-20261019-r3.zip   2,092,648,837 B
-  SHA-256 25436366f1f0e9caa284b64c1e97e6a241cf3e50785c5775569eb9788e4a788c
-  ↑ 这一个包就含 模型 + sm89 引擎 + 运行期 DLL：断网机器上也能把它全须全尾重建起来
-repo/                                        （或直接 git clone 回来）
+models/bonsai2_27b_ternary_ptq1_native_mtp.ninfer   6,394,697,216 B
+  ↑ 唯一「删了就得重下 6.4 GB」的东西（ModelScope 有公开直链，见 §3.2）
+engine/    1 支能用的 ninfer-serve-89.exe + 9 个 DLL        约 1.4 GB
+repo/                                        （或直接 git clone 回来，4.7 MB）
 logs/            23 MB，实测证据（可选）
 ```
 
-放 D 盘或网盘都行（D 盘剩 239 GB）。有它就不用再登录夸克、不用再等下载。
+放 D 盘（剩 239 GB）或网盘都行，留着就不用等下载、也不依赖任何网盘提取码。
 
-### 10.3 恢复流程（删完之后照这个做，约 20 分钟，其中 15 分钟是下载）
+> ⚠ **2026-10-31 更正**：早先写的「留 2.09 GB 的 r3 总包就够」是错的 —— 那个包里**没有模型**（见 §3.2）。
+> 要能断网自给自足，必须留 `models/` + `engine/`；只留 zip 的话，恢复时还要再下 6.4 GB 模型。
 
-1. `git clone https://github.com/zkkk9555/local_model.git C:/Project/local_model/repo`（或直接看网页）
-2. 按 §3 下 `infer-27b-kv-stream-3arch-20261019-r3.zip`（2.09 GB，夸克）
-3. 解开后把 `model/*.ninfer` 放进 `models/`，`engines/sm89/*` + `runtime/*.dll` 放进 `engine/`
-4. `python tools/restore_check.py --deep`（校验字节数与 SHA-256）
-5. `bash scripts/switch.sh ninfer` → `bash scripts/console.sh open`
+### 10.3 恢复流程（删完之后照这个做；留了 models/ + engine/ 的话 5 分钟，全下 40 分钟）
+
+1. **克隆到项目根**（不是 `repo/` 子目录 —— 脚本里的 `ROOT` 硬编码成项目根）：
+   `git clone https://github.com/zkkk9555/local_model.git C:/Project/local_model`
+2. `mkdir -p logs tmp`（仓库按 .gitignore 不带 `logs/`，而 `scripts/switch.sh` 起服第一句就重定向到 `logs/`）
+3. 模型放 `models/`：留了旧件就跳过；否则按 §3.2 从 ModelScope 下（6.4 GB）
+4. 引擎放 `engine/`：`ninfer-serve-89.exe` + 9 个 DLL（§3.1 / §3.3）。**别把 r3 包的 `runtime/*.dll` 混进来**（见 §3.3 的警告）
+5. `python tools/restore_check.py --deep`（真树应 18 项全 OK；报 11 项 MISSING 基本就是第 1 步克隆位置错了，可用 `--root <项目根>` 指路）
+6. `bash scripts/switch.sh ninfer` → `bash scripts/console.sh open`
 
 ### 10.4 什么时候值得再捡起来
 

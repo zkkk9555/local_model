@@ -13,7 +13,7 @@
 ## 模型：Bonsai-2-27B（三元 PTQ1）
 
 - 模型族：Bonsai-2-27B（Qwen3.8-27B 的三元重训版）
-- 权重格式 `.ninfer`（PTQ1 三元 + MTP 投机头），存在于作者分发包，公共 HuggingFace 只有 PQ2 全件
+- 权重格式 `.ninfer`（PTQ1 三元 + MTP 投机头）；公共 HuggingFace 只有 PQ2 全件，PTQ1 件可从 ModelScope `q409640976/ninfer-kvmem-heretic-bonsai2-27b` 公开下载（见 RESTORE.md §3.2）
 - llama.cpp 路线的 GGUF 来自公开仓库 <https://huggingface.co/CaryPalmer/Ternary-Bonsai-2-27B-262k-GGUF>
 - **我们不分发权重**；权重的许可与使用条款由原作者/HF 仓库规定，使用前请自行确认
 
@@ -26,6 +26,7 @@
 
 - `scripts/`、`tools/`、`docs/`、`reports/`、`config/`：MIT（见 LICENSE）
 - 文档里引用的 B 站视频内容、GitHub issue、HF 模型卡均为公开信息，引用处标注了来源
+- `docs/archive/` 存有少量第三方公开内容的全文副本（B 站专栏 cv53657756、HF 模型卡、GitHub issue/PR 讨论），仅作离线引用证据，版权归原作者；作者要求可随时删除
 
 ## 免责
 

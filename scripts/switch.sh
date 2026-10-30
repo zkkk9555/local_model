@@ -5,6 +5,7 @@
 set -u
 ROOT="C:/Project/local_model"
 cd "$ROOT" || exit 1
+mkdir -p logs tmp          # 仓库按 .gitignore 不带 logs/，起服第一句就往里重定向
 wait_http() { # url max_sec
   local u="$1" n="$2" i=0
   while [ "$i" -lt "$n" ]; do
